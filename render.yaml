@@ -1,0 +1,20 @@
+# Render Blueprint for PulseIQ (backend + frontend in one Docker service).
+# Render reads this file from the repository root when you use New -> Blueprint.
+services:
+  - type: web
+    name: pulseiq
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeploy: true
+    # Returns quickly once the server is up, so Render knows the deploy is healthy.
+    healthCheckPath: /api/health
+    envVars:
+      # Where the database, login key and uploads are written inside the container.
+      # (The Dockerfile already sets this; listed here so it is visible in Render.)
+      - key: PULSEIQ_DATA_DIR
+        value: /data
+      # SITE_PASSWORD is intentionally NOT set, so there is no password page.
