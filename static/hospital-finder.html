@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — Find Nearby Care</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAgVElEQVR42oWbebRkV3Xef/uce2+Nr97Y73W/brV6ULcGJCEhIQEyo4UZDPYCIzthGTvYCyd4JV4rTmwTkhjZhDjGQ0xMHC87Aa/YArxsbBIwtpFQZBAIISQ0IQn1PL5+86u56t57zs4f99bwXreSWlqt7qq6t+7ZZw/f/vZ3hGhaUUAEvGOiOkOxOk+v30PxiAgggCIYsi8DKKrDj7I/Bv/OP5fRP1AdXceOv2W3UERl7P6DzyT/wrab598TsitkdCMR0ME7su33UNDBW5J9boaLV0exUKFUmacX90F020PsXPzwYYZvaf65jj3AtpVw+Zt6+UJf8huMm36HGUb3Fq9jF2WbpMqOzRm9gsxIHmss1dpuemkCOIYbxs5d0fy9MZPmxpL8LZHx7wyu0aGniBgQQTTzDMWjLkUBYwIQm3uPzxeh259ERz+mO6yjIvke6OWGVGG7YyiBIKg6qpU5vFic6yLG7LD9yN4y7s46+mXN3XHw9+Fng9/MF63e4ZI+6mPUOxDB2JCoNIFi6Pe6CA51aW4swdjMKMMnlx0RJ2OursOtweTPPAjGgblER64QqHqCIKJQmqKT9LOY9z67qex003GfyD6X3MVEdvqsh8GiXUqadBGFqDxFdddhCpN7CScXSVsr1M99m1e+9+OEUZlv/ekvUa0dojp9gNbmSZprL9JtLuFcHzEhJixhsGOGHzzPICeMXn5n0OgOYwkEeE+xMkHiBfV+uBDNLaX5LlwWk5oZSdFh4hmZSBFj8Ukf7x0mMExffQuLt7yD2QN3EE0eptsXnIQ0Tj5IZ/MspfmbiKIyQWmSmf13cdVNP0nc7+CSNu2NY9SXv8va6X+gtXUadQ5VjzEmD6FRoGcbI6PAFzN68jzcMTIMUZFwWmdm9hGrxfskW6zKWGbJDKDDSrAzvvwwtSqCMRbvHa7forb7EM6n2LDM7f/sz0FCOuefZe3Fb7Bx+jF6zRV80iXtt6jtfTliLVtnniSIChSKk0TlBSYX72R6zyupTh+mWJrg+9/8KKee/CxhWKTfaxIUJvJ1pTuyraI+QfEYWxxtWm6UQcBKWJzT6uQ+YucQuULKlbEAEB3mMyQzhIx9UQ34uE+xMsnuO36EQ2/5IPVTz/Dsff+euevfwNbZZ+mun8bFDVCHkQATFjE2JE16oGCjCj7t4dIu6hPEhAThNOWpq5nf/yqWTz1AafZa9r38/Sw982esnH4Ql7QxJhzGoojBuy579v4otjDN+VP3IcZmnuLz0i5ZbQuCsIAieFXMZXVL8wQvY4lnlACHSWWQ3DotZo6+muve8yGmDt3Kpae/ybmvfY603+HCY58fJrSgUN1Wk7xPCKISgsWlMWICgmgiM7CAakJz/Tkaq0+DppjiDC5Rbrz7t9g48xAvfPPjNFafJYhqiBiybfHEaZconEE1Rp3BmAiMyQw1SKITM4fVRDXipI+I2ZYjLjPHzlqqgJFsp1TZ84afZt9bfhHdusiZv/sEy0/ej/qEoFDJcII6UJ9XBDN0S9U0c2EVxEaIsYDBewfqhi43AGXO9QmjCfYcfQf7bvwAaQqnn/hNLp34e2xQQPDgHd73cK7L7OxrQULq9ScQE41CAbCF8q57VUK8Osw2MKIjgDKeccdQh1iL+hRbqHLDe3+Nq9/yAVYe+3ue+5OfZ/P4o9gwwobFLGeozytDdrXzKd73cwyQUKwuUCjPkHQ38aI410fV58Uoxwx5PrJBiPqU9QuPsH7mq1Rnbubgy3+WQiFic+lxvOtjxGBMiBiDtZPYsEavf2H7ihRssTx7LybIYe+Ouj9W3sarnEgOZvAEpRq3/sxvsXjbWzj+hU9w/H/9R3y/Q1CcGFVRyfJHmrTxrkcQTFCpHmDvnjdSLNbouRa3/Min2fOy97F88m+ZKh5gz9wPgDpS3ySOG6g6jIR58vGgHmMj+u0V1s89QLEwyZFb309U3cX6uW/hfZIlOxORpFsk8TIL828jdQ2SpI6QP7+IjNXL7f6fgarM/Xxe7gbAQ9WhaYItz2BsmWfv+zin/+FPsFGEsRHqkx3W9ExWj7J7z5uYWbgNayKCwHLh4gOs1o/j+21IDT5NKJSm2LNwN/sX34rXNpdWHuXiytdp9y4i2CF0Rz1BoYZX5flHf5s4brJ4zdso1eZprDxHUJzK8L5kuKHfWwevqO+BKWfeUJs9qt4U8T7N42wn6hslwKzESp6clOve8yHqZ1/k4re/DKIILgdGmav7NMalXVBh7+I7OXz4AzRaz7Gx+U02N56i010GsVgbYYIKAGl3FedjRAyVygHmZm6mVj5CubiX9fqznDz3WZzrZBUEixqDmCDLJd5hwypze19HsTTHyef/FGNDRDNU6dIWgakRBJP00jVEbAaFty14zOEH7j5Effnu+7jP4Xf8CxZe+z6an/sPaNLFFkqoT1HvMbZA6hJMEHLtNT/N+tox1jcep90/T6P+XBZugMHkWd7h4q0sV5gQKxbwdDrnOd0+i6pncuI6CuEsU9XrqRYPcvbSX+MkJjATeE3AJ6hCr3WGMJziwPUfpNfb5MKJL2RQ2jtAsLZKuXQt/eYmAthiee5elWCIAi+HtGzD80mvxdyNr+fIj3+MCw99hhNf+h1sVMQgBHYa1NFPWkzVDvHqWz9GVFjk7IWv0O4cI47XCYIy1kZjNyXvHkclZpD0RARjQoyE9JN1Wt3TWBuxd/5t7Jq+g3rnBHHaIAoXKFeOkPRXEDHU159lauYoVx15N+sXHqbbOo+xIQbBuTZ9t5JXH4ctlOfu9RIMM+7OVY+SoOB9Sqk6zXU/9Z+J61u88Ge/iEtjjLEZNJUCadKhVt3Lq1/xG2w2TvPYU79Kr79EGFbyJJbDVh3rEEWz2BzP0aJDrJG1+RYjAb3uKiubX2N68iYO7P4J6u1jSDgNOHqdC5igiAda9WPMLL6ZqLTI+oX7s0UYi5gA1YRK5QjWFDBZRtVR2zkEez5rMfL+WsWgLuXA636K6T1HOfM3v02/tUUQFnP3gl7/PIVCldfd8d+5tPIojz39EVBHaEvZ70uWewXFMAJeOlj8kFhRjCpGwGKy63K8YGxWAp879QkajWd5zbW/hqTrbK1/A2PDrMMzEc3NFzj5zB9Sm7uLuX0/iHd9RIL8l8EGk5TKh7CF0uy9KgavuqOXyhOiAGJwaUxtzzXc8J6Psvz0/Zx68FPYqDTq9QFjI4wY2q0znDr/BcBjxGLE47F0nBK7mNj1iV1KrIbAWozIMHEawIvQcS77jiixV2J1iCpWQAjABDQ7x+n1Vqm3jqE4MGEeUQ4RobX1HFO7bmdq4U42Ln0Nr27ozf3eBfq9JQIdttBX6P91UBUUXJ9dt7+Lvok4+dU/Rl0fsZk1EYN3PW644ZdZXf0Wx07fR7G4K4tflLYaZsKIt8xVuTY01MSz7jwvxo5vNNo0koRSboSuChNhxN3zU7wsjJgS6Cg802nxjcYWq6lSCgxWLLFv8+KlP2f//DuoThzgxLnP5fgkRRDSpMvSic/wsrt+h9nFu7l06vMYW8hLqMO7PsEOymTY9Iz8QdA0oTC1wOxNP8zKMw/SPP8sJozwPsFIQOp67N3zVmpTN3Ly1GcplnbniczT9srd87v41f37uKMQEvQTNPX4wJAWQ77ebvORE2d4bKtO6hPumKjx6wcOcFe1hkk9PvGoQCzCM3GX3714gb+p1ymQgaFCUKXROsGB/e+m0T7O8srDWBugCkFYpb7xPdqNU8wuvprl018An+ZYyhGGU1kYZu0uVyAtM/Dj0oTZa19PaWqRjWfuz8PDggrOxxQL8xw++n7OL32JVucsYgIETyvt885alc9ctchdBpJOh1Ya0yKl4xPSfszdhTJ/ec1hfnCqwu0TFe7bf5A3BAW6/R71NKGOo65KB7ipMskfHb2R9+5aoOtT8ClCQKt3hovLDzM//ToMMmSaxIakSZ2Vc1+lMn0jpdoBnOvmz29QH2cG2N7WMpalwatHrGHy6JvorJynfvpxbFjKEJaxeNdnYfHNOIVLFx8isEVElZ7zXFuM+L2FPUz3Ylq9PqJKAAQCVgCv1Hsxsyr84ZFruO/o9ey2IZupBwWjgsEAWf/eTFOcej6892puKRbppUlWy22JpZUHUR8xNfXy4SIH5XVz5RHSvqdcOYq6OPNrY/EkmPHGX2U8peV/pjFRdZZw/uVsnniUuLGUtZQ5PA6Lc+y5+u1cvPAAvfZSxh2rwwMf3LWbA1FIR4RADKhkpOUg13rFeqXjHbNqWTQhXStYa1CVvK3NtsYriBq6sWPKW947szBG0UEcL7HVeJK56TsxNtsgzZuZTv37dLaOMzn3CkxQHGOOLGZb/lPZiXxQl1DeeyOmOk/9+DdwaX/kKC5mYuIwYsosLz04bENjl7I7Cvmh2RnSgsUENjNuXlY8ZpRjRBHniJ2n5zJWxyl4MmN5k/9fBedB1dBxyl3VXewvVunnJROg3nyKifIByuX9GTpUBwpJf5362hMUJ44QFGdzRit7BjN4iNHe6zjbDijl2YNEpHRWT2V1GJ/X75hq7Vrq9dO0Gy9iTQAoKcLVxQLzxZA0b/2Hd9YcBbT68MbXYP71z+EcqFPUZ3ysF4NDMkOo4AE3MIwXYg+TErEYRniftdnGFujGqyRxi3JhD871tpE3Sf8SQVghCGfz58881cCY36uOzQPy4YYq0eQ+Ak3xcRsxYTZ8ICslhepBevEy3vVy6hrAUgsCikZw3uPV5z8heAV1Hp86uONWeONrSKamcd0033nFJwneKc4Lzg2MYPD59V4zjzDOgyYZisWS+g79pE6ldBDRvESrgolI4i2sCYmiOdR7NG+eTBYnDKc64yE6ID99b5P6qYdJ2uvD5kV9NjzpNF6gufEEEhSGZKOIsJE4WnGKKjgVnEi2i0bxONziLvzBfWgUITdeR9qLUZPxim73LlIvuERJMaRqsmslu48aQ2yg49PhTqp6UEez9X3SpI7YcMj8GhMSx5ukSTfzYE1ytD1Ao7ptz0c9oQiEZerf/z9ceOgPSfut3Doe9Qk2KJDYVbrd01hbBsmsHuA51+2y3OpjY4dPcoOJQ1Fcv4e88iYk8bj7v4F9zc1QCLLgObiPXX/w64Svv5Ok2cU7SJMU5xTnldRl8HzDJSw7xUiQ73SK+JSN5nfo+iXCsJpRfMZiTETaW6HbWsanPdQlw7mF0THyY3wMhYB3KcWJPdx4z+/w8vd9ksqua/BOkaCGi3vM3PAerv+JT3PgTb8EFDES4lUJ8az0WnytU8dGEWkY4qsldKKKL5VINcTedivu+RO4Lz9E6ZbrkQO70SQhesOriRbnmXjfO5Gr5klRnI1whSK+VCIOAqwN+U6ryZJLCSUACVAJcc6xe/EnuP66/8D8rjfjvMcEVbw6ipWDFCt7mdz1SgSbVwhDoKqo+PFhSY4DsjrqXELcaeJdnJEmJsjITTEkrTXayydpLD2H1xQGrmgMmqT8Rcnyvt/6MJXaBJLT1c45+omDPbvof+T30VPnqUxNEr3sKP2tJtEb7+LiR/8r1Te+ir2f+hi91Q3EWoIwo7WdV1yzy1d+4d/gT8dQCPNmKit5/c4K9Y0ztNsXs5bO9QFDv7tMa+NJ2lsvDtM8gFSmDqs3Uc4IjY2qc4yvKhQnFrBhiW79fHapS/IkElMo7yVN+jjXQfLEqKqIKs4Kn7zn3Xzg8CE28Rls7vRxicNtNvBPvgBxn9on/i3u2GnSx58j+Kf/iOWf/jBm3wLBrTcR92NihSAIUVVKYvniyhl++fOfhzjOmajBnjnKhb0EwSyNzgv5kMdlQEoCqlO302k+TxqvZnMEJJsOy7Yp22iQKAKS9qkcfhMzR1/H6S/+MklnEzEWEYvHMDP3JqxRzp36UzCFkScZizrlNz/z17z6yFGuLke0EiDxaOLxxsJEhbTXp/XQtym/680EN19P67sv0Os45NIm6V/dT98JXTUolpJYjqV9PnH2cVKTEBqbZfR8yOF9ykztBwjCCs3OC0Me37sOE9O3s/vQB1k68Xs0N9eG+cqg2yb0GQU2CAGyMZeU5pCZm5Ggkt/U5iXPYGxAaeJQPnrTfLaQaQkK1nIqDPh3jU16hTK2UMRVy+h0FT9VwVvBlyJ6T75AsGuW6MYjtB5+gr4VEmvx1SoyOYGpVfETJfxEmT/pXeJ0kBINJj2D3xPAeyJTpts5k8FhHY3KotIiQkzSXwdsToFoNgrgJcUMipLSXXmeOLbY0i50MDnORRCt+vNYUyEIp7L4Jx9YaoYByur54uoyHzt1EttP8P2YOHG41OGcR6MivbNL+Iur6PI6/e+dwBcLxA7iVElSxTml4ITPrpzgSxvniSTIWOqx6qXqKRYWKBcX6fROg3f5ICbzgiCaJk23SJOtfHE+mzLJuLIhv6mMN0UYkvVjqEspLNwIPmbAIolY2q0XQWFiMms0JB9eDMLI+ZQCnk+unOUT6xcoYnAeUpUsoSF4pyz/zy+y9EefJ+2meBuSYOlh6XkoGsuXN8/zqdVTWDGjcfc27YEyUbkej6PbX8qGIpCxSBJQLO8lbp/ApVujiZRPCUaNn2ybBw1oMmMj4s2TpOunqey+lU0TZGOsHNfHvWXqW88yMXUbm2uPbh+k+hGoDiXgP106h0jAz85dRds51Bg0VRIb0Xzg26gapFAg9ZCIkCBUbMDfbpzh91dfQE2E0QzIyrZRhseaEs3uKeqdEySum4dipjQJC7ME4Qwba3+XDVKDSjaiU7BRceZeFZv30Jk1hRH/j7H4pENl/npqV91J/eQDpL16Nr/TbASdxk2mFn6Ibvtk5mJicgw2ptrI7/1wq441lttr06QKsZKhvjDE2RCnkObMYcWE/M36Wf7LpedJFDKy3A871wF08+pJXR+XthFJKIRFUEfsY1z+CP3WCTrNYxmTNRiOi8FGxenMALkK7LL5uEhGPBjDzHXvxLWWaF36Xsa14zESkSRrRMW91KZvpbH5HVCXQ2rdJqExOVT+ertOy8Pt5SksQteB84ZEIfYGI5ZIDfetnuQPVl/EixCI4AdDTWPyjRKSpEExKnPjwXdw23U/xa3Xvpdbjv5jbjj0NvbN3URkS2w2TtBpHs9KogTD+aaIzQ2AHXZ47BCjDWIsbi9T2fdaTFSjceKriJGhjE6MJU3rzO/9Ubxr0GkeyyCq+hxZ6pgiQwhMwOOtOi926txQrlELSnRUSbzBiqHhYv7bpe/z2fqZbMgp47ylDOt64joc2nsnb77949xy+Oc4sHgbtcoihWCCucnD7Jl+Ffun38iu2rVstk/S7FzABuV8XBYxOfWagQfkErih2kW2dQYD0rO3+jz95edQ18Ql2XiKXNmVJBuoc8zsfiON9SdwrpXRZrnLDh58kF8CAyd6DR5prjEflTgQTlCUkGe7W3z80tN8s71ClMewbpvZZw+ZpD1efvRtvOOu36VWvJm1+jG+d+pzfOeFT/PUib/g2LkH2WycxcoMM9U7uHr362nHF1hrnsbYbERuxCKVqUPqJMwlJuOixJ2l0eCTDrtf9SHKM1dx+oEP5WIqtg07ipWDpPEaSbyFS3sZ4hJAzSiv5KFhVOn7hIIx/OjU1VRtkb+qn2Mr6VIwBq/kOgIZXiMCcb/F4X13cs/d/4NCcZ6nXvhrHnr8o9Q7FxFbRSTAp23wHWYmj3DbNf+SQ7vfjpcVvvzYv+L82pMEAt71sOFYCLyUOELzMFB12Ooik9f/JL67SWflKcSEOfOiqPf0OmeolA+zuOceOp0sKWYanXHVmR+KLUIT4kR4prvBd7sbJBjCfE4x9EIZINSs3gc24M2v+HXmJm/j+NJX+NLDv0Qv6VOIJrGiGCMUy4sUKwdpts9xfv0bTFUXmavdTCmscmrpK/kkLMSGhalhCMg2PaAMuZKBNA6B7vrzFKePMHnNW+lceIS4eT4fjQlIAWMsSbpJpXSQ+T1vJ0k36faWMvisMkyMGRNthnqsQAx2gMtyHDEQZGUJNUt8iYs5uOfV3Hz452m017n/sQ/RTQvMzt1FP14liTdQnzK1+91UZl9Fv/0C/X6DZus4s5VXUgz2s9F6knrnLNYWciCE5sNCPxb7OmSLBZ93gBZBWX38k/TbXWZu/YVM1OSTHBqnQ+3AhaXPUd96mr37f4bde+/B2CLOdfA5KzsQMw1Eiwr4cTmtGFTysPEJ3ndzoYVhcf52osIU51cfZHn9aaKwQrd/idS18dqnWD5CsXwNzbWHifvrBGJZ3XqOiyuPgK+wa+oVIMFgPn1lJa7quFzY5qBCERvS33iO1W//BtH0jUwdeTdpdxPv+yAjPl5MyNLK/+b82fsIwzmCoEaxsBcblEnTFi5p5ovyw8ZEcxIzewaPkuB8ByNFioVFvCYYgVrlKoxV1jafx6mn3z9Fp/09kISotJ/awo/QbjxNY+1BRD1K1qHWeyfwklCK9mBtAUUJxsUhQ25UdKgTVFWwNYQEfBu8wwQlOhceZOM7v4ktzDN77Y/RuPgImiaZbihfiMHQbHyHZuMJbDDB7vl3ERQmaXe+T7vxPEm8gfM9VKBU3g9i6bROIV4zgxV3Uyrup1Q6Qrd7hpWVbN6YJkKcJsS+l4me8Ij3qMZMLPw4hCW2Tv9VltitxYhBbZiDKJ9zgi4TSAy4QM21PKI6JgfMcYBvZCVMMxUIAiassnXiC0wdehd7XvFhSnNfYfXZT+GSZi5FSxHVjK1Bcb7LxeXPUykdpFy9hpn5txEGU2xtPUar9TT7bvgVgmCCk0/+CgVZYGb2tRgrxMkW9eZ3aTaeylpw16fRWCPuOirlxVwd4lA1BIW99Da/SXs9xfseJt9lzZVppcICYoQkbaKuiwSVnBEa9kJ+m05kNBvoEZb2UZ68icbKAxnSQwiiCZrn7icszDJ16B6a09+ivfoE6nqZvF78SFunHu+bNOqP0tj8FkE0RaG4mAkicST9Nt5l1aGXXGBl5Qv00zXStDWUPhsTok7ZbH6PNGmyd/YVlMIJer11SrU7ERPQ2fwHMGE+HMmIW+9iIltksnIYNX1aycWcRFVsEE3emzE/eplKLKPJ84qgDjGVfOw0YmO969PdfJ7OymOEtUPMXPdP8P114tYZ8C6bE2pGpGY9RojYAqoJSbyO9x3Ux7Q2vkN97evE8RrObRHHq7nczWbX5NAXsaim7Ju/k1JhH93eOstrjyCaEPfO5CqXMPs9MSAWl7Y4uPvt7Jl9A710je+f+0vitIkgWBvV7hUxOU4eQ5s7Rubq+8Td85jCHKRNfNrKsL1YBEg6S2ACSrO3UNv3JoKwStJZIo3reXM0rrsTMBYjUT5k9dnup33QbOKMhBgx2zwRwJoCrf4m1oRMFF5GtXSAOF1jfeu7gENsIQ9Xj3PZ/fYvvJX9C+8CNZxZ+TLn1x7GmgLgsTas3Cs2yIGHjDTSsv1wQkYxB/h0k7C4iIlmcfE6IkF2XVAi7Vyie+lhBE9p9xuo7PoBbFiiv/VclhvUZzE7QHdDj0sxtprd33WG5Tb7b0ReiISYoASasl5/llphgcnyUXbvupVyaYZ2dzmj1k1IIAHV4i4OL/4YV82/E1VD4vp0+ys0OsdwvodIgJjCrEbFGs75HQIpveykQFaT+1Rm7iQoLdJY+mImqZcRs6ZpD3U9osmj1K66B+8a9LeeIpq6ge7a46TdS6S9DbxPETEYk3lHGjczhiao5Qcr4lx2X8AWJomKe5iYfS0mqLB2+tPEvWWK4Qy3XvNBFmfvwhPRaF4kdsvErouRIoVojsBM0+tfIk43MHYGT0i7f5ZTF++j07uASDStxeJk1jerH3Vtlx1fGrEvmaLeZiXIzKLJSiY+VJcDIUXTNpgMAk/su5uJq+8BE+KSOsnWMZLWKVxaJ+0skTSOU5q5HjEFWitPEBXnCcoLmHCKUu1aihPXYKRI0lmlXX+a9trX8GkXp57AFtg//zr2TN5FrXwNxoYkaYJL+ySuQ7N7ioubD9FoHefIVf+cIFwAgZ5b5uzFP0cIJrVQnIBcLzw6liIjTKBj6WEQw6IgEWIX0fRSptPzvdxZzBjBnl0fFHcRTR4lmryWYu0oJqxAUKa78QSt4/exeNtHMFGN89/+ENXpV1HZdRfOtdC0S9w+S695nG79eVyyOewtJD8j5HxMFEwwWT5IIZgCrySuSa+/RjteJsUhWOZqd7Bn7odzPZHJOlaCSbVBSBhVcd5d8WiVjKtox8TSmtUYQLGFq1HfxScrwyGpDODt4ECDZvFpoilsOIEEk3jXxbXPMnfk/diwyOoLf4yYCYLCDGmyiUvr+KSdN2tBJpUdL9YDShyP9/GwvGUnWgzWRMO8412fyfL1LC68MyNGsAjhtApKoTCRz+39ZUfMBkdmBiVRx/Z32ApLAASg8chIug1ODZ0KdeBT1LusVNlgRGGrz71mcObI5JWC0dEYkR2q/XFl+3Zptw6l8YPJVJfJiZexuPAujCkjhJOKQmBDgkLuBZedFrnMBUacgei2hQ5oNc1R5c50ymWybNlmzMH5xEHrq1c6hLl9iWMHKAcnwnRM2j+Ycg9OiRicJtQq17Jn/odzA5CNioOogtgon+TKMBVc8TW2OBk1zCN+ZJvMXreLsPKzhqrjETVWgpT/52tcwzb8fWXsANfODVTGeXQRg/cxxWgBkXBKx28URlVUbO46sk06d5mGeHh4iLEef8QCbzvgh27zCsZ6/Z0Szf//a+fhzR0hO6zk4wbRy1xQfTouksouSOPWUGY2LqMdnLO57CTooG+WsQeScbUZVyBbR6c/dHjs9qXZqCsH0EucsR2T2448VXfcbcB/hrlEZuzGXhUXt8ClVzg8Oc71s+0U57i0blugymCKIaOw0TEPGM8Dsl2u/1JhN+hRhgaW4aGUl8QvL2XaHQqR0e74pAX5wYVRHI2pvGWnhXWUELd5zaDV1h2jRxkXo+3YW91mX3kpCdcV55rCZQeKr3iCO7NawBUOrA8yQhp3sTbFhMV8kOzHFi07Tm/v/GG54hlw3fFVZRxsyY6z4Zd70zZP0R0xf9kBdOHKJW1kiP8L05AoH6uQKp4AAAAASUVORK5CYII=">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  :root{
+    --map-doctor:#8b5cf6; --map-doctor-glow:rgba(139,92,246,0.45);
+    --map-hospital:#1fd8a4; --map-hospital-glow:rgba(31,216,164,0.4);
+    /* Already token-based, so these follow whichever theme is active. */
+    --fw-bg:var(--bg-deep);
+    --fw-panel:color-mix(in srgb, var(--bg-panel) 92%, transparent);
+    --fw-border:var(--wash-3);
+  }
+  [data-theme="light"]{
+    /* The marker colours stay recognisable but darken enough to be legible as
+       label text on a white panel. */
+    --map-doctor:#6d3fc9; --map-doctor-glow:rgba(109,63,201,0.35);
+    --map-hospital:#0e7d5c; --map-hospital-glow:rgba(14,125,92,0.32);
+  }
+  /* This screen's accent is the map violet, so its hover ring matches the
+     pins rather than the app-wide cyan. */
+  :root{--glow-ring:rgba(139,92,246,0.45);--glow-cast:rgba(139,92,246,0.30);}
+  [data-theme="light"]{--glow-ring:rgba(109,63,201,0.5);--glow-cast:rgba(109,63,201,0.26);}
+  html,body{height:100%;margin:0;background:var(--fw-bg);}
+  .finder-app{height:100vh;display:flex;flex-direction:column;background:var(--fw-bg);}
+
+  .finder-top{height:70px;flex-shrink:0;display:flex;align-items:center;gap:14px;padding:0 24px;background:var(--fw-panel);border-bottom:1px solid var(--fw-border);backdrop-filter:blur(14px);}
+  .finder-top .logo{display:flex;align-items:center;gap:10px;margin-right:10px;}
+  .finder-top .logo .mark{width:38px;height:38px;border-radius:11px;background-image:var(--pulse-logo);background-size:cover;background-position:center;box-shadow:0 0 16px -4px var(--cyan-glow);}
+  .finder-top .logo h1{font-size:15px;margin:0;color:var(--ink-0);font-weight:800;}
+  .finder-top .logo h1 span{color:var(--map-hospital);}
+  .finder-top .logo .sub{font-size:9.5px;color:var(--ink-500);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;}
+  .env-chip{display:flex;align-items:center;gap:10px;background:var(--glass);border:1px solid var(--fw-border);border-radius:12px;padding:8px 14px;}
+  .env-chip .ic{width:30px;height:30px;border-radius:9px;background:var(--wash-2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+  .env-chip .v{font-weight:800;font-size:13px;color:var(--ink-0);line-height:1.1;}
+  .env-chip .l{font-size:9px;color:var(--ink-500);text-transform:uppercase;letter-spacing:0.04em;font-weight:700;}
+  .finder-top .grow{flex:1;}
+  .finder-top .clock{font-family:'JetBrains Mono',monospace;color:var(--ink-400);font-size:13px;margin-right:14px;}
+  .export-btn{display:flex;align-items:center;gap:8px;background:var(--wash-2);border:1px solid var(--fw-border);color:var(--ink-0);font-weight:700;font-size:12.5px;padding:11px 18px;border-radius:11px;}
+  .back-link{color:var(--ink-400);font-size:12px;font-weight:700;padding:9px 14px;border-radius:10px;background:var(--glass);border:1px solid var(--fw-border);}
+
+  .finder-body{flex:1;display:flex;min-height:0;position:relative;}
+  .mapzone{flex:1;position:relative;min-width:0;background:var(--screen);}
+  #leafletMap{position:absolute;inset:0;background:var(--screen);}
+  /* OSM fallback tiles are light; darken them to match the dark theme */
+  html:not([data-theme="light"]) .osm-tiles{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.6);}
+
+  .float{position:absolute;z-index:1000;}
+  .pill-btn{background:var(--fw-panel);backdrop-filter:blur(10px);border:1px solid var(--fw-border);border-radius:12px;padding:10px 15px;font-size:12.5px;font-weight:700;color:var(--ink-200);display:flex;align-items:center;gap:8px;box-shadow:0 14px 30px -16px var(--shadow-strong);}
+  .mapview-pill{top:16px;left:16px;}
+  .area-pill{top:16px;left:50%;transform:translateX(-50%);cursor:default;}
+  .area-pill #locLabel{color:var(--ink-0);font-family:'Inter';font-size:12.5px;font-weight:700;
+    max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .area-pill #locLabel.none{color:var(--ink-500);font-weight:600;}
+  .zoom-ctl{top:16px;right:16px;display:flex;flex-direction:column;gap:4px;}
+  .zoom-ctl button{width:38px;height:38px;background:var(--fw-panel);backdrop-filter:blur(10px);border:1px solid var(--fw-border);border-radius:11px;font-size:17px;font-weight:700;color:var(--ink-200);box-shadow:0 12px 26px -14px var(--shadow-strong);}
+
+  .nearby-panel{left:16px;bottom:16px;width:314px;background:var(--fw-panel);backdrop-filter:blur(18px);border:1px solid var(--fw-border);border-radius:18px;padding:18px 19px;box-shadow:0 30px 60px -24px var(--shadow-strong);max-height:calc(100vh - 190px);display:flex;flex-direction:column;}
+
+  /* Real results, listed and clickable */
+  .res-status{font-size:10.5px;color:var(--ink-500);margin-top:12px;line-height:1.55;}
+  .res-status.err{color:var(--red);}
+  .res-list{overflow-y:auto;margin-top:9px;flex:1;min-height:0;}
+  .res-item{background:var(--wash-1);border:1px solid var(--fw-border);border-radius:11px;
+    padding:9px 11px;margin-bottom:6px;cursor:pointer;}
+  .res-item:hover{border-color:rgba(124,147,255,0.5);background:var(--wash-2);}
+  .res-item .rn{font-size:11.5px;font-weight:700;color:var(--ink-0);line-height:1.35;}
+  .res-item .rm{font-size:10px;color:var(--ink-500);margin-top:3px;display:flex;gap:7px;flex-wrap:wrap;}
+  .res-item .rt{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle;}
+
+  /* Map popups need to read on the dark theme */
+  .leaflet-popup-content-wrapper{background:var(--panel-solid);color:var(--ink-100);border:1px solid var(--glass-border-2);
+    border-radius:12px;box-shadow:0 20px 44px -16px var(--shadow-strong);}
+  .leaflet-popup-tip{background:var(--panel-solid);border:1px solid var(--glass-border-2);}
+  .leaflet-popup-content{margin:12px 14px;font-family:'Inter';font-size:12px;line-height:1.6;min-width:190px;}
+  .leaflet-popup-content a{color:var(--cyan-bright);}
+  .pop-h{font-size:13px;font-weight:800;color:var(--ink-0);margin-bottom:3px;}
+  .pop-t{font-size:9.5px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:7px;}
+  .pop-r{color:var(--ink-400);font-size:11px;margin-top:3px;}
+  .pop-r b{color:var(--ink-200);font-weight:600;}
+  .pop-act{display:flex;gap:7px;margin-top:9px;}
+  .pop-act a{flex:1;text-align:center;background:var(--wash-2);border:1px solid var(--glass-border-2);
+    border-radius:8px;padding:6px 0;font-size:10.5px;font-weight:700;text-decoration:none;}
+  .nearby-panel h4{margin:0 0 14px;font-size:14px;font-weight:800;color:var(--ink-0);display:flex;align-items:center;gap:9px;}
+  .nearby-panel h4 .pin{width:30px;height:30px;border-radius:9px;background:var(--wash-2);display:flex;align-items:center;justify-content:center;font-size:13px;}
+  .np-label{font-size:10px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-500);margin-bottom:8px;}
+  .np-select{width:100%;background:var(--wash-1);border:1px solid var(--fw-border);border-radius:11px;padding:11px 13px;color:var(--ink-0);font-size:12.5px;font-family:'Inter';font-weight:600;margin-bottom:16px;outline:none;}
+  /* Native dropdowns inherit the OS list styling, which rendered white-on-white
+     against this dark theme. Set both explicitly. */
+  .np-select option{background:var(--panel-solid);color:var(--ink-0);}
+
+  /* Free-text place search with live suggestions — any place, not a fixed list */
+  .area-search{position:relative;margin-bottom:16px;}
+  .area-search input{width:100%;background:var(--wash-1);border:1px solid var(--fw-border);
+    border-radius:11px;padding:11px 13px;color:var(--ink-0);font-size:12.5px;font-family:'Inter';font-weight:600;
+    outline:none;box-sizing:border-box;}
+  .area-search input:focus{border-color:rgba(124,147,255,0.55);}
+  .sugg{position:absolute;left:0;right:0;top:calc(100% + 5px);background:var(--panel-solid);
+    border:1px solid var(--glass-border-2);border-radius:11px;overflow:hidden;z-index:60;
+    box-shadow:0 24px 50px -18px rgba(0,0,0,0.9);display:none;max-height:230px;overflow-y:auto;}
+  .sugg.on{display:block;}
+  .sugg .s-item{padding:9px 12px;font-size:11.5px;color:var(--ink-200);cursor:pointer;line-height:1.4;
+    border-bottom:1px solid var(--wash-2);}
+  .sugg .s-item:last-child{border-bottom:none;}
+  .sugg .s-item:hover,.sugg .s-item.sel{background:rgba(124,147,255,0.18);color:var(--ink-0);}
+  .sugg .s-note{padding:9px 12px;font-size:10.5px;color:var(--ink-600);}
+
+  .route-box{font-size:10.5px;color:var(--ink-500);line-height:1.6;background:var(--wash-1);
+    border:1px solid var(--fw-border);border-radius:11px;padding:11px 13px;}
+  .route-box b{color:var(--ink-0);}
+  .route-box .rd{display:flex;gap:14px;margin-top:7px;}
+  .route-box .rd div{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:var(--cyan-bright);}
+  .route-box .rd span{display:block;font-family:'Inter';font-size:9px;color:var(--ink-600);
+    text-transform:uppercase;letter-spacing:0.06em;font-weight:700;}
+  .route-clear{margin-top:9px;width:100%;background:var(--wash-2);border:1px solid var(--fw-border);
+    color:var(--ink-300);border-radius:9px;padding:7px 0;font-size:10.5px;font-weight:700;cursor:pointer;}
+  .route-clear:hover{color:var(--ink-0);}
+  .pop-act a.route-a{background:rgba(34,229,240,0.14);border-color:rgba(34,229,240,0.45);color:var(--cyan-bright);cursor:pointer;}
+  .radius-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+  .radius-row .v{font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--ink-0);font-size:13px;}
+  input[type=range]{-webkit-appearance:none;width:100%;height:5px;border-radius:99px;background:var(--glass-border-2);margin-bottom:18px;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--knob);box-shadow:0 0 0 4px var(--map-doctor-glow);cursor:pointer;}
+  /* Find Nearby is the primary action here, so it keeps a violet lift; white
+     text rather than --ink-0, which inverts to near-black in light mode and
+     disappeared into the fill. */
+  .find-btn{width:100%;border:none;border-radius:12px;padding:14px 0;font-weight:800;font-size:13px;
+    color:#fff;background:linear-gradient(90deg,var(--map-doctor),#a78bfa);
+    box-shadow:0 14px 30px -12px var(--map-doctor-glow);margin-bottom:10px;cursor:pointer;}
+  .find-btn:hover{filter:brightness(1.07);box-shadow:0 18px 36px -12px var(--map-doctor-glow);}
+  .find-btn:active{transform:translateY(1px) scale(0.99);filter:brightness(0.95);
+    box-shadow:0 6px 16px -10px var(--map-doctor-glow);}
+  .clear-btn{width:100%;border:1px solid var(--fw-border);background:transparent;border-radius:12px;
+    padding:12px 0;font-weight:700;font-size:12.5px;color:var(--ink-300);cursor:pointer;}
+  .clear-btn:hover{background:var(--glass-hover);color:var(--ink-0);border-color:rgba(139,92,246,0.45);}
+  .clear-btn:active{transform:translateY(1px) scale(0.99);filter:brightness(0.95);}
+
+  .legend-chip{bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:18px;padding:11px 22px;}
+  .legend-chip span{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--ink-200);}
+  .legend-dot{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;}
+
+  .chat-fab{right:20px;bottom:20px;width:54px;height:54px;border-radius:50%;background:var(--panel-solid-2);border:1px solid var(--fw-border);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 16px 34px -14px var(--shadow-strong);}
+  .chat-fab .dot{position:absolute;top:2px;right:2px;width:11px;height:11px;border-radius:50%;background:var(--green);border:2px solid var(--fw-bg);}
+
+  .rightpanel{width:290px;flex-shrink:0;background:var(--fw-panel);backdrop-filter:blur(18px);border-left:1px solid var(--fw-border);padding:20px 20px 14px;overflow-y:auto;}
+  .rp-title{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:800;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-500);margin:18px 0 12px;}
+  .rp-title:first-child{margin-top:0;}
+  .rp-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:12.5px;font-weight:600;color:var(--ink-200);}
+  .rp-row .k{display:flex;align-items:center;gap:9px;}
+  .rp-dot{width:9px;height:9px;border-radius:50%;}
+  .rp-sw{width:36px;height:20px;border-radius:99px;background:var(--wash-3);position:relative;cursor:pointer;flex-shrink:0;}
+  .rp-sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s;}
+  .rp-sw.on.doctor{background:linear-gradient(90deg,color-mix(in srgb, var(--map-doctor) 62%, #000),var(--map-doctor));}
+  .rp-sw.on.hospital{background:linear-gradient(90deg,color-mix(in srgb, var(--map-hospital) 62%, #000),var(--map-hospital));}
+  .rp-sw.on.pharm{background:linear-gradient(90deg,color-mix(in srgb, var(--map-hospital) 62%, #000),var(--map-hospital));}
+  .rp-sw.on.emg{background:linear-gradient(90deg,color-mix(in srgb, var(--red) 62%, #000),var(--red));}
+  .rp-sw.on::after{left:18px;}
+  .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .summary-tile{background:var(--wash-1);border:1px solid var(--fw-border);border-radius:12px;padding:12px 13px;}
+  .summary-tile .l{font-size:9px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--ink-500);margin-bottom:6px;}
+  .summary-tile .v{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:21px;}
+  .summary-tile.doc .v{color:var(--map-doctor);} .summary-tile.hosp .v{color:var(--map-hospital);} .summary-tile.ink .v{color:var(--ink-0);}
+  .radius-guide-row{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:11.5px;}
+  .radius-guide-row .rk{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .radius-guide-row .km{font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--ink-0);width:44px;}
+  .radius-guide-row .lbl{color:var(--ink-500);}
+
+  /* custom leaflet marker */
+  .pq-marker{border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-0);font-weight:800;font-family:'JetBrains Mono',monospace;position:relative;}
+  .pq-marker.doctor{background:radial-gradient(circle,rgba(139,92,246,0.5),rgba(139,92,246,0.18));box-shadow:0 0 0 1px rgba(139,92,246,0.6), 0 0 22px -4px var(--map-doctor-glow);}
+  .pq-marker.hospital{background:radial-gradient(circle,rgba(31,216,164,0.5),rgba(31,216,164,0.16));box-shadow:0 0 0 1px rgba(31,216,164,0.6), 0 0 22px -4px var(--map-hospital-glow);}
+  .pq-marker.pharmacy{background:radial-gradient(circle,rgba(31,216,164,0.5),rgba(31,216,164,0.16));box-shadow:0 0 0 1px rgba(31,216,164,0.6), 0 0 22px -4px var(--map-hospital-glow);}
+  .pq-marker.emg{box-shadow:0 0 0 5px rgba(255,92,114,0.35),0 0 18px -2px rgba(255,92,114,0.9);}
+  .pq-you{width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 6px var(--glass-border-2);}
+  .leaflet-popup-content-wrapper{background:var(--panel-solid);color:var(--ink-0);border-radius:12px;border:1px solid var(--fw-border);}
+  .leaflet-popup-tip{background:var(--panel-solid);}
+
+  /* ------------------------------------------------------------------
+     Phone. The map keeps the top of the screen, the Map Layers column
+     moves below it in normal flow, and the search panel becomes a
+     bottom sheet you pull up — the pattern every map app uses, because
+     a 314px floating panel covers a 390px map entirely.
+     ------------------------------------------------------------------ */
+  @media(max-width:900px){
+    .finder-app{height:auto;min-height:100dvh;}
+    .finder-top{height:auto;flex-wrap:wrap;padding:10px 12px;gap:8px;}
+    .finder-top .logo{margin-right:0;}
+    .finder-top .logo .mark{width:32px;height:32px;}
+    .finder-top .clock{display:none;}
+    .env-chip{padding:6px 10px;gap:7px;}
+    .env-chip .ic{display:none;}
+    .env-chip .v{font-size:12px;}
+    .export-btn{padding:9px 13px;font-size:11.5px;}
+
+    .finder-body{flex-direction:column;min-height:0;}
+    .mapzone{height:58dvh;flex:none;}
+    .rightpanel{width:100%;border-left:none;border-top:1px solid var(--fw-border);
+      padding:16px 14px 24px;overflow:visible;}
+
+    /* The page scrolls on a phone, so the search panel is a normal card above
+       the map rather than a floating overlay covering it. */
+    .nearby-panel{position:static;width:auto;max-height:none;margin:12px 12px 0;
+      box-shadow:none;}
+    .res-list{max-height:46dvh;}
+    #radiusSlider{height:26px;}
+    .rp-sw{width:48px;height:28px;}
+    .rp-sw::after{width:22px;height:22px;top:3px;left:3px;}
+    .rp-sw.on::after{left:23px;}
+    .rp-row{padding:11px 0;}
+
+    .area-pill{max-width:62vw;}
+    .area-pill #locLabel{max-width:100%;}
+    .legend-chip{display:none;}      /* duplicates the layer dots and costs map height */
+    .chat-fab{right:14px;bottom:14px;width:48px;height:48px;font-size:19px;}
+  }
+
+  @media(max-width:900px){
+    .summary-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="finder-app">
+  <div class="finder-top">
+    <a class="logo" href="patient-dashboard.html" style="text-decoration:none;">
+      <div class="mark"></div>
+      <div><h1>Pulse<span>IQ</span></h1><div class="sub">AI Cuffless BP Monitoring</div></div>
+    </a>
+    <div class="env-chip"><div class="ic">🌡️</div><div><div class="v" id="envTemp">25.8°C</div><div class="l">Temperature</div></div></div>
+    <div class="env-chip"><div class="ic">💧</div><div><div class="v" id="envHum">68%</div><div class="l">Humidity</div></div></div>
+    <div class="env-chip"><div class="ic">⛰️</div><div><div class="v" id="envElev">312m</div><div class="l">Elevation</div></div></div>
+    <div class="grow"></div>
+    <div class="clock" id="clock">--:--:--</div>
+    <button class="export-btn" id="btnExport">⬇ Export Report</button>
+  </div>
+
+  <div class="finder-body">
+      <div class="float nearby-panel" id="nearbyPanel">
+        <h4><span class="pin">📍</span>Find Nearby</h4>
+        <div class="np-label">Search Area</div>
+        <div class="area-search">
+          <input id="areaInput" placeholder="Any city, town or area…" autocomplete="off" value="Bhilai, India">
+          <div class="sugg" id="areaSugg"></div>
+        </div>
+        <div class="radius-row"><div class="np-label" style="margin:0;">Search Radius</div><div class="v" id="radiusVal">5 km</div></div>
+        <input type="range" id="radiusSlider" min="1" max="20" value="5">
+        <button class="find-btn" id="btnFind">Find Nearby</button>
+        <button class="clear-btn" id="btnGeo">📍 Use My Location</button>
+        <button class="clear-btn" id="btnClear">Clear</button>
+        <div class="res-status" id="resStatus"></div>
+        <div class="res-list" id="resList"></div>
+      </div>
+    <div class="mapzone">
+      <div id="leafletMap"></div>
+
+      <button class="float pill-btn mapview-pill" id="btnMapView">📍 <span id="mapViewLbl">Map View</span></button>
+
+      <div class="float pill-btn area-pill">📍 <span id="locLabel">Bhilai, India</span></div>
+
+      <div class="float zoom-ctl">
+        <button id="zIn">+</button>
+        <button id="zOut">−</button>
+        <button id="zFit" title="Zoom out to show every result">⤢</button>
+      </div>
+
+
+      <div class="float pill-btn legend-chip">
+        <span><span class="legend-dot" style="background:var(--map-doctor);">🧑</span>Doctor</span>
+        <span><span class="legend-dot" style="background:var(--map-hospital);">✚</span>Hospital</span>
+      </div>
+
+      <div class="float chat-fab" style="position:absolute;" id="chatFab" title="Ask the Health Assistant">🤖<div class="dot"></div></div>
+    </div>
+
+    <div class="rightpanel">
+      <div class="rp-title">🗺️ Map Layers <span style="float:right;font-size:8.5px;color:#5b6a80;letter-spacing:0.04em;">BUILD 3</span></div>
+      <div class="rp-row"><span class="k"><span class="rp-dot" style="background:var(--map-doctor);"></span>Doctors</span><div class="rp-sw on doctor" data-layer="doctor"></div></div>
+      <div class="rp-row"><span class="k"><span class="rp-dot" style="background:var(--map-hospital);"></span>Hospitals</span><div class="rp-sw on hospital" data-layer="hospital"></div></div>
+      <div class="rp-row"><span class="k"><span class="rp-dot" style="background:var(--map-hospital);"></span>Pharmacies</span><div class="rp-sw pharm" data-layer="pharmacy"></div></div>
+      <div class="rp-row"><span class="k"><span class="rp-dot" style="background:var(--red);"></span>Emergency only</span><div class="rp-sw emg" data-layer="emergency"></div></div>
+
+      <div class="rp-title">Route</div>
+      <div class="route-box" id="routeBox">Click any facility, then <b>Route</b> to draw the driving route from your location.</div>
+
+      <div class="rp-title">Search Summary</div>
+      <div class="summary-grid">
+        <div class="summary-tile doc"><div class="l">Doctors</div><div class="v" id="sumDoctors">–</div></div>
+        <div class="summary-tile hosp"><div class="l">Hospitals</div><div class="v" id="sumHospitals">–</div></div>
+        <div class="summary-tile ink"><div class="l">Within Radius</div><div class="v" id="sumRadius">5 km</div></div>
+        <div class="summary-tile ink"><div class="l">Total Found</div><div class="v" id="sumTotal">–</div></div>
+      </div>
+
+      <div class="rp-title">Radius Guide</div>
+      <div class="radius-guide-row"><span class="rk" style="background:var(--green);"></span><span class="km">1 km</span><span class="lbl">Very Close</span></div>
+      <div class="radius-guide-row"><span class="rk" style="background:var(--amber);"></span><span class="km">5 km</span><span class="lbl">Close</span></div>
+      <div class="radius-guide-row"><span class="rk" style="background:color-mix(in srgb, var(--amber) 55%, var(--red));"></span><span class="km">10 km</span><span class="lbl">Moderate</span></div>
+      <div class="radius-guide-row"><span class="rk" style="background:var(--red);"></span><span class="km">20 km</span><span class="lbl">Far</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  document.getElementById('chatFab').onclick = function(){ window.location.href = 'chat.html'; };
+  document.getElementById('btnExport').onclick = function(){ window.print(); };
+
+  function tick(){ var d=new Date(); document.getElementById('clock').textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':'); }
+  setInterval(tick,1000); tick();
+
+  if (typeof L === 'undefined'){
+    document.getElementById('leafletMap').innerHTML =
+      '<div style="height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px;color:var(--ink-400);font-size:13px;line-height:1.7;">' +
+      '⚠ The Leaflet map library could not load from the CDN.<br>This usually means the page was opened via a local <code>file://</code> path with network access blocked by a browser/security setting.<br><br>' +
+      '<b>Fix:</b> serve this folder with a local server (e.g. <code>python -m http.server</code>) and open it via <code>http://localhost:...</code> instead of double-clicking the file.' +
+      '</div>';
+    return;
+  }
+
+  var center = [21.1938, 81.3509]; // Bhilai, India — demo default
+  var DEFAULT_RADIUS_KM = 5;
+  var radiusKm = DEFAULT_RADIUS_KM;
+  var showDoctors = true, showHospitals = true;
+
+  var map = L.map('leafletMap', {zoomControl:false}).setView(center, 12);
+  document.getElementById('zIn').onclick = () => map.zoomIn();
+  document.getElementById('zOut').onclick = () => map.zoomOut();
+
+  // v3: CARTO now watermarks its tiles with "API KEY REQUIRED", so the basemap
+  // uses free, key-less providers instead. Esri's grey canvas (dark + light,
+  // with a separate label layer) is primary; if it fails to load, the map
+  // falls back automatically to standard OpenStreetMap tiles, darkened with CSS
+  // in dark mode so the page still looks right.
+  var ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/%s/MapServer/tile/{z}/{y}/{x}';
+  var esriOpts = { maxZoom: 16, attribution: 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors' };
+  var dark = L.layerGroup([
+    L.tileLayer(ESRI.replace('%s', 'World_Dark_Gray_Base'), esriOpts),
+    L.tileLayer(ESRI.replace('%s', 'World_Dark_Gray_Reference'), esriOpts)
+  ]);
+  var lightBase = L.layerGroup([
+    L.tileLayer(ESRI.replace('%s', 'World_Light_Gray_Base'), esriOpts),
+    L.tileLayer(ESRI.replace('%s', 'World_Light_Gray_Reference'), esriOpts)
+  ]);
+  var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19, className: 'osm-tiles', attribution: '&copy; OpenStreetMap contributors'
+  });
+  var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19, attribution: 'Tiles &copy; Esri'
+  });
+
+  // Automatic fallback: several failed Esri tiles -> switch to OpenStreetMap.
+  var useOsm = false, tileFails = 0;
+  [dark, lightBase].forEach(function(g){
+    g.eachLayer(function(l){
+      l.on('tileerror', function(){
+        if (useOsm || ++tileFails < 4) return;
+        useOsm = true;
+        map.removeLayer(dark); map.removeLayer(lightBase);
+        if (!onSat) osm.addTo(map);
+      });
+    });
+  });
+
+  function isLight(){ return document.documentElement.getAttribute('data-theme') === 'light'; }
+  function baseLayer(){ return useOsm ? osm : (isLight() ? lightBase : dark); }
+
+  baseLayer().addTo(map);
+
+  var onSat = false;
+  document.getElementById('btnMapView').onclick = function(){
+    onSat = !onSat;
+    if (onSat){
+      map.removeLayer(dark); map.removeLayer(lightBase); map.removeLayer(osm);
+      map.addLayer(satellite);
+      document.getElementById('mapViewLbl').textContent = 'Satellite';
+    } else {
+      map.removeLayer(satellite);
+      baseLayer().addTo(map);
+      document.getElementById('mapViewLbl').textContent = 'Map View';
+    }
+  };
+
+  // Swap the basemap when the theme button is pressed. Satellite is left alone,
+  // since aerial imagery has no light and dark variant.
+  new MutationObserver(function(){
+    if (onSat) return;
+    map.removeLayer(dark); map.removeLayer(lightBase); map.removeLayer(osm);
+    baseLayer().addTo(map);
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  var youMarker = L.marker(center, {icon: L.divIcon({className:'', html:'<div class="pq-you"></div>', iconSize:[16,16]})}).addTo(map).bindPopup('<b>You are here</b>');
+
+  var layerDoctor = L.layerGroup().addTo(map);
+  var layerHospital = L.layerGroup().addTo(map);
+  var layerPharmacy = L.layerGroup().addTo(map);
+  var routeLayer = L.layerGroup().addTo(map);
+  var showPharmacy = false, emergencyOnly = false;
+
+  function haversine(a, b){
+    var R = 6371, toRad = x => x*Math.PI/180;
+    var dLat = toRad(b[0]-a[0]), dLon = toRad(b[1]-a[1]);
+    var s = Math.sin(dLat/2)**2 + Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(dLon/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1-s));
+  }
+
+  var RESULTS = [];          // everything the last search returned
+  var MARKERS = {};          // id -> marker, so the list can focus the map
+
+  function esc(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  // Build a street address out of whichever addr:* tags OSM actually has.
+  function addressOf(t){
+    var parts = [];
+    if(t['addr:housenumber'] && t['addr:street']) parts.push(t['addr:housenumber'] + ' ' + t['addr:street']);
+    else if(t['addr:street']) parts.push(t['addr:street']);
+    if(t['addr:suburb']) parts.push(t['addr:suburb']);
+    if(t['addr:city']) parts.push(t['addr:city']);
+    if(t['addr:postcode']) parts.push(t['addr:postcode']);
+    return parts.join(', ');
+  }
+
+  function typeColour(t){
+    // Pharmacies share the hospital green; the popup glyph tells them apart.
+    return (t === 'hospital' || t === 'pharmacy') ? 'var(--map-hospital)' : 'var(--map-doctor)';
+  }
+
+  function popupHtml(p){
+    var colour = typeColour(p.type);
+    var h = '<div class="pop-h">' + esc(p.name) + '</div>' +
+            '<div class="pop-t" style="color:' + colour + ';">' + esc(p.label) + '</div>';
+    if(p.address)  h += '<div class="pop-r">📍 ' + esc(p.address) + '</div>';
+    if(p.phone)    h += '<div class="pop-r">📞 <a href="tel:' + esc(p.phone.replace(/\s/g,'')) + '">' + esc(p.phone) + '</a></div>';
+    if(p.hours)    h += '<div class="pop-r">🕐 ' + esc(p.hours) + '</div>';
+    if(p.emergency === 'yes') h += '<div class="pop-r" style="color:var(--map-hospital);">🚨 <b>Emergency department</b></div>';
+    h += '<div class="pop-r"><b>' + p.dist.toFixed(2) + ' km</b> away</div>';
+    h += '<div class="pop-act">' +
+         '<a class="route-a" onclick="PulseRoute(' + p.lat + ',' + p.lon + ',\'' + esc(p.name).replace(/'/g,"\\'") + '\')">Route</a>' +
+         '<a href="https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lon + '" target="_blank" rel="noopener">Directions</a>';
+    if(p.website) h += '<a href="' + esc(p.website) + '" target="_blank" rel="noopener">Website</a>';
+    h += '</div>';
+    return h;
+  }
+
+  // ---- Real driving route via OSRM (free public demo server, no API key) ----
+  window.PulseRoute = function(lat, lon, name){
+    var box = document.getElementById('routeBox');
+    box.innerHTML = 'Calculating route to <b>' + esc(name) + '</b>…';
+    routeLayer.clearLayers();
+    var url = 'https://router.project-osrm.org/route/v1/driving/' +
+              center[1] + ',' + center[0] + ';' + lon + ',' + lat +
+              '?overview=full&geometries=geojson';
+    fetch(url)
+      .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(d){
+        if(!d.routes || !d.routes.length) throw new Error('no route');
+        var rt = d.routes[0];
+        // GeoJSON is [lon,lat]; Leaflet wants [lat,lon].
+        var pts = rt.geometry.coordinates.map(function(c){ return [c[1], c[0]]; });
+        // Draw a wide soft casing under a bright core so the route reads on a dark map.
+        L.polyline(pts, {color:'#22e5f0', weight:11, opacity:0.22}).addTo(routeLayer);
+        L.polyline(pts, {color:'#7bf5fb', weight:4, opacity:0.95}).addTo(routeLayer);
+        map.fitBounds(L.latLngBounds(pts), {padding:[70,70]});
+        var km = (rt.distance/1000).toFixed(2);
+        var mins = Math.round(rt.duration/60);
+        box.innerHTML = 'Route to <b>' + esc(name) + '</b>' +
+          '<div class="rd"><div>' + km + '<span>km by road</span></div>' +
+          '<div>' + mins + '<span>min drive</span></div></div>' +
+          '<button class="route-clear" onclick="PulseRouteClear()">Clear route</button>';
+      })
+      .catch(function(){
+        box.innerHTML = 'Could not calculate a route (the free OSRM server may be busy). ' +
+                        'The <b>Directions</b> link still opens the route in Google Maps.' +
+                        '<button class="route-clear" onclick="PulseRouteClear()">Dismiss</button>';
+      });
+  };
+
+  window.PulseRouteClear = function(){
+    routeLayer.clearLayers();
+    document.getElementById('routeBox').innerHTML =
+      'Click any facility, then <b>Route</b> to draw the driving route from your location.';
+  };
+
+  function plot(items){
+    layerDoctor.clearLayers(); layerHospital.clearLayers(); layerPharmacy.clearLayers();
+    MARKERS = {};
+    items.forEach(function(p){
+      var icon = p.type === 'hospital' ? '✚' : (p.type === 'pharmacy' ? '💊' : '🧑');
+      var size = 34;
+      // Facilities with a real emergency department get a red halo.
+      var emg = p.emergency === 'yes' ? ' emg' : '';
+      var html = '<div class="pq-marker '+p.type+emg+'" style="width:'+size+'px;height:'+size+'px;font-size:14px;">'+icon+'</div>';
+      var marker = L.marker([p.lat, p.lon], {icon: L.divIcon({className:'', html:html, iconSize:[size,size]})});
+      marker.bindPopup(popupHtml(p));
+      marker.bindTooltip(p.name, {direction:'top', offset:[0,-16]});
+      marker.addTo(p.type === 'hospital' ? layerHospital : (p.type === 'pharmacy' ? layerPharmacy : layerDoctor));
+      MARKERS[p.id] = marker;
+    });
+  }
+
+  // After a fresh search, zoom out far enough that every result is actually on
+  // screen. Without this the map keeps whatever zoom you were on, and a 20 km
+  // search looks empty because the pins sit outside the viewport.
+  function fitToResults(items){
+    if(!items.length) return;
+    var pts = items.map(function(p){ return [p.lat, p.lon]; });
+    pts.push(center);
+    map.fitBounds(L.latLngBounds(pts), {padding:[60,60], maxZoom:15});
+  }
+
+  function renderList(items){
+    var el = document.getElementById('resList');
+    if(!items.length){ el.innerHTML = ''; return; }
+    el.innerHTML = items.map(function(p){
+      var colour = typeColour(p.type);
+      return '<div class="res-item" data-id="'+p.id+'">' +
+             '<div class="rn"><span class="rt" style="background:'+colour+'"></span>'+esc(p.name)+'</div>' +
+             '<div class="rm"><span>'+p.dist.toFixed(2)+' km</span>' +
+             (p.phone ? '<span>📞</span>' : '') + (p.emergency==='yes' ? '<span>🚨 24h</span>' : '') +
+             '<span>'+esc(p.label)+'</span></div></div>';
+    }).join('');
+    el.querySelectorAll('.res-item').forEach(function(node){
+      node.addEventListener('click', function(){
+        var m = MARKERS[this.getAttribute('data-id')];
+        if(!m) return;
+        map.setView(m.getLatLng(), Math.max(map.getZoom(), 15), {animate:true});
+        m.openPopup();
+      });
+    });
+  }
+
+  function applyFilters(){
+    var items = RESULTS.filter(function(p){
+      if(p.type === 'doctor'   && !showDoctors)   return false;
+      if(p.type === 'hospital' && !showHospitals) return false;
+      if(p.type === 'pharmacy' && !showPharmacy)  return false;
+      // "Emergency only" keeps facilities OSM records as having an emergency
+      // department, or as open around the clock.
+      if(emergencyOnly && !(p.emergency === 'yes' || /24\/7/.test(p.hours))) return false;
+      return true;
+    });
+    plot(items); renderList(items);
+    var nD = items.filter(function(i){ return i.type==='doctor'; }).length;
+    var nH = items.filter(function(i){ return i.type==='hospital'; }).length;
+    document.getElementById('sumDoctors').textContent = nD;
+    document.getElementById('sumHospitals').textContent = nH;
+    document.getElementById('sumTotal').textContent = items.length;
+  }
+
+  function status(msg, isErr){
+    var el = document.getElementById('resStatus');
+    el.textContent = msg || '';
+    el.className = 'res-status' + (isErr ? ' err' : '');
+  }
+
+  // Public Overpass mirrors — if the first is busy or rate-limited, try the next
+  // rather than silently falling back to invented places.
+  var OVERPASS = [
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter',
+    'https://maps.mail.ru/osm/tools/overpass/api/interpreter'
+  ];
+
+  function overpassFetch(query, i){
+    i = i || 0;
+    if(i >= OVERPASS.length) return Promise.reject(new Error('all mirrors failed'));
+    return fetch(OVERPASS[i], {method:'POST', body:'data=' + encodeURIComponent(query),
+                               headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .catch(function(){ return overpassFetch(query, i + 1); });
+  }
+
+  function loadNearby(pt){
+    var meters = radiusKm * 1000;
+    status('Searching OpenStreetMap for real facilities within ' + radiusKm + ' km…');
+    // ways/relations matter: most hospitals are mapped as building outlines, not
+    // single points. "out center" gives each one a usable coordinate.
+    var f = '["amenity"~"^(hospital|clinic|doctors|pharmacy)$"](around:' + meters + ',' + pt[0] + ',' + pt[1] + ');';
+    var query = '[out:json][timeout:25];(node' + f + 'way' + f + 'relation' + f + ');out center tags 200;';
+
+    overpassFetch(query)
+      .then(function(data){
+        var seen = {};
+        var items = (data.elements || []).map(function(el){
+          var t = el.tags || {};
+          var lat = el.lat != null ? el.lat : (el.center && el.center.lat);
+          var lon = el.lon != null ? el.lon : (el.center && el.center.lon);
+          if(lat == null || lon == null) return null;
+          var kind = t.amenity === 'hospital' ? 'hospital'
+                   : (t.amenity === 'pharmacy' ? 'pharmacy' : 'doctor');
+          var fallbackName = kind === 'hospital' ? 'Unnamed hospital'
+                           : (kind === 'pharmacy' ? 'Unnamed pharmacy' : 'Unnamed clinic');
+          return {
+            id: el.type + '/' + el.id,
+            name: t.name || t['name:en'] || fallbackName,
+            type: kind,
+            label: t.amenity === 'hospital' ? 'Hospital'
+                 : (t.amenity === 'clinic' ? 'Clinic'
+                 : (t.amenity === 'pharmacy' ? 'Pharmacy' : 'Doctor')),
+            lat: lat, lon: lon,
+            address: addressOf(t),
+            phone: t.phone || t['contact:phone'] || '',
+            website: t.website || t['contact:website'] || '',
+            hours: t.opening_hours || '',
+            emergency: t.emergency || '',
+            dist: haversine(pt, [lat, lon])
+          };
+        }).filter(function(p){
+          if(!p) return false;
+          if(p.dist > radiusKm * 1.05) return false;   // Overpass rounds; trim strays
+          // The same hospital can appear as both a node and a building way.
+          var k = p.name.toLowerCase() + '|' + p.lat.toFixed(3) + '|' + p.lon.toFixed(3);
+          if(seen[k]) return false;
+          seen[k] = 1; return true;
+        });
+
+        items.sort(function(a,b){ return a.dist - b.dist; });
+        RESULTS = items;
+        applyFilters();
+        fitToResults(items);
+        status(items.length
+          ? items.length + ' real facilities found · nearest ' + items[0].dist.toFixed(2) + ' km · source: OpenStreetMap'
+          : 'No hospitals or clinics mapped within ' + radiusKm + ' km. Try a wider radius.', !items.length);
+      })
+      .catch(function(){
+        RESULTS = []; applyFilters();
+        status('Could not reach OpenStreetMap. Check your connection, then press Find Nearby again. ' +
+               'No results are shown rather than made-up ones.', true);
+      });
+  }
+
+  // Real conditions for the map centre — Open-Meteo is free and needs no API key.
+  function loadEnvironment(pt){
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + pt[0] + '&longitude=' + pt[1] +
+          '&current=temperature_2m,relative_humidity_2m')
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(!d || !d.current) return;
+        document.getElementById('envTemp').textContent = Math.round(d.current.temperature_2m * 10) / 10 + '°C';
+        document.getElementById('envHum').textContent = Math.round(d.current.relative_humidity_2m) + '%';
+      })
+      .catch(function(){
+        document.getElementById('envTemp').textContent = '—';
+        document.getElementById('envHum').textContent = '—';
+      });
+    fetch('https://api.open-meteo.com/v1/elevation?latitude=' + pt[0] + '&longitude=' + pt[1])
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(d && d.elevation && d.elevation.length) document.getElementById('envElev').textContent = Math.round(d.elevation[0]) + 'm';
+      })
+      .catch(function(){ document.getElementById('envElev').textContent = '—'; });
+  }
+
+  document.getElementById('radiusSlider').addEventListener('input', function(){
+    radiusKm = parseInt(this.value, 10);
+    document.getElementById('radiusVal').textContent = radiusKm + ' km';
+    document.getElementById('sumRadius').textContent = radiusKm + ' km';
+  });
+
+  // Type toggles just re-filter what was already fetched — no need to hit
+  // Overpass again, which was both slow and needless API load.
+  function syncLayerSwitches(){
+    document.querySelectorAll('.rp-sw[data-layer="doctor"]').forEach(function(s){ s.classList.toggle('on', showDoctors); });
+    document.querySelectorAll('.rp-sw[data-layer="hospital"]').forEach(function(s){ s.classList.toggle('on', showHospitals); });
+  }
+  document.querySelectorAll('.rp-sw').forEach(function(sw){
+    sw.addEventListener('click', function(){
+      var key = this.getAttribute('data-layer');
+      var willOn = !this.classList.contains('on');
+      this.classList.toggle('on', willOn);
+      if (key==='doctor'){ showDoctors = willOn; applyFilters(); }
+      if (key==='hospital'){ showHospitals = willOn; applyFilters(); }
+      if (key==='pharmacy'){ showPharmacy = willOn; applyFilters(); }
+      if (key==='emergency'){ emergencyOnly = willOn; applyFilters(); }
+    });
+  });
+
+  function goToPoint(pt, label, zoom){
+    center = pt;
+    map.setView(pt, zoom || 13);
+    youMarker.setLatLng(pt);
+    if(label){
+      setAreaLabel(label);
+      document.getElementById('areaInput').value = label;
+    }
+    showDoctors = true; showHospitals = true;
+    document.querySelectorAll('.rp-sw[data-layer="doctor"],.rp-sw[data-layer="hospital"]').forEach(el=>el.classList.add('on'));
+    loadEnvironment(pt);        // real temperature / humidity / elevation
+    loadNearby(pt);
+  }
+
+  // ---- Place search: any location on earth, via Nominatim (free, no key) ----
+  var suggBox = document.getElementById('areaSugg');
+  var suggTimer = null, SUGG = [], suggIdx = -1;
+
+  function hideSugg(){ suggBox.classList.remove('on'); suggIdx = -1; }
+
+  function drawSugg(){
+    if(!SUGG.length){ hideSugg(); return; }
+    suggBox.innerHTML = SUGG.map(function(s, i){
+      return '<div class="s-item' + (i === suggIdx ? ' sel' : '') + '" data-i="' + i + '">' + esc(s.display_name) + '</div>';
+    }).join('');
+    suggBox.classList.add('on');
+    suggBox.querySelectorAll('.s-item').forEach(function(n){
+      n.addEventListener('click', function(){ pickSugg(parseInt(this.getAttribute('data-i'), 10)); });
+    });
+  }
+
+  function pickSugg(i){
+    var s = SUGG[i]; if(!s) return;
+    hideSugg();
+    // Prefer the short name in the box, keep the full name as the tooltip.
+    var short = s.display_name.split(',').slice(0, 2).join(',').trim();
+    goToPoint([parseFloat(s.lat), parseFloat(s.lon)], short, 13);
+  }
+
+  function searchPlaces(q){
+    if(q.length < 3){ hideSugg(); return; }
+    suggBox.innerHTML = '<div class="s-note">Searching…</div>';
+    suggBox.classList.add('on');
+    fetch('https://nominatim.openstreetmap.org/search?format=json&limit=8&addressdetails=0&q=' + encodeURIComponent(q))
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        SUGG = d || []; suggIdx = -1;
+        if(!SUGG.length){ suggBox.innerHTML = '<div class="s-note">No place found for "' + esc(q) + '"</div>'; return; }
+        drawSugg();
+      })
+      .catch(function(){
+        suggBox.innerHTML = '<div class="s-note">Place search unavailable — check your connection.</div>';
+      });
+  }
+
+  // The pill mirrors whatever area is being searched. Empty gets placeholder
+  // styling so it reads as "nothing selected" rather than a blank chip.
+  function setAreaLabel(text){
+    var el = document.getElementById('locLabel');
+    if(!el) return;
+    el.textContent = text || 'Select area…';
+    el.classList.toggle('none', !text);
+  }
+
+  var areaInput = document.getElementById('areaInput');
+  areaInput.addEventListener('input', function(){
+    var q = this.value.trim();
+    clearTimeout(suggTimer);
+    // Nominatim asks for max ~1 request/second, so debounce rather than
+    // firing on every keystroke.
+    suggTimer = setTimeout(function(){ searchPlaces(q); }, 450);
+  });
+  areaInput.addEventListener('keydown', function(e){
+    if(!suggBox.classList.contains('on')) return;
+    if(e.key === 'ArrowDown'){ e.preventDefault(); suggIdx = Math.min(suggIdx + 1, SUGG.length - 1); drawSugg(); }
+    else if(e.key === 'ArrowUp'){ e.preventDefault(); suggIdx = Math.max(suggIdx - 1, 0); drawSugg(); }
+    else if(e.key === 'Enter'){ e.preventDefault(); pickSugg(suggIdx >= 0 ? suggIdx : 0); }
+    else if(e.key === 'Escape'){ hideSugg(); }
+  });
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.area-search')) hideSugg();
+  });
+
+  document.getElementById('btnFind').onclick = function(){ loadNearby(center); };
+
+  // "Show everything again" — the map's ⤢ control brings every visible pin
+  // back into view after zooming in. The sidebar duplicate was removed.
+  function showAll(){
+    var visible = Object.keys(MARKERS);
+    if(!visible.length){ status('Nothing to show yet — press Find Nearby first.', true); return; }
+    fitToResults(RESULTS.filter(function(p){ return MARKERS[p.id]; }));
+  }
+  document.getElementById('zFit').onclick = showAll;
+
+  // Turn a GPS fix back into a place name so "Search Area" shows where you
+  // actually are instead of a meaningless "My location" placeholder.
+  function reverseGeocode(pt){
+    var area = document.getElementById('areaInput');
+    setAreaLabel('Locating…'); area.value = 'Locating…';
+    fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=14&lat=' + pt[0] + '&lon=' + pt[1])
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        var a = (d && d.address) || {};
+        var place = a.suburb || a.neighbourhood || a.village || a.town || a.city_district || a.city || a.county || '';
+        var region = a.city && place !== a.city ? a.city : (a.state || a.country || '');
+        var label = [place, region].filter(Boolean).join(', ');
+        if(!label && d && d.display_name) label = d.display_name.split(',').slice(0, 2).join(',').trim();
+        if(!label) label = pt[0].toFixed(4) + ', ' + pt[1].toFixed(4);
+        setAreaLabel(label); area.value = label;
+      })
+      .catch(function(){
+        // Nominatim unreachable — show the real coordinates rather than a placeholder.
+        var label = pt[0].toFixed(4) + ', ' + pt[1].toFixed(4);
+        setAreaLabel(label); area.value = label;
+      });
+  }
+
+  document.getElementById('btnGeo').onclick = function(){
+    if(!navigator.geolocation){ status('This browser has no location support.', true); return; }
+    status('Requesting your location…');
+    navigator.geolocation.getCurrentPosition(function(pos){
+      center = [pos.coords.latitude, pos.coords.longitude];
+      map.setView(center, 14);
+      youMarker.setLatLng(center);
+      reverseGeocode(center);
+      loadEnvironment(center); loadNearby(center);
+    }, function(){
+      status('Location permission denied or unavailable. Pick an area instead.', true);
+    }, {timeout:10000});
+  };
+
+  document.getElementById('btnClear').onclick = function(){
+    RESULTS = [];
+    // MARKERS kept pointing at markers that had just been removed from the
+    // map, so a later "fit to results" tried to frame pins that no longer
+    // existed. Clearing the layers has to clear the index with them.
+    MARKERS = {};
+    layerDoctor.clearLayers(); layerHospital.clearLayers(); layerPharmacy.clearLayers();
+    PulseRouteClear();
+    document.getElementById('resList').innerHTML = '';
+    document.getElementById('sumDoctors').textContent = '–';
+    document.getElementById('sumHospitals').textContent = '–';
+    document.getElementById('sumTotal').textContent = '–';
+    // Clear the typed location too — leaving the old area in the box made it
+    // look as though that search was still active.
+    document.getElementById('areaInput').value = '';
+    setAreaLabel('');
+    // Radius is part of the search, so Clear resets it with everything else.
+    radiusKm = DEFAULT_RADIUS_KM;
+    document.getElementById('radiusSlider').value = DEFAULT_RADIUS_KM;
+    document.getElementById('radiusVal').textContent = DEFAULT_RADIUS_KM + ' km';
+    document.getElementById('sumRadius').textContent = DEFAULT_RADIUS_KM + ' km';
+    var sugg = document.getElementById('areaSugg');
+    if(sugg){ sugg.innerHTML = ''; sugg.classList.remove('on'); }
+    status('Cleared. Enter an area or use your location, then press Find Nearby.');
+  };
+
+  loadEnvironment(center);
+  loadNearby(center);
+})();
+</script>
+<script src="shared/shell.js?v=16"></script>
+</body>
+</html>

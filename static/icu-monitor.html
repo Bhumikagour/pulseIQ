@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — Live ICU Monitor</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  html,body{height:100%;margin:0;}
+  .icu-app{height:100vh;display:flex;flex-direction:column;}
+  .icu-top{height:66px;flex-shrink:0;display:flex;align-items:center;gap:16px;padding:0 24px;background:color-mix(in srgb, var(--bg-panel) 88%, transparent);border-bottom:1px solid var(--glass-border);backdrop-filter:blur(14px);}
+  .icu-top .back{background:var(--glass);border:1px solid var(--glass-border-2);color:var(--ink-0);padding:9px 15px;border-radius:10px;font-size:12px;font-weight:700;}
+  .icu-top .who{font-size:14px;font-weight:800;color:var(--ink-0);}
+  .icu-top .meta{font-size:11.5px;color:var(--ink-500);}
+  .icu-top .grow{flex:1;}
+  .pat-switch{display:flex;align-items:center;gap:8px;margin-left:6px;}
+  .pat-switch label{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-600);font-weight:700;}
+  .pat-switch select{background:var(--wash-1);border:1px solid var(--glass-border-2);color:var(--ink-0);
+    font-family:'Inter';font-size:12px;font-weight:700;padding:8px 12px;border-radius:10px;outline:none;cursor:pointer;}
+  .pat-switch select:focus{border-color:rgba(34,229,240,0.5);}
+  .pat-switch select option{background:var(--panel-solid);color:var(--ink-0);}
+  .live-pill{display:flex;align-items:center;gap:7px;background:rgba(60,230,133,0.1);border:1px solid rgba(60,230,133,0.35);color:var(--green);font-weight:800;font-size:11.5px;padding:8px 14px;border-radius:99px;}
+  .live-pill .d{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.4s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .timer{font-family:'JetBrains Mono',monospace;color:var(--ink-300);font-size:13px;}
+
+  .icu-body{flex:1;display:flex;gap:16px;padding:20px 24px;min-height:0;}
+  .monitor-panel{flex:1;background:var(--screen);border:1px solid var(--glass-border);border-radius:22px;padding:22px 26px;display:flex;flex-direction:column;justify-content:space-between;min-height:0;}
+  /* Monitor panel: subtle clinical grid behind the traces */
+  .monitor-panel{position:relative;overflow:hidden;}
+  .grid-bg{position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+    background-size:44px 44px;}
+  /* The vignette darkened the trace edges with the *page* colour, so in light
+     mode it painted a pale halo over the dark monitor. It added nothing in
+     either theme, so it is gone rather than re-tinted. */
+
+  .vrow{display:flex;align-items:stretch;gap:14px;flex:1;min-height:0;position:relative;z-index:1;}
+  .ch-label{width:74px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;}
+  .ch-label .n{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:800;letter-spacing:0.04em;color:currentColor;}
+  .ch-label .u{font-size:9px;color:var(--ink-600);margin-top:2px;letter-spacing:0.04em;}
+
+  .scroller{overflow:hidden;flex:1;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 97%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 97%,transparent 100%);}
+  .scroller svg{display:block;height:100%;width:200%;animation:scrollw 9s linear infinite;
+    filter:drop-shadow(0 0 5px currentColor) drop-shadow(0 0 14px currentColor);}
+  .scroller svg path{vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round;fill:none;}
+  @keyframes scrollw{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .paused .scroller svg{animation-play-state:paused;}
+
+  .ppg{color:var(--spo2);} .ppg path{stroke:var(--spo2);}
+  .vpg{color:var(--hr);}   .vpg path{stroke:var(--hr);}
+  .apg{color:var(--sbp);}  .apg path{stroke:var(--sbp);}
+  .rr{color:var(--rr);}    .rr path{stroke:var(--rr);}
+  .ppg .scroller svg{animation-duration:9s;}
+  .vpg .scroller svg{animation-duration:9s;}
+  .apg .scroller svg{animation-duration:9s;}
+  .rr  .scroller svg{animation-duration:11s;}
+
+  .vitals-col{width:220px;flex-shrink:0;display:flex;flex-direction:column;gap:12px;}
+  .vt{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:14px 16px;}
+  .vt .l{font-size:9.5px;color:var(--ink-500);text-transform:uppercase;letter-spacing:0.05em;font-weight:700;margin-bottom:6px;}
+  .vt .v{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:26px;}
+  .vt .sub{font-size:10px;color:var(--ink-500);margin-top:2px;}
+  .vt.bp .v{color:var(--sbp);} .vt.hr .v{color:var(--hr);} .vt.spo2 .v{color:var(--spo2);} .vt.rr .v{color:var(--rr);}
+
+  .icu-foot{padding:14px 24px;background:color-mix(in srgb, var(--bg-panel) 88%, transparent);border-top:1px solid var(--glass-border);display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .foot-item{font-size:11.5px;color:var(--ink-400);}
+  .foot-item b{color:var(--ink-0);}
+  .icu-foot .grow{flex:1;}
+  .icu-btn.why-link{text-decoration:none;color:var(--cyan-bright);border-color:rgba(34,229,240,.35);}
+  .icu-btn{background:var(--glass);border:1px solid var(--glass-border-2);color:var(--ink-0);padding:9px 16px;border-radius:10px;font-size:12px;font-weight:700;}
+  .why-strip{flex-shrink:0;padding:0 24px 16px;}
+  .why-strip:empty{display:none;}
+  .alert-row{padding:10px 24px;background:color-mix(in srgb, var(--bg-panel) 70%, transparent);display:flex;gap:24px;font-size:11.5px;color:var(--ink-400);border-top:1px solid var(--glass-border);}
+  .alert-row b{color:var(--ink-0);}
+
+  /* Phone. The 220px vitals column beside the traces left neither enough
+     room; they stack, and the traces keep priority. */
+  @media(max-width:900px){
+    .icu-app{height:auto;min-height:100dvh;}
+    .icu-top{height:auto;flex-wrap:wrap;padding:10px 12px;gap:10px;}
+    .icu-top .timer{display:none;}
+    .icu-top .meta{width:100%;}
+    .pat-switch{margin-left:0;width:100%;}
+    .pat-switch select{flex:1;min-width:0;}
+    .icu-body{flex-direction:column;padding:12px 12px;gap:12px;}
+    .monitor-panel{padding:14px 12px;min-height:46dvh;}
+    .vitals-col{width:100%;flex-direction:row;flex-wrap:wrap;gap:10px;}
+    .vitals-col > *{flex:1 1 calc(50% - 5px);min-width:0;}
+    .icu-foot{padding:12px;gap:8px;}
+    .why-strip{padding:0 12px 12px;}
+    .icu-foot .icu-btn{flex:1 1 calc(50% - 4px);justify-content:center;min-height:42px;}
+    .icu-top .back{min-height:40px;display:flex;align-items:center;}
+    .alert-row{flex-wrap:wrap;gap:6px;padding:10px 12px;}
+  }
+</style>
+</head>
+<body>
+<div class="icu-app">
+  <div class="icu-top">
+    <a class="back" href="doctor-dashboard.html" id="backLink">← Back</a>
+    <div><div class="who" id="patName">Rohit Sharma</div><div class="meta" id="patMeta">Bed 04 · ID: P2-2024-007</div></div>
+    <div class="pat-switch">
+      <label for="patientSelect">Patient</label>
+      <select id="patientSelect"><option value="">Loading…</option></select>
+    </div>
+    <div class="grow"></div>
+    <span id="backendBadge" class="badge" style="margin-right:2px;">● Connecting…</span>
+    <div class="live-pill"><span class="d"></span>LIVE</div>
+    <div class="timer" id="screenClock">00:12:33</div>
+  </div>
+
+  <div class="icu-body">
+    <div class="monitor-panel" id="monitorPanel">
+      <div class="grid-bg"></div>
+      <div style="font-size:11px;color:var(--ink-500);font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1;">
+        ICU-style Monitor · <span id="chanSrc">real recorded channels</span>
+      </div>
+
+      <div class="vrow ppg">
+        <div class="ch-label"><div class="n">PPG</div><div class="u">pleth</div></div>
+        <div class="scroller"><svg id="wavePPG" viewBox="0 0 2000 100" preserveAspectRatio="none"><path stroke-width="2.1"/></svg></div>
+      </div>
+      <div class="vrow vpg">
+        <div class="ch-label"><div class="n">VPG</div><div class="u">1st deriv</div></div>
+        <div class="scroller"><svg id="waveVPG" viewBox="0 0 2000 100" preserveAspectRatio="none"><path stroke-width="1.9"/></svg></div>
+      </div>
+      <div class="vrow apg">
+        <div class="ch-label"><div class="n">APG</div><div class="u">2nd deriv</div></div>
+        <div class="scroller"><svg id="waveAPG" viewBox="0 0 2000 100" preserveAspectRatio="none"><path stroke-width="1.9"/></svg></div>
+      </div>
+    </div>
+
+    <div class="vitals-col">
+      <div class="vt bp"><div class="l">Predicted BP (Live)</div><div class="v" id="vBp">—</div><div class="sub" id="vMap">PPGResNetBiLSTM estimate</div></div>
+      <div class="vt hr"><div class="l">Heart Rate</div><div class="v" id="vHr">—</div><div class="sub">from PPG peaks</div></div>
+      <div class="vt spo2"><div class="l">Mean Arterial Pressure</div><div class="v" id="vMapVal">—</div><div class="sub">MAP</div></div>
+      <div class="vt rr"><div class="l">Reading</div><div class="v" id="vCat" style="font-size:19px;">—</div><div class="sub">vs. standard adult bands</div></div>
+    </div>
+  </div>
+
+
+  <div class="alert-row">
+    <span id="alertMain">🟢 <b>Live Alerts:</b> No critical alerts</span>
+    <span id="alertWin">📶 <b>Window:</b> —</span>
+  </div>
+
+  <div class="icu-foot">
+    <span class="foot-item">Model: <b id="fModel">PPGResNetBiLSTM (Live)</b></span>
+    <div class="grow"></div>
+    <a class="icu-btn why-link" id="btnWhy" href="xai-results.html">Why this reading? →</a>
+    <button class="icu-btn" id="btnPrev">◀ Prev window</button>
+    <button class="icu-btn" id="btnNext">Next window ▶</button>
+    <button class="icu-btn" id="btnPause">⏸ Pause</button>
+    <button class="icu-btn" id="btnDownload">⬇ Download</button>
+  </div>
+</div>
+
+<!-- Full-bleed page: shell.js renders no sidebar here (no #rail), but it
+     provides the shared account/recording resolver used below. -->
+<script src="shared/shell.js?v=16"></script>
+<script src="shared/why.js?v=16"></script>
+<script>
+  var params = new URLSearchParams(window.location.search);
+  // Fallback only — the real list (names, beds, IDs) comes from /api/patients
+  // so every subject in the dataset is reachable, not just these.
+  var PATIENTS = {
+    'rohit-sharma':  {name:'Rohit Sharma',  bed:'01', id:'P2-2024-001'},
+    'meena-patil':   {name:'Meena Patil',   bed:'02', id:'P2-2024-002'},
+    'arvind-kumar':  {name:'Arvind Kumar',  bed:'03', id:'P2-2024-003'},
+    'sunita-nair':   {name:'Sunita Nair',   bed:'04', id:'P2-2024-004'}
+  };
+  var ROLE = localStorage.getItem('pulseiq_role') || 'patient';
+  var IS_DOCTOR = ROLE === 'doctor';
+
+  // Only doctors may view another person's record. A patient account is pinned
+  // to its own chart and ignores any ?patient= in the URL, so it can't be used
+  // to peek at someone else's data.
+  var DEFAULT_PATIENT = 'rohit-sharma';
+  // Doctors browse any patient. A patient sees only their own linked recording,
+  // resolved below — `key` stays null until then so nothing loads by accident.
+  var key = IS_DOCTOR ? (params.get('patient') || DEFAULT_PATIENT) : null;
+  var p = PATIENTS[key] || {name:'—', bed:'--', id:'--'};
+  if(IS_DOCTOR){
+    document.getElementById('patName').textContent = p.name;
+    document.getElementById('patMeta').textContent = 'Bed ' + p.bed + ' · ID: ' + p.id;
+  }
+
+  var t0 = 12*60 + 33; // seed seconds like the reference's 00:12:33
+  function tick(){
+    t0++;
+    var h = String(Math.floor(t0/3600)).padStart(2,'0');
+    var m = String(Math.floor((t0%3600)/60)).padStart(2,'0');
+    var s = String(t0%60).padStart(2,'0');
+    document.getElementById('screenClock').textContent = h+':'+m+':'+s;
+  }
+  setInterval(tick,1000);
+
+  document.getElementById('btnPause').onclick = function(){
+    var paused = document.getElementById('monitorPanel').classList.toggle('paused');
+    this.textContent = paused ? '▶ Resume' : '⏸ Pause';
+  };
+  // Export the window that is actually on screen: the real PPG/VPG/APG samples
+  // the backend returned, plus the model's own estimate for that window.
+  function csvEscape(v){
+    var s = String(v == null ? '' : v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function buildCsv(d){
+    var ppg = d.channels.ppg || [], vpg = d.channels.vpg || [], apg = d.channels.apg || [];
+    var n  = Math.min(ppg.length, vpg.length, apg.length);
+    var fs = d.samplingRateHz || 125;
+    var meta = [
+      ['# PulseIQ waveform export'],
+      ['# subject', d.subjectId],
+      ['# window', (winPos + 1) + ' of ' + (d.numWindowsAvailable != null ? d.numWindowsAvailable : '?')],
+      ['# window_index', d.windowIndex],
+      ['# sampling_rate_hz', fs],
+      ['# duration_s', d.durationSec],
+      ['# samples', n],
+      ['# model', 'PPGResNetBiLSTM'],
+      ['# predicted_sbp_mmhg', d.dl && d.dl.SBP != null ? d.dl.SBP.toFixed(2) : ''],
+      ['# predicted_dbp_mmhg', d.dl && d.dl.DBP != null ? d.dl.DBP.toFixed(2) : ''],
+      ['# predicted_map_mmhg', d.dl && d.dl.MAP != null ? d.dl.MAP.toFixed(2) : ''],
+      ['# heart_rate_bpm', d.heartRateBpm != null ? d.heartRateBpm.toFixed(1) : ''],
+      ['# note', 'Model estimate, not a diagnosis.']
+    ].map(function(r){ return r.map(csvEscape).join(','); });
+
+    var lines = meta.concat(['sample_index,time_s,ppg,vpg,apg']);
+    for(var i=0;i<n;i++){
+      lines.push(i + ',' + (i/fs).toFixed(6) + ',' + ppg[i] + ',' + vpg[i] + ',' + apg[i]);
+    }
+    return lines.join('\n') + '\n';
+  }
+
+  // Inline feedback on the button — a blocking alert() is what made the old
+  // stub feel like a dead end.
+  function flashBtn(btn, msg){
+    if(btn.dataset.busy) return;
+    var original = btn.textContent;
+    btn.dataset.busy = '1';
+    btn.textContent = msg;
+    setTimeout(function(){ btn.textContent = original; delete btn.dataset.busy; }, 2200);
+  }
+
+  document.getElementById('btnDownload').onclick = function(){
+    var btn = this;
+    if(!LAST_WINDOW){
+      flashBtn(btn, 'No window loaded');
+      return;
+    }
+    var d = LAST_WINDOW;
+    var blob = new Blob([buildCsv(d)], {type:'text/csv;charset=utf-8'});
+    var url  = URL.createObjectURL(blob);
+    var a    = document.createElement('a');
+    a.href = url;
+    a.download = 'pulseiq_' + (d.subjectId || 'subject') + '_window' + d.windowIndex + '_' +
+                 (d.samplingRateHz || 125) + 'Hz.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    // Revoking immediately can cancel the download in some browsers.
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+    flashBtn(btn, '✓ Downloaded');
+  };
+
+  // ---- Real backend wiring ---------------------------------------------
+  var PULSEIQ_API = (window.PULSEIQ_API_BASE || (location.port === '8090' ? 'http://localhost:8001' : location.origin));
+
+  function setBadge(ok){
+    var b = document.getElementById('backendBadge');
+    if(!b) return;
+    if(ok){ b.textContent = '● Live Backend'; b.style.color = 'var(--green)'; b.style.borderColor='rgba(52,211,153,0.4)'; }
+    else { b.textContent = '● Demo Data'; b.style.color = 'var(--ink-500)'; }
+  }
+
+  // --- Seamless waveform rendering -------------------------------------
+  // The scroll animation shifts the SVG by exactly half its width, so the
+  // trace only loops without a visible seam if the drawn signal is cropped
+  // to a whole number of cardiac cycles and then tiled twice. That crop is
+  // what fixes the break you saw in the old hardcoded paths.
+  var VB_W = 2000, VB_H = 100, PAD = 12;
+
+  // Standard adult bands, graded on systolic; diastolic only escalates.
+  // Describes the reading — not a diagnosis.
+  function bpCategory(sbp, dbp){
+    if(sbp >= 140 || dbp >= 90) return {cls:'high',     label:'High'};
+    if(sbp >= 130 || dbp >= 80) return {cls:'elevated', label:'Elevated'};
+    if(sbp >= 120)              return {cls:'elevated', label:'Borderline'};
+    if(sbp < 90)                return {cls:'elevated', label:'Low'};
+    return {cls:'normal', label:'Normal'};
+  }
+
+  function findPeaks(a, minDist, thresh){
+    var out = [], last = -1e9;
+    for(var i=1;i<a.length-1;i++){
+      if(a[i] > a[i-1] && a[i] >= a[i+1] && a[i] > thresh && (i - last) >= minDist){
+        out.push(i); last = i;
+      }
+    }
+    return out;
+  }
+
+  // Whole-beat bounds derived from the PPG only. VPG and APG are derivatives
+  // of that same signal, so they must be cropped on the SAME indices — cropping
+  // each channel on its own peaks lands them on different phases and puts a
+  // visible step at the loop point.
+  function cycleBounds(ppg){
+    var fallback = {start:0, end:ppg.length};
+    if(ppg.length < 40) return fallback;
+    var mean = 0; for(var i=0;i<ppg.length;i++) mean += ppg[i]; mean /= ppg.length;
+    var sd = 0; for(var j=0;j<ppg.length;j++) sd += (ppg[j]-mean)*(ppg[j]-mean);
+    sd = Math.sqrt(sd/ppg.length) || 1;
+    var norm = ppg.map(function(v){ return (v-mean)/sd; });
+    var minDist = Math.max(4, Math.floor(ppg.length * (0.4/12))); // ~0.4s over a 12s window
+    var pk = findPeaks(norm, minDist, 0.2);
+    if(pk.length >= 3) return {start: pk[0], end: pk[pk.length-1]};
+    return fallback;
+  }
+
+  function buildTiledPath(values){
+    if(!values || !values.length) return '';
+    var lo = Math.min.apply(null, values), hi = Math.max.apply(null, values);
+    var span = (hi - lo) || 1;
+    var n = values.length;
+    var total = n * 2;              // draw the cropped cycle twice
+    var d = '';
+    for(var i=0;i<total;i++){
+      var v = values[i % n];
+      var x = (i/(total-1)) * VB_W;
+      var y = VB_H - PAD - ((v - lo)/span) * (VB_H - PAD*2);
+      d += (i===0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    return d;
+  }
+
+  // Whole-beat cropping gets the phase right, but real signals vary beat to
+  // beat, so the first and last sample still differ slightly. Removing a linear
+  // ramp equal to that residual drift forces last == first exactly, making the
+  // wrap continuous for any patient. The tilt is spread over ~500 samples, so
+  // the waveform shape is visually unchanged.
+  function forceLoop(v){
+    var n = v.length;
+    if(n < 3) return v;
+    var drift = v[n-1] - v[0];
+    var out = new Array(n);
+    for(var i=0;i<n;i++) out[i] = v[i] - drift * (i/(n-1));
+    return out.slice(0, n-1); // last sample now duplicates the first — drop it
+  }
+
+  function drawWave(svgId, values, bounds){
+    var path = document.querySelector('#' + svgId + ' path');
+    if(!path) return;
+    var v = bounds ? values.slice(bounds.start, bounds.end) : values;
+    path.setAttribute('d', buildTiledPath(forceLoop(v)));
+  }
+
+  // v3: the synthetic respiration lane is gone. Every trace on this monitor
+  // is a real recorded channel that the model actually reads.
+
+  var WIN_LIST = [], winPos = 0;
+  // Last payload the backend returned, so Download exports exactly what is
+  // drawn rather than re-fetching and risking a different window.
+  var LAST_WINDOW = null;
+
+  function loadWaveform(windowIdx){
+    var url = PULSEIQ_API + '/api/waveform/' + key + (windowIdx != null ? '?window=' + windowIdx : '');
+    return fetch(url)
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        setBadge(true);
+        LAST_WINDOW = d;
+        WIN_LIST = d.windowIndices || [];
+        winPos = Math.max(0, WIN_LIST.indexOf(d.windowIndex));
+
+        var bounds = cycleBounds(d.channels.ppg);
+        drawWave('wavePPG', d.channels.ppg, bounds);
+        drawWave('waveVPG', d.channels.vpg, bounds);
+        drawWave('waveAPG', d.channels.apg, bounds);
+
+        var sbp = Math.round(d.dl.SBP), dbp = Math.round(d.dl.DBP), map = Math.round(d.dl.MAP);
+        var cat = bpCategory(sbp, dbp);
+        document.getElementById('vBp').textContent = sbp + '/' + dbp;
+        document.getElementById('vHr').innerHTML = (d.heartRateBpm ? d.heartRateBpm.toFixed(0) : '—') + ' <small style="font-size:13px;">BPM</small>';
+        document.getElementById('vMapVal').innerHTML = map + ' <small style="font-size:13px;">mmHg</small>';
+        var catEl = document.getElementById('vCat');
+        catEl.textContent = cat.label;
+        catEl.style.color = cat.cls === 'high' ? 'var(--red)' : (cat.cls === 'elevated' ? 'var(--amber)' : 'var(--green)');
+
+        document.getElementById('patMeta').textContent = IS_DOCTOR
+          ? ('Bed ' + p.bed + ' · ID: ' + p.id)
+          : ('Patient ID: ' + d.subjectId);
+        document.getElementById('chanSrc').textContent =
+          'live PPG/VPG/APG · ' + d.samplingRateHz + ' Hz';
+        document.getElementById('alertWin').innerHTML =
+          '📶 <b>Segment:</b> ' + (winPos+1) + ' of ' + d.numWindowsAvailable + ' · ' + d.durationSec + 's';
+        document.getElementById('alertMain').innerHTML = cat.cls === 'normal'
+          ? '🟢 <b>Live Alerts:</b> no critical alerts'
+          : '🟡 <b>Live Alerts:</b> BP reading is ' + cat.label.toLowerCase() + ' — confirm clinically';
+
+        var wb = document.getElementById('btnWhy');
+        if(wb) wb.href = 'xai-results.html?patient=' + encodeURIComponent(key) + '&window=' + d.windowIndex;
+      })
+      .catch(function(){
+        setBadge(false);
+        LAST_WINDOW = null;
+        document.getElementById('chanSrc').textContent = 'backend offline — start it with: python -m uvicorn main:app --port 8001';
+      });
+  }
+
+  // --- Patient switcher -------------------------------------------------
+  // Populated from the backend so it always matches the real subjects that
+  // actually exist in the dataset, rather than a hardcoded list.
+  function applyPatient(newKey){
+    key = newKey;
+    p = PATIENTS[key] || {name: key, bed:'--', id:'--'};
+    document.getElementById('patName').textContent = p.name;
+    WIN_LIST = []; winPos = 0;
+    try {
+      var u = new URL(window.location.href);
+      u.searchParams.set('patient', key);
+      history.replaceState(null, '', u.toString());
+    } catch(e){ /* file:// in some browsers — harmless, monitor still switches */ }
+    loadWaveform(null);
+  }
+
+  var switcher = document.querySelector('.pat-switch');
+  if(!IS_DOCTOR){
+    // Patient account: remove the switcher from the DOM entirely.
+    if(switcher) switcher.remove();
+  } else {
+    fetch(PULSEIQ_API + '/api/patients')
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        // Adopt the backend's list wholesale, so beds/IDs/names stay in sync
+        // with the dataset instead of drifting from a hardcoded copy.
+        d.patients.forEach(function(pt){
+          PATIENTS[pt.id] = {name: pt.name, bed: pt.bed, id: pt.displayId};
+        });
+        if(PATIENTS[key]){
+          p = PATIENTS[key];
+          document.getElementById('patName').textContent = p.name;
+        }
+        var sel = document.getElementById('patientSelect');
+        sel.innerHTML = d.patients.map(function(pt){
+          return '<option value="' + pt.id + '"' + (pt.id === key ? ' selected' : '') + '>' +
+                 pt.name + ' — Bed ' + pt.bed + ' · ' + pt.numWindows + ' windows</option>';
+        }).join('');
+        sel.addEventListener('change', function(){ applyPatient(this.value); });
+      })
+      .catch(function(){
+        var sel = document.getElementById('patientSelect');
+        sel.innerHTML = Object.keys(PATIENTS).map(function(k){
+          return '<option value="' + k + '"' + (k === key ? ' selected' : '') + '>' + PATIENTS[k].name + '</option>';
+        }).join('');
+        sel.addEventListener('change', function(){ applyPatient(this.value); });
+      });
+  }
+
+  // Back link should match who's logged in — doctors to the roster,
+  // patients to their own dashboard.
+  (function(){
+    var back = document.getElementById('backLink');
+    if(back && !IS_DOCTOR) back.setAttribute('href', 'patient-dashboard.html');
+  })();
+
+  if(IS_DOCTOR){
+    loadWaveform(null);
+  } else {
+    // Patient: show their own name and their own linked recording, or nothing.
+    window.PulseShell.resolvePatientKey().then(function(who){
+      if(who.name) document.getElementById('patName').textContent = who.name;
+      if(!who.linked){
+        document.getElementById('patMeta').textContent = 'No recording linked to this account';
+        document.getElementById('chanSrc').textContent = 'no data — link a Patient ID in your profile';
+        document.getElementById('monitorPanel').innerHTML =
+          '<div style="display:flex;align-items:center;justify-content:center;height:100%;text-align:center;padding:30px;">' +
+          '<div><div style="font-size:34px;margin-bottom:10px;">📉</div>' +
+          '<div style="font-size:15px;font-weight:800;color:var(--ink-0);margin-bottom:8px;">No recording linked</div>' +
+          '<div style="font-size:12px;color:var(--ink-400);max-width:380px;line-height:1.7;margin-bottom:16px;">' +
+          'There is no PPG recording attached to this account, so there is nothing to monitor.</div>' +
+          '<a href="profile.html" style="display:inline-block;background:linear-gradient(90deg,#22e5f0,#7bf5fb);' +
+          'color:#04070b;padding:10px 20px;border-radius:11px;font-weight:800;font-size:12px;text-decoration:none;">' +
+          'Link a Patient ID →</a></div></div>';
+        document.getElementById('alertMain').innerHTML = '⚪ <b>Live Alerts:</b> no data';
+        document.getElementById('alertWin').innerHTML = '📶 <b>Segment:</b> —';
+        ['vBp','vHr','vMapVal','vCat'].forEach(function(id){
+          var el = document.getElementById(id); if(el) el.textContent = '—';
+        });
+        return;
+      }
+      key = who.key;
+      p = {name: who.name, bed:'--', id: who.key};
+      loadWaveform(null);
+    });
+  }
+
+  document.getElementById('btnPrev').onclick = function(){
+    if(!WIN_LIST.length) return;
+    winPos = (winPos - 1 + WIN_LIST.length) % WIN_LIST.length;
+    loadWaveform(WIN_LIST[winPos]);
+  };
+  document.getElementById('btnNext').onclick = function(){
+    if(!WIN_LIST.length) return;
+    winPos = (winPos + 1) % WIN_LIST.length;
+    loadWaveform(WIN_LIST[winPos]);
+  };
+
+</script>
+</body>
+</html>

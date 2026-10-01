@@ -1,0 +1,240 @@
+/* ============================================================
+   PulseIQ v3 — blood-pressure theme layer
+   Loaded after theme.css on every page. Adds a "pressure" accent
+   (crimson/magenta) next to the existing cyan, flowing background
+   ribbons, a pulse-line motif, and the shared BP visual kit
+   (gauge, heart, sparklines, metric-coloured tiles).
+   ============================================================ */
+:root{
+  --bp:#ff3d7f;              /* pressure accent */
+  --bp-bright:#ff8fb3;
+  --bp-deep:#b3124b;
+  --bp-glow:rgba(255,61,127,0.42);
+  --bp-glow-soft:rgba(255,61,127,0.16);
+  --t-hr:#ff5c8a;
+  --t-map:#b45cf7;
+  --t-sq:#22e5f0;
+}
+
+/* ---------- background: flowing ribbons + warm glow ---------- */
+body{
+  background:
+    radial-gradient(circle at 92% 4%, var(--bp-glow-soft) 0%, transparent 30%),
+    radial-gradient(circle at 10% 8%, var(--cyan-glow-soft) 0%, transparent 32%),
+    radial-gradient(circle at 80% 96%, var(--purple-glow-soft) 0%, transparent 34%),
+    var(--void);
+  background-attachment:fixed;
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='none'><defs><linearGradient id='a' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%23ff3d7f' stop-opacity='0'/><stop offset='.55' stop-color='%23ff3d7f' stop-opacity='.55'/><stop offset='1' stop-color='%23b45cf7' stop-opacity='.2'/></linearGradient><linearGradient id='b' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%2322e5f0' stop-opacity='0'/><stop offset='.6' stop-color='%2322e5f0' stop-opacity='.35'/><stop offset='1' stop-color='%2322e5f0' stop-opacity='0'/></linearGradient></defs><g fill='none' stroke-width='1.2'><path d='M700 40 C 950 -20 1150 180 1600 60' stroke='url(%23a)'/><path d='M760 70 C 1000 20 1180 220 1600 110' stroke='url(%23a)'/><path d='M820 100 C 1050 60 1210 250 1600 160' stroke='url(%23a)'/><path d='M880 130 C 1100 100 1240 280 1600 210' stroke='url(%23a)'/><path d='M0 820 C 300 760 520 900 900 840' stroke='url(%23b)'/><path d='M0 860 C 320 800 560 930 980 870' stroke='url(%23b)'/></g></svg>") no-repeat center/cover;
+}
+.app,.main,.content{position:relative;}
+.app{z-index:1;}
+
+/* ---------- pulse-line motif under the top bar ---------- */
+.topbar{position:relative;}
+.topbar::after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:14px;pointer-events:none;opacity:.8;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 14' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%2322e5f0' stop-opacity='0'/><stop offset='.35' stop-color='%2322e5f0' stop-opacity='.8'/><stop offset='.65' stop-color='%23ff3d7f' stop-opacity='.9'/><stop offset='1' stop-color='%23ff3d7f' stop-opacity='0'/></linearGradient></defs><path d='M0 12 H250 L258 12 L264 2 L272 14 L280 6 L286 12 H600' fill='none' stroke='url(%23g)' stroke-width='1.3'/></svg>") no-repeat center/100% 100%;
+}
+
+/* ---------- brand: tagline under the logo ---------- */
+#rail .r-logo .r-home{font-size:8.5px;letter-spacing:.09em;color:var(--bp-bright);opacity:.85;}
+#rail .mark{box-shadow:0 0 18px -4px var(--bp-glow),0 0 0 1px rgba(255,61,127,.25);}
+#rail .r-logo h2 span{color:var(--bp-bright);}
+
+/* ---------- metric-coloured stat tiles ---------- */
+.stat-tile.mt{position:relative;overflow:hidden;padding:16px 18px 14px;
+  --mc:var(--cyan);border-color:color-mix(in srgb,var(--mc) 28%,transparent);
+  background:linear-gradient(160deg,color-mix(in srgb,var(--mc) 12%,transparent),transparent 60%),var(--glass);}
+.stat-tile.mt::before{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,var(--mc) 30%,transparent),transparent 70%);pointer-events:none;}
+.stat-tile.mt.bp{--mc:var(--bp);} .stat-tile.mt.hr{--mc:var(--t-hr);}
+.stat-tile.mt.map{--mc:var(--t-map);} .stat-tile.mt.sq{--mc:var(--t-sq);}
+.stat-tile.mt .top{align-items:center;gap:10px;justify-content:flex-start;}
+.stat-tile.mt .mi{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  color:var(--mc);background:color-mix(in srgb,var(--mc) 16%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--mc) 35%,transparent);}
+.stat-tile.mt .lbl{text-transform:none;letter-spacing:0;font-size:12.5px;color:var(--ink-0);font-weight:700;line-height:1.2;}
+.stat-tile.mt .lbl small{display:block;font-size:10px;color:var(--ink-500);font-weight:600;margin-top:2px;}
+.stat-tile.mt .row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;}
+.stat-tile.mt .v{font-size:30px;line-height:1;}
+.stat-tile.mt.bp .v small:first-child{font-size:30px;color:var(--ink-200);}
+.stat-tile.mt .sp{width:48%;height:34px;flex-shrink:0;}
+.stat-tile.mt .sp svg{width:100%;height:100%;display:block;}
+@media(max-width:900px){.stat-tile.mt .v{font-size:24px;} .stat-tile.mt .sp{width:40%;}}
+
+/* ---------- gauge ---------- */
+.pa-gauge{width:100%;height:auto;display:block;}
+.pa-gauge .pa-needle{transform-origin:50% 85.3%;animation:paNeedle 1.1s cubic-bezier(.3,1.4,.5,1) both;}
+@keyframes paNeedle{from{transform:rotate(-80deg);opacity:0;}to{transform:none;opacity:1;}}
+.pa-gauge-read{text-align:center;margin-top:-18px;}
+.pa-gauge-read .n{font-family:'JetBrains Mono',monospace;color:var(--ink-0);display:flex;align-items:baseline;justify-content:center;gap:4px;}
+.pa-gauge-read .n b{font-size:32px;font-weight:800;color:var(--bp-bright);}
+.pa-gauge-read .n b.d{color:#8aa8ff;}
+.pa-gauge-read .n span{font-size:22px;color:var(--ink-500);}
+.pa-gauge-read .n small{font-size:11px;color:var(--ink-500);margin-left:4px;}
+.pa-gauge-read .band{display:inline-block;margin-top:8px;font-size:11px;font-weight:800;padding:4px 12px;border-radius:99px;letter-spacing:.03em;}
+.pa-legend{display:flex;justify-content:center;gap:12px;margin-top:10px;font-size:10px;color:var(--ink-500);flex-wrap:wrap;}
+.pa-legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;}
+
+/* ---------- heart ---------- */
+.pa-heart{width:100%;height:auto;display:block;overflow:visible;}
+.pa-heart .pa-heart-body{transform-origin:50% 55%;animation:paBeat 1.2s ease-in-out infinite;}
+@keyframes paBeat{0%,100%{transform:scale(1);}12%{transform:scale(1.045);}24%{transform:scale(.99);}36%{transform:scale(1.025);}}
+.pa-heart .pa-pulse{stroke-dasharray:520;stroke-dashoffset:520;animation:paTrace 2.4s linear infinite;}
+@keyframes paTrace{0%{stroke-dashoffset:520;}70%,100%{stroke-dashoffset:-520;}}
+.pa-heart .pa-ring{transform-origin:50% 51%;animation:paSpin 40s linear infinite;}
+@keyframes paSpin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion:reduce){.pa-heart *,.pa-gauge *{animation:none!important;stroke-dashoffset:0!important;}}
+
+/* ---------- dashboard hero card (heart + gauge) ---------- */
+.bp-hero{position:relative;overflow:hidden;border-radius:var(--radius-lg);padding:20px 22px;
+  border:1px solid rgba(255,61,127,.28);
+  background:radial-gradient(120% 90% at 85% 0%,rgba(255,61,127,.20),transparent 60%),
+             radial-gradient(90% 80% at 0% 100%,rgba(34,229,240,.10),transparent 60%),var(--glass);
+  box-shadow:0 30px 60px -34px var(--bp-glow);}
+.bp-hero .bh-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.bp-hero .bh-kick{font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bp-bright);}
+.bp-hero h3{margin:4px 0 0;font-size:17px;font-weight:800;color:var(--ink-0);line-height:1.25;}
+.bp-hero h3 span{color:var(--cyan-bright);}
+/* Heart sits inside the header as a contained badge: never clipped by the card
+   edge and never behind the title or the gauge. */
+.bp-hero .bh-top{align-items:center;}
+.bp-hero .bh-art{position:relative;width:92px;height:92px;flex-shrink:0;border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle,rgba(255,61,127,.25),transparent 70%);
+  box-shadow:0 0 0 1px rgba(255,61,127,.28),0 0 30px -6px var(--bp-glow);pointer-events:none;}
+.bp-hero .bh-art .pa-art{width:100%;height:100%;object-fit:cover;object-position:52% 55%;transform-origin:50% 55%;
+  -webkit-mask-image:radial-gradient(circle,#000 62%,transparent 72%);mask-image:radial-gradient(circle,#000 62%,transparent 72%);}
+.bp-hero .bh-gauge{position:relative;max-width:250px;margin:12px auto 0;}
+.bp-hero .bh-note{font-size:10.5px;color:var(--ink-500);text-align:center;margin-top:8px;}
+
+/* ---------- small section kicker with pulse glyph ---------- */
+.pa-kicker{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--bp-bright);}
+.pa-kicker .pa-ic{color:var(--bp);}
+
+/* ---------- light theme adjustments ---------- */
+[data-theme="light"] body::after{opacity:.35;}
+[data-theme="light"] .stat-tile.mt .v{color:var(--ink-0);}
+
+/* ---------- dashboard hub tiles: metric colours ---------- */
+.qa-tile .ic{color:var(--cyan-bright);}
+.qa-tile .ic-monitor,.qa-tile .ic-history{color:var(--bp-bright);
+  background:linear-gradient(135deg,rgba(255,61,127,.22),rgba(255,61,127,.06));border-color:rgba(255,61,127,.3);}
+.qa-tile .ic-insights{color:var(--purple-bright);
+  background:linear-gradient(135deg,rgba(180,92,247,.22),rgba(180,92,247,.06));border-color:rgba(180,92,247,.3);}
+.qa-tile:hover .ic-monitor,.qa-tile:hover .ic-history{box-shadow:0 0 26px -6px var(--bp-glow);}
+
+/* ---------- doctor roster: BP range marker ---------- */
+.bp-scale{position:relative;height:6px;border-radius:99px;margin-top:7px;width:120px;
+  background:linear-gradient(90deg,#8aa8ff 0 18%,#3ce685 18% 45%,#ffd166 45% 55%,#ff9f43 55% 64%,#ff3d7f 64% 100%);opacity:.85;}
+.bp-scale i{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:var(--ink-0);
+  border:2px solid var(--bg-deep);transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(255,255,255,.5);}
+[data-theme="light"]{--bp:#e0245e;--bp-bright:#c8175a;}
+
+/* ---------- reference artwork (heart / hand) ----------
+   The images are opaque crops; a radial mask melts their edges into
+   whatever background they sit on, in both themes. */
+.pa-art{display:block;width:100%;height:auto;user-select:none;pointer-events:none;
+  -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,transparent 100%);
+          mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 58%,transparent 100%);}
+/* "lub-dub": two quick contractions with a glow flash, then rest (~72 bpm). */
+.pa-art-heart{animation:paArtBeat .85s cubic-bezier(.3,0,.3,1) infinite;transform-origin:50% 58%;will-change:transform,filter;}
+@keyframes paArtBeat{
+  0%  {transform:scale(1);    filter:brightness(1)    saturate(1);}
+  10% {transform:scale(1.055);filter:brightness(1.22) saturate(1.2);}
+  20% {transform:scale(.99);  filter:brightness(1.02) saturate(1);}
+  30% {transform:scale(1.035);filter:brightness(1.14) saturate(1.12);}
+  45% {transform:scale(1);    filter:brightness(1)    saturate(1);}
+  100%{transform:scale(1);    filter:brightness(1)    saturate(1);}}
+.pa-art-hand{animation:paArtGlow 2.4s ease-in-out infinite;}
+@keyframes paArtGlow{0%,100%{filter:brightness(1) saturate(1);}50%{filter:brightness(1.18) saturate(1.15);}}
+@media (prefers-reduced-motion:reduce){.pa-art{animation:none!important;}}
+
+/* ---------- premium heart scene inside the dashboard BP card ---------- */
+.bp-hero > *{position:relative;z-index:1;}
+.bp-hero > .pa-scene{position:absolute;z-index:0;right:-58px;top:-40px;width:250px;aspect-ratio:1319/1193;pointer-events:none;opacity:.8;
+  -webkit-mask-image:linear-gradient(180deg,#000 28%,rgba(0,0,0,.5) 55%,transparent 86%);mask-image:linear-gradient(180deg,#000 28%,rgba(0,0,0,.5) 55%,transparent 86%);}
+.pa-scene img{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.pa-scene-waves{filter:brightness(.5) saturate(.72);opacity:.8;
+  -webkit-mask-image:radial-gradient(ellipse 31% 45% at 51% 53%,#000 60%,transparent 100%),
+    linear-gradient(90deg,transparent 0%,#000 6%,#000 14%,transparent 19.5%,transparent 81.5%,#000 86%,#000 95%,transparent 100%);
+          mask-image:radial-gradient(ellipse 31% 45% at 51% 53%,#000 60%,transparent 100%),
+    linear-gradient(90deg,transparent 0%,#000 6%,#000 14%,transparent 19.5%,transparent 81.5%,#000 86%,#000 95%,transparent 100%);
+  -webkit-mask-composite:source-over;mask-composite:add;
+  animation:paSceneDrift 16s ease-in-out infinite alternate;transform-origin:50% 55%;}
+@keyframes paSceneDrift{0%{transform:translate3d(-6px,3px,0) scale(1);}50%{transform:translate3d(5px,-4px,0) scale(1.03);}100%{transform:translate3d(8px,2px,0) scale(1.01);}}
+.pa-scene-heart{transform-origin:52% 58%;
+  -webkit-mask-image:radial-gradient(ellipse 31% 45% at 51% 53%,#000 64%,transparent 100%);
+          mask-image:radial-gradient(ellipse 31% 45% at 51% 53%,#000 64%,transparent 100%);
+  animation:paSceneBeat 1.25s cubic-bezier(.35,0,.25,1) infinite;}
+@keyframes paSceneBeat{0%{transform:scale(1);filter:brightness(.7) saturate(.85);}
+  12%{transform:scale(1.035);filter:brightness(.9) saturate(.95);}
+  24%{transform:scale(.998);filter:brightness(.74) saturate(.86);}
+  36%{transform:scale(1.02);filter:brightness(.84) saturate(.92);}
+  55%,100%{transform:scale(1);filter:brightness(.7) saturate(.85);}}
+.bp-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(100deg,rgba(10,8,16,.85) 0%,rgba(10,8,16,.45) 45%,transparent 75%);}
+.bp-hero .bh-top h3,.bp-hero .bh-kick{text-shadow:0 2px 14px rgba(0,0,0,.6);}
+@media (prefers-reduced-motion:reduce){.pa-scene img{animation:none!important;}}
+
+/* ---------- sidebar wrist-sensor artwork ---------- */
+#rail{overflow:hidden;}
+#rail > *:not(.rail-art){position:relative;z-index:1;}
+#rail .rail-art{position:absolute;left:0;right:0;top:84px;bottom:190px;z-index:0;pointer-events:none;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 16%,#000 62%,transparent 100%),linear-gradient(90deg,transparent 0%,#000 14%,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-in;
+          mask-image:linear-gradient(180deg,transparent 0%,#000 16%,#000 62%,transparent 100%),linear-gradient(90deg,transparent 0%,#000 14%,#000 86%,transparent 100%);
+          mask-composite:intersect;}
+#rail .rail-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%;
+  filter:brightness(.55) saturate(.8);animation:railFloat 14s ease-in-out infinite alternate;transform-origin:47% 30%;}
+@keyframes railFloat{from{transform:scale(1.02) translateY(0);}to{transform:scale(1.07) translateY(-8px);}}
+/* soft pulse over the sensor point, in time with the heart elsewhere (~50 bpm) */
+#rail .rail-pulse{position:absolute;left:47.5%;top:27%;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,110,150,.55) 0%,rgba(255,61,127,.18) 35%,transparent 70%);
+  mix-blend-mode:screen;animation:railPulse 1.25s ease-out infinite;}
+@keyframes railPulse{0%{transform:scale(.7);opacity:.35;}12%{transform:scale(1);opacity:.9;}36%{transform:scale(.92);opacity:.6;}60%,100%{transform:scale(.7);opacity:.3;}}
+#rail .rail-cap{position:absolute;left:0;right:0;bottom:20%;text-align:center;font-size:11px;letter-spacing:.06em;color:var(--ink-400);
+  text-shadow:0 2px 10px rgba(0,0,0,.9);}
+#rail .rail-cap b{color:var(--bp-bright);font-weight:800;}
+@media (max-height:400px){#rail .rail-art{display:none;}}
+@media (max-height:620px){#rail .rail-art{top:76px;bottom:150px;} #rail .rail-cap{display:none;}}
+@media (prefers-reduced-motion:reduce){#rail .rail-art img,#rail .rail-pulse{animation:none;}}
+[data-theme="light"] #rail .rail-art{opacity:.8;}
+
+/* ---------- v3: backdrop glows removed (flat, calmer background) ---------- */
+body{background:var(--void)!important;}
+.app::before{display:none;}
+.stat-tile.mt::before{display:none;}
+.stat-tile.mt{background:var(--glass);}
+.bp-hero{background:var(--glass);box-shadow:none;}
+.card.glow-cyan,.card.glow-purple{box-shadow:none;}
+
+/* ---------- dashboard BP card: still heart, soft editorial treatment ---------- */
+.bp-hero > .pa-scene{right:-30px;top:-24px;width:250px;opacity:1;
+  -webkit-mask-image:radial-gradient(ellipse 48% 52% at 55% 45%,#000 45%,transparent 78%);
+          mask-image:radial-gradient(ellipse 48% 52% at 55% 45%,#000 45%,transparent 78%);}
+.bp-hero .pa-scene-waves{animation:none;opacity:.55;filter:brightness(.42) saturate(.7) blur(.4px);}
+.bp-hero .pa-scene-heart{animation:none;transform:none;filter:brightness(.72) saturate(.82) contrast(1.05);}
+/* faint rim light so the heart reads as lit, not pasted */
+.bp-hero > .pa-scene::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(circle at 44% 40%,rgba(255,120,160,.16),transparent 30%),
+             radial-gradient(circle at 68% 62%,rgba(90,140,255,.10),transparent 34%);}
+
+/* ---------- dashboard BP card: heart blended into the corner (still) ---------- */
+.bp-hero > .pa-scene{right:-70px;top:-60px;width:330px;opacity:.55;
+  -webkit-mask-image:linear-gradient(200deg,#000 25%,rgba(0,0,0,.45) 50%,transparent 72%);
+          mask-image:linear-gradient(200deg,#000 25%,rgba(0,0,0,.45) 50%,transparent 72%);}
+.bp-hero .pa-scene-waves{display:none;}
+.bp-hero .pa-scene-heart{filter:brightness(.62) saturate(.7) blur(.3px);
+  -webkit-mask-image:radial-gradient(ellipse 36% 46% at 52% 52%,#000 50%,transparent 100%);
+          mask-image:radial-gradient(ellipse 36% 46% at 52% 52%,#000 50%,transparent 100%);}
+.bp-hero > .pa-scene::after{display:none;}
+
+/* ---------- dashboard BP card: still heart, cropped into the top-right corner ---------- */
+.bp-hero > .bh-heart{position:absolute;z-index:0;right:-78px;top:-64px;width:310px;aspect-ratio:1319/1193;pointer-events:none;
+  -webkit-mask-image:radial-gradient(ellipse 60% 62% at 62% 42%,#000 30%,rgba(0,0,0,.5) 55%,transparent 80%);
+          mask-image:radial-gradient(ellipse 60% 62% at 62% 42%,#000 30%,rgba(0,0,0,.5) 55%,transparent 80%);}
+.bp-hero > .bh-heart img{width:100%;height:100%;display:block;filter:brightness(.6) saturate(.75);opacity:.85;}
+.bp-hero > .bh-heart::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,var(--bg-deep) 0%,transparent 40%);opacity:.6;}

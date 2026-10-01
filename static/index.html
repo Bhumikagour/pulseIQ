@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — AI-Powered Cuffless Blood Pressure Monitoring</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  body{overflow-x:hidden;}
+  .nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;padding:16px 48px;background:color-mix(in srgb, var(--bg-deep) 80%, transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--glass-border);}
+  .nav .brand{font-weight:800;font-size:16px;color:var(--ink-0);display:flex;align-items:center;gap:10px;}
+  .nav .brand .mark{width:32px;height:32px;border-radius:9px;background-image:var(--pulse-logo);background-size:cover;background-position:center;box-shadow:0 0 16px -4px var(--cyan-glow);}
+  .nav .brand span{color:var(--cyan-bright);}
+  .nav .links{display:flex;gap:28px;margin-left:52px;}
+  .nav .links a{font-size:13px;font-weight:600;color:var(--ink-300);}
+  .nav .links a:hover{color:var(--ink-0);}
+  .nav .grow{flex:1;}
+  .nav .cta{background:#fff;color:#04070b;padding:10px 22px;border-radius:11px;font-weight:800;font-size:12.5px;}
+
+  .hero{position:relative;padding:80px 48px 50px;display:flex;align-items:center;gap:60px;max-width:1360px;margin:0 auto;}
+  .hero::before{content:"";position:absolute;top:-100px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(34,229,240,0.14),transparent 65%);pointer-events:none;}
+  .hero-copy{flex:1;position:relative;z-index:2;min-width:0;}
+  .hero-copy h1{font-size:48px;line-height:1.12;font-weight:800;letter-spacing:-0.02em;margin:0 0 18px;color:var(--ink-0);}
+  .hero-copy p{font-size:15px;line-height:1.75;color:var(--ink-400);max-width:480px;margin:0 0 28px;}
+  .hero-btns{display:flex;gap:14px;margin-bottom:30px;}
+  .hero-btns .primary{background:linear-gradient(90deg,var(--cyan),var(--cyan-bright));color:var(--cyan-ink);padding:14px 26px;border-radius:13px;font-weight:800;font-size:13.5px;box-shadow:0 16px 34px -12px var(--cyan-glow);}
+  .hero-btns .ghost{background:transparent;border:1.5px solid var(--glass-border-2);color:var(--ink-0);padding:14px 26px;border-radius:13px;font-weight:700;font-size:13.5px;}
+  .hero-badges{display:flex;gap:10px;flex-wrap:wrap;}
+  .hero-badges .b{font-size:11px;font-weight:700;color:var(--ink-200);background:var(--glass);border:1px solid var(--glass-border);padding:8px 13px;border-radius:999px;}
+
+  .phone-wrap{position:relative;z-index:2;flex-shrink:0;width:320px;}
+  /* v3 hero art */
+  .hero-art{position:relative;z-index:2;flex-shrink:0;width:520px;height:500px;}
+  .hero-art::before{content:"";position:absolute;inset:-60px;background:radial-gradient(circle at 55% 45%,rgba(255,61,127,.22),transparent 60%);pointer-events:none;}
+  .ha-heart{position:absolute;left:-60px;top:0;width:600px;aspect-ratio:1319/1193;pointer-events:none;
+    -webkit-mask-image:radial-gradient(ellipse 62% 60% at 50% 50%,#000 55%,transparent 100%);mask-image:radial-gradient(ellipse 62% 60% at 50% 50%,#000 55%,transparent 100%);}
+  .ha-glow{position:absolute;left:51%;top:44%;width:180px;height:180px;margin:-90px 0 0 -90px;border-radius:50%;mix-blend-mode:screen;
+    background:radial-gradient(circle,rgba(255,130,170,.45),rgba(255,61,127,.12) 40%,transparent 70%);animation:haGlow 1.25s ease-out infinite;}
+  @keyframes haGlow{0%{opacity:.25;transform:scale(.8);}12%{opacity:.85;transform:scale(1);}36%{opacity:.55;}60%,100%{opacity:.25;transform:scale(.8);}}
+  .ha-card{position:absolute;background:color-mix(in srgb,var(--panel-solid) 82%,transparent);backdrop-filter:blur(14px);
+    border:1px solid var(--glass-border-2);border-radius:16px;box-shadow:0 24px 50px -20px rgba(0,0,0,.8);}
+  .ha-gauge{right:-10px;bottom:10px;width:230px;padding:14px 16px 16px;border-color:rgba(255,61,127,.35);}
+  .ha-gauge .pa-kicker{margin-bottom:6px;}
+  .ha-gauge .pa-gauge-read .n b{font-size:26px;}
+  .ha-chip,.ha-why{display:flex;align-items:center;gap:10px;padding:10px 14px;}
+  .ha-chip{left:-10px;top:70px;} .ha-why{left:10px;bottom:60px;}
+  .ha-chip b,.ha-why b{display:block;font-size:12.5px;color:var(--ink-0);}
+  .ha-chip span,.ha-why span{display:block;font-size:10.5px;color:var(--ink-400);}
+  .ha-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--cyan-bright);
+    background:rgba(34,229,240,.12);box-shadow:inset 0 0 0 1px rgba(34,229,240,.3);flex-shrink:0;}
+  .ha-ic.purple{color:var(--purple-bright);background:rgba(180,92,247,.12);box-shadow:inset 0 0 0 1px rgba(180,92,247,.35);}
+  .ha-tag{position:absolute;right:0;top:-6px;text-align:right;font-size:19px;font-weight:800;line-height:1.25;color:var(--ink-0);}
+  .ha-tag em{font-style:normal;color:var(--cyan-bright);}
+  .how-strip{display:flex;align-items:center;gap:40px;max-width:1100px;margin:0 auto;padding:10px 48px 30px;}
+  .hs-art{width:420px;flex-shrink:0;position:relative;aspect-ratio:1312/1199;}
+  .hs-art img{width:100%;height:100%;display:block;filter:brightness(.62) saturate(.8);
+    -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 50%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 50%,transparent 100%);
+    animation:railFloat 14s ease-in-out infinite alternate;}
+  .hs-pulse{position:absolute;left:47.2%;top:38%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;mix-blend-mode:screen;
+    background:radial-gradient(circle,rgba(255,110,150,.5),rgba(255,61,127,.15) 40%,transparent 70%);animation:railPulse 1.25s ease-out infinite;}
+  .hs-copy h2{font-size:30px;font-weight:800;color:var(--ink-0);margin:10px 0 20px;letter-spacing:-0.01em;}
+  .hs-steps{display:grid;grid-template-columns:1fr;gap:12px;max-width:560px;}
+  .hs-steps > div{display:flex;gap:12px;background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;padding:16px;}
+  .hs-steps b{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    color:var(--bp-bright);background:rgba(255,61,127,.12);box-shadow:inset 0 0 0 1px rgba(255,61,127,.3);}
+  .hs-steps span{font-size:11.5px;line-height:1.55;color:var(--ink-400);}
+  .hs-steps strong{display:block;font-size:13px;color:var(--ink-0);margin-bottom:4px;}
+  @media(max-width:900px){.how-strip{flex-direction:column;padding:10px 16px 20px;gap:10px;}.hs-art{width:300px;}.hs-steps{grid-template-columns:1fr;}}
+  .grad-bp{background:linear-gradient(90deg,#ff3d7f,#ff8fb3);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  @media(max-width:1080px){.hero-art{width:100%;max-width:520px;margin:0 auto;}}
+  @media(max-width:600px){.hero-art{height:420px;}.ha-heart{left:0;width:100%;}.ha-tag{display:none;}
+    .ha-gauge{right:0;width:200px;}.ha-chip{left:0;top:10px;}.ha-why{left:0;bottom:10px;}}
+  .phone-glow-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:380px;height:380px;background:radial-gradient(circle,rgba(34,229,240,0.28),transparent 68%);filter:blur(6px);z-index:0;}
+  .phone{position:relative;z-index:2;background:linear-gradient(180deg,var(--panel-solid),var(--screen));border:1px solid var(--glass-border-2);border-radius:38px;padding:14px;box-shadow:0 60px 120px -40px var(--shadow-strong);}
+  .phone-screen{background:var(--screen);border-radius:26px;padding:20px 18px;position:relative;overflow:hidden;min-height:500px;}
+  .phone-hi{font-size:10px;color:var(--ink-500);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:6px;}
+  .phone-bp{font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--ink-0);font-size:36px;display:flex;align-items:baseline;gap:8px;}
+  .phone-bp small{font-size:12px;color:var(--ink-500);font-weight:600;}
+  /* Live trace panel. This replaced a glowing circle with a fingertip glyph:
+     it read as a tap target, but nothing on a marketing page is tappable, so it
+     was promising an interaction that did not exist. A moving readout carries
+     the same "this is alive" signal without pretending to be a button. */
+  .phone-trace{position:relative;height:150px;margin:14px 0;border-radius:14px;overflow:hidden;
+    display:flex;flex-direction:column;padding:28px 12px 10px;
+    background:radial-gradient(120% 140% at 50% 0%,rgba(34,229,240,0.09),rgba(0,0,0,0) 70%),var(--screen);}
+  .phone-trace::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(var(--wash-2) 1px,transparent 1px),
+                     linear-gradient(90deg,var(--wash-2) 1px,transparent 1px);
+    background-size:100% 25px,30px 100%;}
+  /* The waveform sits in the flow rather than filling the panel, so it can
+     never run under the quality readout below it. */
+  .phone-trace .vp{position:relative;flex:1 1 auto;min-height:0;margin:0 -12px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);
+            mask-image:linear-gradient(90deg,transparent 0,#000 8%,#000 92%,transparent 100%);}
+  .phone-trace svg{position:absolute;top:0;left:0;height:100%;width:200%;
+    animation:trace-scroll 4.2s linear infinite;will-change:transform;}
+  @keyframes trace-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .phone-trace .wv{filter:drop-shadow(0 0 6px rgba(34,229,240,0.6)) drop-shadow(0 0 16px rgba(34,229,240,0.25));}
+  .trace-tag{position:absolute;top:10px;left:12px;z-index:3;display:flex;align-items:center;gap:6px;
+    font-size:8.5px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-500);}
+  .trace-tag i{width:6px;height:6px;border-radius:50%;background:var(--cyan-bright);
+    box-shadow:0 0 8px var(--cyan-bright);animation:blip 1.4s ease-in-out infinite;font-style:normal;}
+  @keyframes blip{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.35;transform:scale(0.75);}}
+  .trace-q{position:relative;z-index:3;flex:0 0 auto;padding-top:8px;}
+  .trace-q .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+    font-size:8px;color:var(--ink-500);white-space:nowrap;
+    text-transform:uppercase;letter-spacing:0.06em;font-weight:700;margin-bottom:4px;}
+  .trace-q .row b{color:var(--cyan-bright);font-family:'JetBrains Mono',monospace;font-size:9.5px;
+    letter-spacing:0;flex:0 0 auto;}
+  .trace-q .bar{height:3px;border-radius:99px;background:var(--wash-3);overflow:hidden;}
+  .trace-q .bar i{display:block;height:100%;width:99%;border-radius:99px;
+    background:linear-gradient(90deg,var(--cyan-dim),var(--cyan-bright));}
+  .phone-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .phone-tile{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;padding:10px 12px;}
+  .phone-tile .l{font-size:8.5px;color:var(--ink-500);text-transform:uppercase;letter-spacing:0.06em;font-weight:700;}
+  .phone-tile .v{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:16px;color:var(--ink-0);margin-top:3px;}
+  .phone-tile.hr .v{color:var(--hr);} .phone-tile.spo2 .v{color:var(--spo2);}
+
+  .section{max-width:1160px;margin:0 auto;padding:20px 48px 70px;}
+  .wf-title{text-align:center;font-size:13px;font-weight:800;color:var(--ink-400);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:34px;}
+  .workflow{display:flex;align-items:flex-start;justify-content:center;gap:0;}
+  .wf-step{display:flex;flex-direction:column;align-items:center;width:150px;text-align:center;flex-shrink:0;}
+  .wf-step .ic{color:var(--bp-bright);box-shadow:0 0 24px -8px var(--bp-glow);}
+  .wf-step .ic{width:56px;height:56px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border-2);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;}
+  .wf-step p{font-size:11.5px;font-weight:700;color:var(--ink-200);margin:0;line-height:1.4;}
+  .wf-arrow{color:var(--ink-700);font-size:20px;padding-top:18px;flex-shrink:0;width:40px;text-align:center;}
+
+  .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px;}
+  .feat{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:22px 20px;}
+  .feat .ic{color:var(--cyan-bright);}
+  .feat .ic.purple{color:var(--purple-bright);}
+  .feat .ic{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:14px;background:rgba(34,229,240,0.1);box-shadow:inset 0 0 0 1px rgba(34,229,240,0.3);}
+  .feat .ic.purple{background:rgba(180,92,247,0.1);box-shadow:inset 0 0 0 1px rgba(180,92,247,0.35);}
+  .feat h4{font-size:13.5px;font-weight:700;color:var(--ink-0);margin:0 0 6px;}
+  .feat p{font-size:11.5px;color:var(--ink-400);line-height:1.6;margin:0;}
+  .footer{text-align:center;padding:30px;color:var(--ink-600);font-size:11.5px;border-top:1px solid var(--glass-border);}
+  @media(max-width:1080px){ .feat-grid{grid-template-columns:1fr 1fr;} .hero{flex-direction:column;} }
+  /* Phone. The 48px side padding and the fixed-width workflow row were what
+     pushed this page 260px wider than the screen. */
+  @media(max-width:720px){
+    .nav{padding:12px 16px;}
+    .nav .links{display:none;}                 /* the CTA is the only nav that matters here */
+    .hero{padding:40px 16px 30px;gap:32px;}
+    .hero-copy h1{font-size:31px;}
+    .hero-copy p{font-size:14px;}
+    .hero-btns{flex-direction:column;gap:10px;}
+    .hero-btns .primary,.hero-btns .ghost{text-align:center;padding:14px 18px;}
+    .section{padding:16px 16px 46px;}
+    .feat-grid{grid-template-columns:1fr;gap:12px;margin-top:34px;}
+    /* Five 150px steps cannot fit; let them wrap into a centred block and drop
+       the connecting arrows, which only read correctly in a single row. */
+    .workflow{flex-wrap:wrap;gap:18px 10px;}
+    .wf-step{width:calc(50% - 10px);}
+    .wf-arrow{display:none;}
+    .phone-wrap{width:100%;max-width:320px;margin:0 auto;}
+    .footer{padding:24px 16px;}
+  }
+  @media(max-width:420px){
+    .hero-copy h1{font-size:27px;}
+    .wf-step{width:100%;}
+  }
+  /* Five 150px steps plus arrows need ~910px; below that they wrap, which
+     starts well above the phone breakpoint. */
+  @media(max-width:1000px){
+    .workflow{flex-wrap:wrap;gap:20px 12px;}
+    .wf-arrow{display:none;}
+    .wf-step{width:calc(33.33% - 12px);}
+    .section{padding:20px 24px 60px;}
+    .hero{padding:60px 24px 40px;}
+  }
+  @media(max-width:720px){ html,body{overflow-x:hidden;} }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="brand"><div class="mark"></div>Pulse<span>IQ</span></div>
+  <div class="links">
+    <a href="#features">Features</a>
+    <a href="#workflow">How It Works</a>
+    <a href="#about">About</a>
+  </div>
+  <div class="grow"></div>
+  <a class="cta" href="login.html">Sign In</a>
+</div>
+
+<div class="hero">
+  <div class="hero-copy">
+    <div class="pa-kicker" style="margin-bottom:14px;"><span data-pa-icon="heart" data-size="16"></span>Blood pressure, without the cuff</div>
+    <h1><span class="grad-cyan">AI-Powered</span><br>Cuffless <span class="grad-bp">Blood Pressure</span><br>Monitoring.</h1>
+    <p>Explainable. Transparent. Honest. Blood pressure from the light sensor in a pulse clip, no cuff needed. Every reading tells you, in plain words, what in your pulse drove it.</p>
+    <div class="hero-btns">
+      <a class="primary" href="login.html">Try Demo</a>
+      <a class="ghost" href="#features">Learn More</a>
+    </div>
+    <div class="hero-badges">
+      <span class="b">✓ No cuff needed</span>
+      <span class="b">✓ Tested on patients from two hospitals</span>
+      <span class="b">✓ Explainable AI</span>
+    </div>
+  </div>
+
+  <!-- v3: BP-themed hero art. The gauge shows an example reading and is labelled as such. -->
+  <div class="hero-art">
+    <div class="ha-heart pa-scene" aria-hidden="true">
+      <img class="pa-scene-waves" src="shared/img/heart-hd.webp" alt="">
+      <img class="pa-scene-heart" src="shared/img/heart-hd.webp" alt="">
+      <i class="ha-glow"></i>
+    </div>
+    <div class="ha-card ha-gauge">
+      <div class="pa-kicker"><span data-pa-icon="bp" data-size="14"></span>Example reading</div>
+      <div id="heroGauge"></div>
+    </div>
+    <div class="ha-card ha-chip">
+      <div class="ha-ic" data-pa-icon="sensor"></div>
+      <div><b>No cuff</b><span>Just a pulse sensor on your finger</span></div>
+    </div>
+    <div class="ha-card ha-why">
+      <div class="ha-ic purple" data-pa-icon="brain"></div>
+      <div><b>Explained</b><span>See what drove every reading</span></div>
+    </div>
+    <div class="ha-tag">Cuffless.<br>Continuous.<br><em>Explainable.</em></div>
+  </div>
+</div>
+
+<!-- v3: how the reading is taken, with the wrist-sensor artwork -->
+<div class="section how-strip">
+  <div class="hs-art" aria-hidden="true"><img src="shared/img/hand-clean.webp" alt=""><i class="hs-pulse"></i></div>
+  <div class="hs-copy">
+    <div class="pa-kicker"><span data-pa-icon="sensor" data-size="14"></span>How PulseIQ reads your blood pressure</div>
+    <h2>Just your pulse. <span class="grad-bp">No cuff.</span></h2>
+    <div class="hs-steps">
+      <div><b data-pa-icon="sensor"></b><span><strong>Light sensor</strong>A pulse sensor shines light into the skin and records every heartbeat as a wave.</span></div>
+      <div><b data-pa-icon="pulse"></b><span><strong>AI reads the wave</strong>The shape and timing of each beat change with your blood pressure. The AI learned that link from hospital patients.</span></div>
+      <div><b data-pa-icon="bp"></b><span><strong>Reading + reasons</strong>You get systolic and diastolic, where they sit on the adult ranges, and what drove them.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="workflow">
+  <div class="wf-title">Trusted Workflow</div>
+  <div class="workflow">
+    <div class="wf-step"><div class="ic" data-pa-icon="sensor" data-size="24"></div><p>Pulse Signal Captured</p></div>
+    <div class="wf-arrow">→</div>
+    <div class="wf-step"><div class="ic" data-pa-icon="pulse" data-size="24"></div><p>AI Models Analyze</p></div>
+    <div class="wf-arrow">→</div>
+    <div class="wf-step"><div class="ic" data-pa-icon="brain" data-size="24"></div><p>Explainability (Why)</p></div>
+    <div class="wf-arrow">→</div>
+    <div class="wf-step"><div class="ic" data-pa-icon="bp" data-size="24"></div><p>BP Range Explained</p></div>
+    <div class="wf-arrow">→</div>
+    <div class="wf-step"><div class="ic" data-pa-icon="heart" data-size="24"></div><p>Actionable Insights</p></div>
+  </div>
+
+  <div class="feat-grid" id="features">
+    <div class="feat"><div class="ic" data-pa-icon="monitor"></div><h4>Live ICU-style monitor</h4><p>Bedside-hardware-style vitals per patient, powered by the live model.</p></div>
+    <div class="feat"><div class="ic purple" data-pa-icon="brain"></div><h4>Full explainability</h4><p>Every reading shows which parts of your pulse pushed it up or down.</p></div>
+    <div class="feat"><div class="ic" data-pa-icon="pin"></div><h4>Find nearby care</h4><p>Live map search for hospitals, clinics and doctors near you.</p></div>
+    <div class="feat"><div class="ic purple" data-pa-icon="file"></div><h4>Medical vault</h4><p>Every report and prescription, uploaded once, available everywhere.</p></div>
+    <div class="feat"><div class="ic" data-pa-icon="pill"></div><h4>Medicine reminders</h4><p>Dosage calendar with stock tracking, so refills never sneak up.</p></div>
+    <div class="feat"><div class="ic purple" data-pa-icon="chat"></div><h4>Care team chat</h4><p>Message your doctor directly, plus a general-health AI assistant.</p></div>
+    <div class="feat"><div class="ic" data-pa-icon="shield"></div><h4>Role-based access</h4><p>Separate patient and doctor experiences, each shaped for their workflow.</p></div>
+    <div class="feat"><div class="ic purple" data-pa-icon="bp"></div><h4>BP range guide</h4><p>Every reading is placed on the standard adult ranges, from low to high, at a glance.</p></div>
+  </div>
+</div>
+
+<div class="footer" id="about">PulseIQ · Explainable Cuffless BP Monitoring · Demo / Portfolio Build</div>
+
+<script src="shared/shell.js?v=16"></script>
+<script>document.getElementById('heroGauge').innerHTML = PulseArt.gauge(117, 54);</script>
+</body>
+</html>

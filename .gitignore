@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+pulseiq.db
+secret.key
+vault_files/
+.env

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — Messages</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  .content{padding:0;display:flex;flex:1;min-height:0;}
+  .chat-side{width:262px;background:color-mix(in srgb, var(--bg-panel-2) 70%, transparent);border-right:1px solid var(--glass-border);flex-shrink:0;display:flex;flex-direction:column;min-height:0;}
+  .side-head{padding:16px 16px 10px;font-size:9.5px;letter-spacing:0.09em;text-transform:uppercase;color:var(--ink-600);font-weight:800;}
+  .side-list{flex:1;overflow-y:auto;padding:0 10px 14px;}
+
+  .contact{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:12px;cursor:pointer;margin-bottom:3px;}
+  .contact:hover{background:var(--glass-hover);}
+  .contact.on{background:var(--glass-strong);border:1px solid var(--glass-border-2);}
+  .contact .av{width:34px;height:34px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;
+    background:linear-gradient(135deg,var(--cyan-bright),var(--cyan-dim));color:var(--cyan-ink);}
+  .contact.ai .av{background:linear-gradient(135deg,var(--purple-bright),var(--purple-dim));color:#160821;font-size:15px;}
+  .contact .meta{min-width:0;flex:1;}
+  .contact .nm{font-size:12.5px;font-weight:700;color:var(--ink-0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .contact .lm{font-size:10.5px;color:var(--ink-600);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+  .contact.unread .nm{color:var(--ink-0);font-weight:800;}
+  .contact.unread .lm{color:var(--ink-200);font-weight:600;}
+  .contact .badge-n{flex-shrink:0;min-width:19px;height:19px;padding:0 6px;border-radius:99px;
+    background:linear-gradient(90deg,var(--cyan),var(--cyan-bright));color:var(--cyan-ink);
+    font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 12px -2px var(--cyan-glow);}
+  .contact .dot{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+  .side-empty{font-size:11px;color:var(--ink-600);padding:10px 12px;line-height:1.6;}
+
+  .chat-pane{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .chat-head{padding:16px 24px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;gap:12px;}
+  .chat-head .av{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+    background:linear-gradient(135deg,var(--cyan-bright),var(--cyan-dim));color:var(--cyan-ink);}
+  .chat-head.ai .av{background:linear-gradient(135deg,var(--purple-bright),var(--purple-dim));color:#160821;font-size:15px;}
+  .chat-head h4{margin:0;font-size:13.5px;color:var(--ink-0);}
+  .chat-head .sub{font-size:11px;color:var(--ink-500);}
+  .head-actions{margin-left:auto;}
+  .mini-btn{background:var(--glass);border:1px solid var(--glass-border-2);color:var(--ink-300);font-size:11px;font-weight:700;padding:7px 12px;border-radius:9px;cursor:pointer;}
+  .mini-btn:hover{color:var(--ink-0);}
+
+  .messages{flex:1;overflow-y:auto;padding:24px;}
+  .bubble{max-width:62%;padding:12px 16px;border-radius:16px;font-size:12.5px;margin-bottom:4px;line-height:1.6;white-space:pre-wrap;}
+  .bubble.them{background:var(--glass);border:1px solid var(--glass-border);border-bottom-left-radius:4px;color:var(--ink-200);}
+  .bubble.me{background:linear-gradient(135deg,var(--cyan-dim),var(--cyan));color:var(--cyan-ink);margin-left:auto;border-bottom-right-radius:4px;font-weight:600;}
+  .bubble.pending{opacity:.6;font-style:italic;}
+  .stamp{font-size:9.5px;color:var(--ink-600);margin:0 4px 12px;}
+  .stamp.me{text-align:right;}
+  .empty-thread{text-align:center;color:var(--ink-600);font-size:12px;padding:50px 20px;line-height:1.7;}
+
+  .disclaimer{text-align:center;color:var(--ink-500);font-size:11px;padding:10px 24px;}
+  .composer{display:flex;gap:10px;padding:16px 24px;border-top:1px solid var(--glass-border);}
+  .composer input{flex:1;background:var(--wash-1);border:1px solid var(--glass-border);border-radius:12px;padding:12px 15px;font-size:12.5px;font-family:'Inter';color:var(--ink-0);outline:none;}
+  .composer input:focus{border-color:rgba(34,229,240,0.5);}
+  .composer input:disabled{opacity:.5;}
+  .composer button{background:linear-gradient(90deg,var(--cyan),var(--cyan-bright));color:var(--cyan-ink);border:none;border-radius:12px;width:44px;font-weight:800;font-size:15px;cursor:pointer;}
+  .composer button:disabled{opacity:.45;cursor:default;}
+  .signin-note{background:rgba(255,200,87,0.08);border:1px solid rgba(255,200,87,0.3);color:var(--amber);
+    font-size:11.5px;padding:11px 15px;border-radius:11px;margin:14px 24px;line-height:1.6;}
+  .signin-note a{color:var(--cyan-bright);font-weight:700;}
+
+  /* ---- Message actions, reply quoting and inline editing ---------------- */
+  .msg{position:relative;display:flex;flex-direction:column;}
+  .msg.mine{align-items:flex-end;}
+  .msg .bubble{position:relative;}
+  .bubble.flash{animation:quote-flash 1.1s ease;}
+  @keyframes quote-flash{0%,100%{box-shadow:none;}30%{box-shadow:0 0 0 3px rgba(34,229,240,0.55);}}
+
+  /* No hover handle: the menu comes from right-clicking the message itself, so
+     nothing floats over the thread. Fixed positioning keeps it from being
+     clipped by the scrolling message list. */
+  .msg .bubble{cursor:context-menu;}
+  .msg-menu{position:fixed;z-index:400;min-width:172px;background:var(--panel-solid-2);
+    border:1px solid var(--glass-border-2);border-radius:11px;padding:5px;
+    box-shadow:0 18px 44px var(--shadow-strong);}
+  .msg-menu button{display:block;width:100%;text-align:left;background:none;border:none;color:var(--ink-200);
+    font-size:11.5px;font-weight:600;font-family:'Inter';padding:8px 10px;border-radius:7px;cursor:pointer;}
+  .msg-menu button:hover{background:var(--wash-3);color:var(--ink-0);}
+  .msg-menu button.danger{color:var(--red);}
+  .msg-menu button.danger:hover{background:rgba(255,92,114,0.12);}
+  .msg-menu .sep{height:1px;background:var(--glass-border);margin:4px 2px;}
+  .msg-menu .hint{font-size:9.5px;color:var(--ink-600);padding:4px 10px 6px;line-height:1.45;}
+
+  /* Quoted message inside a bubble. */
+  .quote{display:block;width:100%;text-align:left;border:none;font-family:'Inter';cursor:pointer;
+    border-left:3px solid currentColor;border-radius:7px;padding:6px 9px;margin-bottom:7px;
+    font-size:11px;line-height:1.45;opacity:.85;}
+  .bubble.them .quote{background:var(--wash-2);color:var(--cyan-bright);}
+  .bubble.me   .quote{background:rgba(0,0,0,0.13);color:var(--cyan-ink);}
+  .quote .qa{display:block;font-weight:800;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+  .quote .qb{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.85;}
+  .stamp .edited{opacity:.85;}
+
+  /* Reply chip above the composer. */
+  .reply-bar{display:none;align-items:center;gap:10px;margin:0 24px;padding:9px 12px;
+    background:rgba(34,229,240,0.06);border:1px solid rgba(34,229,240,0.25);
+    border-left:3px solid var(--cyan-bright);border-radius:10px;}
+  .reply-bar.on{display:flex;}
+  .reply-bar .rb-t{flex:1;min-width:0;font-size:11px;line-height:1.45;}
+  .reply-bar .rb-t b{display:block;color:var(--cyan-bright);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;}
+  .reply-bar .rb-t span{display:block;color:var(--ink-400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .reply-bar .rb-x{background:none;border:none;color:var(--ink-500);font-size:15px;cursor:pointer;padding:0 4px;}
+  .reply-bar .rb-x:hover{color:var(--ink-0);}
+
+  /* Inline edit box, replacing the bubble in place. */
+  .edit-box{max-width:62%;margin-left:auto;margin-bottom:4px;}
+  .edit-box textarea{width:100%;background:var(--wash-2);border:1px solid rgba(34,229,240,0.5);
+    border-radius:14px;padding:11px 14px;font-size:12.5px;font-family:'Inter';color:var(--ink-0);
+    outline:none;resize:vertical;min-height:62px;line-height:1.6;}
+  .edit-box .ea{display:flex;gap:8px;justify-content:flex-end;margin-top:7px;}
+  .edit-box .ea button{border:none;border-radius:9px;padding:7px 14px;font-size:11px;font-weight:700;
+    font-family:'Inter';cursor:pointer;}
+  .edit-box .ea .save{background:var(--cyan-bright);color:var(--cyan-ink);}
+  .edit-box .ea .cancel{background:var(--glass);border:1px solid var(--glass-border-2);color:var(--ink-300);}
+  .msg-err{font-size:10.5px;color:var(--red);margin:0 4px 10px;text-align:right;}
+
+  /* Phone. The conversation list and the thread cannot share 390px, so the
+     list collapses to a horizontal strip of avatars above the thread. */
+  @media(max-width:900px){
+    .content{flex-direction:column;min-height:0;}
+    .chat-side{width:100%;flex-direction:row;align-items:center;gap:8px;
+      border-right:none;border-bottom:1px solid var(--glass-border);
+      overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 10px;flex-shrink:0;}
+    .chat-side::-webkit-scrollbar{display:none;}
+    .side-head{display:none;}
+    .side-list{display:flex;gap:8px;padding:0;overflow:visible;flex:none;}
+    .contact{flex-direction:column;align-items:center;gap:5px;width:72px;padding:7px 4px;
+      margin-bottom:0;text-align:center;flex-shrink:0;}
+    .contact .meta{min-width:0;width:100%;}
+    .contact .nm{font-size:10px;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0 auto;}
+    .contact .lm{display:none;}
+    .messages{padding:14px 12px;}
+    .msg .bubble{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+    .bubble{max-width:82%;}
+    .edit-box{max-width:82%;}
+    .composer{padding:10px 12px;gap:8px;}
+    .composer input{font-size:16px;}   /* under 16px iOS zooms the whole page on focus */
+    .chat-head{padding:10px 12px;}
+    .head-actions{margin-left:auto;}
+    .reply-bar{margin:0 12px;}
+    .disclaimer{padding:8px 12px;font-size:10px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="rail" data-active="chat"></div>
+  <div class="main">
+    <div class="topbar">
+      <div class="brand">Pulse<span>IQ</span></div>
+      <div class="grow"></div>
+      <span id="backendBadge" class="badge" style="margin-right:10px;">● Connecting…</span>
+      <div class="clock" id="clock">--:--:--</div>
+    </div>
+    <div class="content">
+      <div class="chat-side">
+        <div class="side-head" id="sideHead">Conversations</div>
+        <div class="side-list" id="contactList"></div>
+      </div>
+
+      <div class="chat-pane">
+        <div class="chat-head" id="chatHead">
+          <div class="av" id="headAv">—</div>
+          <div><h4 id="headName">Select a conversation</h4><div class="sub" id="headSub">—</div></div>
+          <div class="head-actions" id="headActions"></div>
+        </div>
+        <div id="signinNote"></div>
+        <div class="messages" id="messages"></div>
+        <div class="disclaimer" id="disclaimer"></div>
+        <div class="reply-bar" id="replyBar">
+          <div class="rb-t"><b id="rbWho">Replying to</b><span id="rbText"></span></div>
+          <button class="rb-x" id="rbCancel" title="Cancel reply">✕</button>
+        </div>
+        <div class="composer">
+          <input id="msgInput" placeholder="Type a message…" disabled>
+          <button id="sendBtn" disabled>➤</button>
+        </div>
+      </div>
+    </div>
+    <div class="status-bar">
+      <span>SYS: <b>OPERATIONAL</b></span>
+      <span>PulseIQ · Explainable Cuffless BP Monitoring · Demo Mode</span>
+    </div>
+  </div>
+</div>
+<script src="shared/shell.js?v=16"></script>
+<script>
+  function tick(){ var d=new Date(); document.getElementById('clock').textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':'); }
+  setInterval(tick,1000); tick();
+
+  var PULSEIQ_API = (window.PULSEIQ_API_BASE || (location.port === '8090' ? 'http://localhost:8001' : location.origin));
+  var ROLE  = localStorage.getItem('pulseiq_role') || 'patient';
+  var TOKEN = localStorage.getItem('pulseiq_token');
+  var IS_DOCTOR = ROLE === 'doctor';
+  // Patients get the AI assistant as an extra contact; doctors get people only.
+  var SHOW_AI = !IS_DOCTOR;
+
+  var CONTACTS = [];
+  var ACTIVE = null;          // {type:'ai'} or {type:'user', id, name}
+  var pollTimer = null;
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function initials(n){ return n.split(' ').filter(Boolean).map(function(w){return w[0];}).join('').slice(0,2).toUpperCase(); }
+  function updateNavBadge(total){
+    if(window.PulseShell && window.PulseShell.setNavUnread) window.PulseShell.setNavUnread(total);
+  }
+  function authHeaders(){ return TOKEN ? {'Authorization':'Bearer '+TOKEN} : {}; }
+  function timeOf(ts){
+    var d = new Date(ts*1000);
+    return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  }
+  // Guests keep seeing why real messaging is unavailable, even after they
+  // click into the AI conversation.
+  function renderSigninNote(){
+    var el = document.getElementById('signinNote');
+    if(!el) return;
+    if(TOKEN){ el.innerHTML = ''; return; }
+    el.innerHTML =
+      '<div class="signin-note">You\'re browsing as a guest, so real messaging is unavailable. ' +
+      '<a href="login.html">Sign in or create an account</a> to message ' +
+      (IS_DOCTOR ? 'your patients' : 'a doctor') + '.' +
+      (SHOW_AI ? ' The AI assistant still works.' : '') + '</div>';
+  }
+
+  function setBadge(ok, label){
+    var b=document.getElementById('backendBadge'); if(!b) return;
+    if(ok){ b.textContent='● '+(label||'Connected'); b.style.color='var(--green)'; b.style.borderColor='rgba(52,211,153,0.4)'; }
+    else { b.textContent='● '+(label||'Offline'); b.style.color='var(--ink-500)'; }
+  }
+
+  // ---------------- AI thread (local LLM, stored in this browser) ----------------
+  var AI_KEY = 'pulseiq_ai_thread';
+  var AI_GREETING = "Hi! I'm your PulseIQ Health Assistant, running on a local AI model on your own machine. Ask me anything about general wellness, medications, or your readings.";
+  function loadAiThread(){
+    try { var t = JSON.parse(localStorage.getItem(AI_KEY)); if(Array.isArray(t) && t.length) return t; } catch(e){}
+    return [{who:'them', text:AI_GREETING}];
+  }
+  function saveAiThread(t){
+    try { localStorage.setItem(AI_KEY, JSON.stringify(t.filter(function(m){ return !m.pending; }))); } catch(e){}
+  }
+  var aiThread = loadAiThread();
+
+  // ---------------- Contacts ----------------
+  function renderContacts(){
+    var el = document.getElementById('contactList');
+    var html = '';
+    if(SHOW_AI){
+      var on = ACTIVE && ACTIVE.type === 'ai';
+      html += '<div class="contact ai' + (on?' on':'') + '" data-ai="1">' +
+                '<div class="av">🤖</div>' +
+                '<div class="meta"><div class="nm">PulseIQ AI Assistant</div>' +
+                '<div class="lm">General guidance · always available</div></div></div>';
+    }
+    if(!TOKEN){
+      html += '<div class="side-empty">' +
+              (IS_DOCTOR ? 'Sign in to message your patients.' : 'Sign in with a real account to message a doctor.') +
+              '</div>';
+    } else if(!CONTACTS.length){
+      html += '<div class="side-empty">' +
+              (IS_DOCTOR ? 'No patients have signed up yet.' : 'No doctors have signed up yet. Ask someone to create a doctor account.') +
+              '</div>';
+    } else {
+      CONTACTS.forEach(function(c){
+        var on = ACTIVE && ACTIVE.type === 'user' && ACTIVE.id === c.id;
+        var unread = c.unread > 0 && !on;   // reading it right now means it isn't unread
+        html += '<div class="contact' + (on?' on':'') + (unread?' unread':'') + '" data-id="' + c.id + '">' +
+                  '<div class="av">' + esc(initials(c.name)) + '</div>' +
+                  '<div class="meta"><div class="nm">' + esc(c.name) + '</div>' +
+                  '<div class="lm">' + (c.lastMessage ? esc(c.lastMessage) : (IS_DOCTOR?'Patient':'Doctor')) + '</div></div>' +
+                  (unread ? '<div class="badge-n">' + (c.unread > 99 ? '99+' : c.unread) + '</div>' : '') +
+                '</div>';
+      });
+    }
+    el.innerHTML = html;
+
+    var aiEl = el.querySelector('[data-ai]');
+    if(aiEl) aiEl.addEventListener('click', function(){ selectAi(); });
+    el.querySelectorAll('[data-id]').forEach(function(node){
+      node.addEventListener('click', function(){
+        var id = parseInt(node.getAttribute('data-id'), 10);
+        var c = CONTACTS.filter(function(x){ return x.id === id; })[0];
+        if(c) selectUser(c);
+      });
+    });
+  }
+
+  function loadContacts(){
+    if(!TOKEN){ renderContacts(); return Promise.resolve(); }
+    return fetch(PULSEIQ_API + '/api/contacts', {headers: authHeaders()})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        setBadge(true, 'Connected');
+        CONTACTS = d.contacts;
+        renderContacts();
+        updateNavBadge(d.totalUnread);
+      })
+      .catch(function(){ setBadge(false, 'Offline'); renderContacts(); });
+  }
+
+  // ---------------- Selection ----------------
+  function stopPoll(){ if(pollTimer){ clearInterval(pollTimer); pollTimer = null; } }
+
+  function selectAi(){
+    stopPoll();
+    ACTIVE = {type:'ai'};
+    document.getElementById('chatHead').classList.add('ai');
+    document.getElementById('headAv').textContent = '🤖';
+    document.getElementById('headName').textContent = 'PulseIQ AI Assistant';
+    document.getElementById('headSub').textContent = 'General guidance · not a diagnosis · runs locally via Ollama';
+    document.getElementById('disclaimer').textContent = '⚠ AI can make mistakes. Always consult a doctor.';
+    document.getElementById('headActions').innerHTML = '<button class="mini-btn" id="clearAi">Clear chat</button>';
+    document.getElementById('clearAi').onclick = function(){
+      aiThread = [{who:'them', text:AI_GREETING}];
+      saveAiThread(aiThread); renderThread();
+    };
+    renderSigninNote();
+    enableComposer(true, 'Ask anything…');
+    renderContacts(); renderThread();
+    checkAiHealth();
+  }
+
+  function selectUser(c){
+    stopPoll();
+    ACTIVE = {type:'user', id:c.id, name:c.name};
+    document.getElementById('chatHead').classList.remove('ai');
+    document.getElementById('headAv').textContent = initials(c.name);
+    document.getElementById('headName').textContent = c.name;
+    document.getElementById('headSub').textContent = IS_DOCTOR ? 'Patient' : 'Doctor';
+    document.getElementById('disclaimer').textContent =
+      IS_DOCTOR ? 'Messages are stored in your PulseIQ database.'
+                : 'For emergencies call your local emergency number — do not wait for a reply here.';
+    document.getElementById('headActions').innerHTML = '';
+    renderSigninNote();
+    enableComposer(true, 'Message ' + c.name + '…');
+    REPLY_TO = null; EDITING = null;
+    var rb = document.getElementById('replyBar'); if(rb) rb.classList.remove('on');
+    renderContacts(); loadThread();
+    pollTimer = setInterval(loadThread, 5000);   // pick up replies from the other side
+  }
+
+  function enableComposer(on, placeholder){
+    var i = document.getElementById('msgInput'), b = document.getElementById('sendBtn');
+    i.disabled = !on; b.disabled = !on;
+    if(placeholder) i.placeholder = placeholder;
+  }
+
+  // ---------------- Thread rendering ----------------
+  var thread = [];
+
+  function renderThread(){
+    var box = document.getElementById('messages');
+    if(!ACTIVE){ box.innerHTML = '<div class="empty-thread">Select a conversation to get started.</div>'; return; }
+
+    if(ACTIVE.type === 'ai'){
+      box.innerHTML = aiThread.map(function(m){
+        return '<div class="bubble ' + (m.who==='me'?'me':'them') + (m.pending?' pending':'') + '">' + esc(m.text) + '</div>';
+      }).join('');
+    } else {
+      if(!thread.length){
+        box.innerHTML = '<div class="empty-thread">No messages yet.<br>Say hello to start the conversation.</div>';
+      } else {
+        box.innerHTML = thread.map(function(m){
+          var mine = m.senderId === ME_ID;
+          if(EDITING !== null && String(EDITING) === String(m.id)){
+            return '<div class="msg mine" data-id="'+m.id+'"><div class="edit-box">' +
+                   '<textarea id="editArea">'+esc(m.body)+'</textarea>' +
+                   '<div class="ea"><button class="cancel" data-editcancel="1">Cancel</button>' +
+                   '<button class="save" data-editsave="'+m.id+'">Save</button></div></div></div>';
+          }
+          var q = '';
+          if(m.replyTo){
+            // Quoting the sender by role rather than repeating a name keeps the
+            // bubble readable when the same person appears on both sides.
+            var qWho = m.replyTo.senderId === ME_ID ? 'You' : esc(ACTIVE.name || 'Them');
+            q = '<button class="quote" data-jump="'+m.replyTo.id+'">' +
+                '<span class="qa">'+qWho+'</span>' +
+                '<span class="qb">'+esc(m.replyTo.body)+'</span></button>';
+          }
+          return '<div class="msg '+(mine?'mine':'theirs')+'" data-id="'+m.id+'">' +
+                   '<div class="bubble ' + (mine?'me':'them') + '" id="b'+m.id+'">' + q + esc(m.body) + '</div>' +
+                   '<div class="stamp' + (mine?' me':'') + '">' +
+                     (m.editedAt ? '<span class="edited">edited</span> · ' : '') + timeOf(m.createdAt) +
+                   '</div>' +
+                 '</div>';
+        }).join('');
+      }
+    }
+    if(!KEEP_SCROLL) box.scrollTop = box.scrollHeight;
+    KEEP_SCROLL = false;
+  }
+
+  // ---------------- Reply / edit / delete ----------------
+  // Server-side rules are the real ones; these just shape what the UI offers.
+  var REPLY_TO = null;   // message being replied to
+  var EDITING  = null;   // message id currently open in the edit box
+  var OPEN_MENU = null;
+  var KEEP_SCROLL = false;
+  var DELETE_WINDOW_S = 3600;   // matches auth.DELETE_FOR_EVERYONE_SECONDS
+
+  function closeMenu(){
+    var m = document.getElementById('msgMenu');
+    if(m) m.remove();
+    OPEN_MENU = null;
+  }
+
+  function msgById(id){
+    for(var i=0;i<thread.length;i++){ if(String(thread[i].id) === String(id)) return thread[i]; }
+    return null;
+  }
+
+  // Opened by right-clicking a message. Positioned at the pointer and then
+  // nudged back inside the viewport, so it never opens off-screen near an edge.
+  function openMenuAt(id, x, y){
+    closeMenu();
+    var m = msgById(id);
+    if(!m) return;
+    OPEN_MENU = id;
+    var mine = m.senderId === ME_ID;
+    var young = (Date.now()/1000 - m.createdAt) <= DELETE_WINDOW_S;
+    var html = '<div class="msg-menu" id="msgMenu">' +
+               '<button data-act="reply" data-id="'+id+'">Reply</button>';
+    if(mine) html += '<button data-act="edit" data-id="'+id+'">Edit</button>';
+    html += '<div class="sep"></div>' +
+            '<button class="danger" data-act="del-me" data-id="'+id+'">Delete for me</button>';
+    if(mine && young){
+      html += '<button class="danger" data-act="del-all" data-id="'+id+'">Delete for everyone</button>';
+    } else if(mine){
+      html += '<div class="hint">Over an hour old — can only be deleted for you.</div>';
+    }
+    html += '</div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+
+    var el = document.getElementById('msgMenu');
+    var r  = el.getBoundingClientRect();
+    var left = Math.min(x, window.innerWidth  - r.width  - 8);
+    var top  = Math.min(y, window.innerHeight - r.height - 8);
+    el.style.left = Math.max(8, left) + 'px';
+    el.style.top  = Math.max(8, top)  + 'px';
+  }
+
+  document.addEventListener('contextmenu', function(ev){
+    var row = ev.target.closest && ev.target.closest('.msg[data-id]');
+    if(!row) return;                       // outside the thread: leave the browser menu alone
+    if(EDITING) return;                    // don't hijack right-click inside the edit box
+    ev.preventDefault();
+    openMenuAt(row.getAttribute('data-id'), ev.clientX, ev.clientY);
+  });
+
+  // Phones have no right-click, so the same menu opens on a long press. A small
+  // movement threshold keeps it from firing while the thread is being scrolled.
+  var pressTimer = null, pressStart = null, pressRow = null;
+  function cancelPress(){ clearTimeout(pressTimer); pressTimer = null; pressRow = null; }
+
+  document.addEventListener('touchstart', function(ev){
+    var row = ev.target.closest && ev.target.closest('.msg[data-id]');
+    if(!row || EDITING) return;
+    var tch = ev.touches[0];
+    pressStart = { x: tch.clientX, y: tch.clientY };
+    pressRow = row;
+    pressTimer = setTimeout(function(){
+      pressTimer = null;
+      if(navigator.vibrate) navigator.vibrate(12);   // the usual "held long enough" cue
+      openMenuAt(pressRow.getAttribute('data-id'), pressStart.x, pressStart.y);
+    }, 480);
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function(ev){
+    if(!pressTimer || !pressStart) return;
+    var tch = ev.touches[0];
+    if(Math.abs(tch.clientX - pressStart.x) > 10 || Math.abs(tch.clientY - pressStart.y) > 10) cancelPress();
+  }, { passive: true });
+
+  document.addEventListener('touchend', cancelPress);
+  document.addEventListener('touchcancel', cancelPress);
+
+  function startReply(id){
+    var m = msgById(id); if(!m) return;
+    REPLY_TO = m;
+    document.getElementById('rbWho').textContent =
+      'Replying to ' + (m.senderId === ME_ID ? 'yourself' : (ACTIVE.name || 'them'));
+    document.getElementById('rbText').textContent = m.body;
+    document.getElementById('replyBar').classList.add('on');
+    document.getElementById('msgInput').focus();
+  }
+
+  function clearReply(){
+    REPLY_TO = null;
+    document.getElementById('replyBar').classList.remove('on');
+  }
+
+  function jumpTo(id){
+    var el = document.getElementById('b' + id);
+    if(!el) return;                       // quoted message was deleted for this viewer
+    el.scrollIntoView({block:'center', behavior:'smooth'});
+    el.classList.remove('flash');
+    void el.offsetWidth;                  // restart the animation
+    el.classList.add('flash');
+  }
+
+  function showMsgError(text){
+    var box = document.getElementById('messages');
+    var n = document.createElement('div');
+    n.className = 'msg-err';
+    n.textContent = '⚠ ' + text;
+    box.appendChild(n);
+    box.scrollTop = box.scrollHeight;
+    setTimeout(function(){ n.remove(); }, 5000);
+  }
+
+  function apiFail(r){
+    // 405/404 on these routes means the server predates them — the browser
+    // reports a bare "Method Not Allowed", which tells the user nothing.
+    if(r.status === 405 || r.status === 404){
+      return Promise.reject(new Error(
+        'Your backend is running an older build that has no edit/delete routes. ' +
+        'Restart it: python -m uvicorn main:app --port 8001'));
+    }
+    return r.json().then(function(e){ throw new Error(e.detail || 'request failed'); },
+                         function(){ throw new Error('request failed'); });
+  }
+
+  function saveEdit(id, body){
+    body = body.trim();
+    if(!body){ showMsgError('A message cannot be empty. Delete it instead.'); return; }
+    fetch(PULSEIQ_API + '/api/messages/' + id, {
+      method:'PATCH',
+      headers: Object.assign({'Content-Type':'application/json'}, authHeaders()),
+      body: JSON.stringify({body: body})
+    })
+      .then(function(r){ if(!r.ok) return apiFail(r); return r.json(); })
+      .then(function(){ EDITING = null; loadThread(); loadContacts(); })
+      .catch(function(err){ EDITING = null; renderThread(); showMsgError(err.message); });
+  }
+
+  function deleteMsg(id, scope){
+    fetch(PULSEIQ_API + '/api/messages/' + id + '?scope=' + scope, {
+      method:'DELETE', headers: authHeaders()
+    })
+      .then(function(r){ if(!r.ok) return apiFail(r); return r.json(); })
+      .then(function(){
+        if(REPLY_TO && String(REPLY_TO.id) === String(id)) clearReply();
+        loadThread(); loadContacts();
+      })
+      .catch(function(err){ showMsgError(err.message); });
+  }
+
+  // One delegated listener, because the thread is re-rendered wholesale.
+  document.addEventListener('click', function(ev){
+    var t = ev.target;
+    var act = t.closest && t.closest('[data-act]');
+    if(act){
+      ev.stopPropagation();
+      var aid = act.getAttribute('data-id'), a = act.getAttribute('data-act');
+      closeMenu();
+      if(a === 'reply')  startReply(aid);
+      if(a === 'edit'){ EDITING = aid; KEEP_SCROLL = true; renderThread();
+                        var ta = document.getElementById('editArea');
+                        if(ta){ ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); } }
+      if(a === 'del-me')  deleteMsg(aid, 'me');
+      if(a === 'del-all') deleteMsg(aid, 'everyone');
+      return;
+    }
+    var jump = t.closest && t.closest('[data-jump]');
+    if(jump){ ev.stopPropagation(); jumpTo(jump.getAttribute('data-jump')); return; }
+
+    var save = t.closest && t.closest('[data-editsave]');
+    if(save){
+      var ta2 = document.getElementById('editArea');
+      saveEdit(save.getAttribute('data-editsave'), ta2 ? ta2.value : '');
+      return;
+    }
+    if(t.closest && t.closest('[data-editcancel]')){ EDITING = null; KEEP_SCROLL = true; renderThread(); return; }
+
+    closeMenu();
+  });
+
+  document.getElementById('rbCancel').onclick = function(ev){ ev.stopPropagation(); clearReply(); };
+  document.getElementById('messages').addEventListener('scroll', closeMenu);
+  window.addEventListener('resize', closeMenu);
+
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === 'Escape'){
+      if(EDITING){ EDITING = null; KEEP_SCROLL = true; renderThread(); }
+      else if(REPLY_TO) clearReply();
+      closeMenu();
+    }
+  });
+
+  var ME_ID = null;
+
+  function loadThread(){
+    if(!ACTIVE || ACTIVE.type !== 'user' || !TOKEN) return;
+    fetch(PULSEIQ_API + '/api/messages/' + ACTIVE.id, {headers: authHeaders()})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        setBadge(true, 'Connected');
+        // Ignore a late response for a conversation the user already left.
+        if(!ACTIVE || ACTIVE.type !== 'user' || ACTIVE.id !== d.with.id) return;
+        thread = d.messages;
+        renderThread();
+        updateNavBadge(d.totalUnread);
+        // Opening the thread cleared it server-side; reflect that in the list.
+        if(d.markedRead > 0){
+          CONTACTS.forEach(function(c){ if(c.id === d.with.id) c.unread = 0; });
+          renderContacts();
+        }
+      })
+      .catch(function(){ setBadge(false, 'Offline'); });
+  }
+
+  // ---------------- Sending ----------------
+  function send(){
+    var input = document.getElementById('msgInput');
+    var text = input.value.trim();
+    if(!text || !ACTIVE) return;
+    input.value = '';
+
+    if(ACTIVE.type === 'ai'){ sendToAi(text); return; }
+
+    var target = ACTIVE.id;
+    fetch(PULSEIQ_API + '/api/messages', {
+      method:'POST',
+      headers: Object.assign({'Content-Type':'application/json'}, authHeaders()),
+      body: JSON.stringify({recipientId: target, body: text,
+                            replyTo: REPLY_TO ? REPLY_TO.id : null})
+    })
+      .then(function(r){ if(!r.ok) return r.json().then(function(e){ throw new Error(e.detail || 'send failed'); }); return r.json(); })
+      .then(function(){ clearReply(); loadThread(); loadContacts(); })
+      .catch(function(err){
+        thread.push({id:'err', senderId:-1, recipientId:ME_ID, body:'⚠ '+err.message, createdAt: Date.now()/1000});
+        renderThread();
+      });
+  }
+
+  function sendToAi(text){
+    var history = aiThread.filter(function(m){ return !m.pending; }).map(function(m){
+      return {role: m.who==='me' ? 'user' : 'assistant', content: m.text};
+    });
+    aiThread.push({who:'me', text:text});
+    aiThread.push({who:'them', text:'Thinking…', pending:true});
+    renderThread();
+
+    fetch(PULSEIQ_API + '/api/chat', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message:text, history:history, patientId:'rohit-sharma'})
+    })
+      .then(function(r){ if(!r.ok) return r.json().then(function(e){ throw new Error(e.detail || 'request failed'); }); return r.json(); })
+      .then(function(d){
+        aiThread = aiThread.filter(function(m){ return !m.pending; });
+        aiThread.push({who:'them', text:d.reply});
+        saveAiThread(aiThread); renderThread();
+      })
+      .catch(function(err){
+        aiThread = aiThread.filter(function(m){ return !m.pending; });
+        aiThread.push({who:'them', text:'⚠ '+err.message});
+        saveAiThread(aiThread); renderThread();
+      });
+  }
+
+  function checkAiHealth(){
+    fetch(PULSEIQ_API + '/api/chat/health')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(!ACTIVE || ACTIVE.type !== 'ai') return;
+        // The endpoint answers with a different shape per provider. Reading
+        // only the Ollama fields made a working Groq deployment report itself
+        // as offline, and told the user to pull a model that isn't an Ollama one.
+        var sub = document.getElementById('headSub');
+        var model = d.configuredModel || 'not configured';
+        if(d.provider === 'groq'){
+          sub.textContent = (d.reachable && d.modelAvailable)
+            ? 'General guidance · not a diagnosis · via Groq (' + model + ')'
+            : (d.hint || 'AI assistant unavailable — the server rejected the Groq key.');
+        } else if(d.provider === 'ollama'){
+          sub.textContent = (d.ollamaReachable && d.modelPulled)
+            ? 'General guidance · not a diagnosis · running locally via Ollama (' + model + ')'
+            : (d.ollamaReachable ? 'Model not installed — run: ollama pull ' + model
+                                 : (d.hint || 'Local AI offline — start Ollama, then: ollama pull ' + model));
+        } else {
+          sub.textContent = 'AI assistant is not configured on this server.';
+        }
+      })
+      .catch(function(){});
+  }
+
+  document.getElementById('sendBtn').onclick = send;
+  document.getElementById('msgInput').addEventListener('keydown', function(e){ if(e.key==='Enter') send(); });
+
+  // ---------------- Boot ----------------
+  document.getElementById('sideHead').textContent = IS_DOCTOR ? 'Your patients' : 'Conversations';
+
+  if(TOKEN){
+    fetch(PULSEIQ_API + '/api/auth/me', {headers: authHeaders()})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){ ME_ID = d.user.id; })
+      .catch(function(){ TOKEN = null; });
+  }
+  renderSigninNote();
+
+  // Keep the conversation list fresh while the doctor sits on another thread.
+  if(TOKEN) setInterval(loadContacts, 7000);
+
+  loadContacts().then(function(){
+    // Deliberately do NOT auto-open a person's conversation: doing so marks it
+    // read on arrival, so unread badges would never be seen. Patients land on
+    // the AI (which has no unread state); doctors land on the list itself.
+    if(SHOW_AI) selectAi();
+    else renderThread();
+  });
+</script>
+</body>
+</html>

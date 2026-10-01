@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — Medicines</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  .med-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:start;}
+
+  /* Interactive week strip — click any past/today date to view & edit it */
+  .cal-bar{display:flex;align-items:center;gap:9px;margin-bottom:18px;}
+  .cal-nav{background:var(--glass);border:1px solid var(--glass-border-2);color:var(--ink-300);
+    width:34px;height:56px;border-radius:12px;font-size:14px;cursor:pointer;flex-shrink:0;}
+  .cal-nav:hover:not(:disabled){color:var(--ink-0);border-color:rgba(34,229,240,0.4);}
+  .cal-nav:disabled{opacity:.3;cursor:default;}
+  .cal-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;flex:1;}
+  .cal-day{background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+    padding:9px 0;text-align:center;cursor:pointer;transition:all .12s;position:relative;}
+  .cal-day:hover{border-color:rgba(34,229,240,0.45);}
+  .cal-day .dw{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-600);font-weight:800;}
+  .cal-day .dn{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:800;color:var(--ink-200);margin-top:2px;}
+  .cal-day.on{background:rgba(34,229,240,0.12);border-color:rgba(34,229,240,0.55);}
+  .cal-day.on .dn{color:var(--cyan-bright);}
+  .cal-day.today .dw{color:var(--cyan-bright);}
+  /* Future days are browsable now, so they read as "ahead" rather than
+     disabled: dimmed, but clearly still a target. */
+  .cal-day.future{opacity:.55;}
+  .cal-day.future.on{opacity:1;}
+  .cal-day .pip{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);display:flex;gap:3px;}
+  .cal-day .pip i{width:4px;height:4px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);}
+  .cal-day .pip i.miss{background:var(--ink-600);box-shadow:none;}
+  .day-title{display:flex;align-items:baseline;gap:9px;}
+  .day-title .badge-day{font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:99px;
+    background:rgba(34,229,240,0.12);color:var(--cyan-bright);}
+
+  .med-item{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:15px 17px;margin-bottom:11px;position:relative;}
+  .med-item .row1{display:flex;align-items:baseline;gap:9px;}
+  .med-item .nm{font-size:14px;font-weight:800;color:var(--ink-0);}
+  .med-item .ds{font-size:11.5px;color:var(--cyan-bright);font-weight:700;}
+  .med-item .nt{font-size:11px;color:var(--ink-500);margin-top:3px;}
+  .med-del{position:absolute;top:12px;right:12px;background:transparent;border:none;color:var(--ink-600);
+    font-size:15px;cursor:pointer;padding:2px 6px;border-radius:6px;opacity:0;transition:opacity .12s;}
+  .med-item:hover .med-del{opacity:1;}
+  .med-del:hover{background:rgba(255,92,114,0.16);color:var(--red);}
+
+  .slots{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px;}
+  .slot{display:flex;align-items:center;gap:7px;background:var(--wash-1);border:1px solid var(--glass-border-2);
+    border-radius:10px;padding:7px 12px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;
+    font-weight:700;color:var(--ink-300);}
+  .slot:hover{border-color:rgba(34,229,240,0.4);}
+  .slot .tickbox{width:15px;height:15px;border-radius:5px;border:1.5px solid var(--ink-600);display:flex;
+    align-items:center;justify-content:center;font-size:10px;color:transparent;}
+  .slot.done{background:rgba(60,230,133,0.1);border-color:rgba(60,230,133,0.4);color:var(--green);}
+  .slot.done .tickbox{background:var(--green);border-color:var(--green);color:var(--screen);}
+  /* Chrome draws its own clock glyph inside <input type="time">, in a near-black
+     grey that all but disappears on this background. Supplying a background
+     image replaces that glyph, so the picker is visible and matches the theme. */
+  input[type="time"]::-webkit-calendar-picker-indicator{
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ff5c72%22%20stroke-width%3D%222.2%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229%22%2F%3E%3Cpolyline%20points%3D%2212%207%2012%2012%2015.5%2014%22%2F%3E%3C%2Fsvg%3E");
+    background-size:15px 15px;background-repeat:no-repeat;background-position:center;
+    width:16px;height:16px;opacity:1;cursor:pointer;padding:0;margin-left:4px;}
+  input[type="time"]::-webkit-calendar-picker-indicator:hover{filter:brightness(1.25);}
+  /* A dose that has not come round yet: shown, but not tickable. */
+  .slot.pending{opacity:.6;cursor:default;}
+  .slot.pending:hover{border-color:var(--glass-border-2);}
+  /* A past slot that was never logged. */
+  .slot.missed{border-color:rgba(255,92,114,0.35);color:var(--red,#ff5c72);}
+  .slot.missed .tickbox{border-color:rgba(255,92,114,0.5);}
+
+  .adh-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .adh-wrap .gauge{width:140px;height:140px;margin-bottom:8px;}
+  .adh-sub{font-size:11.5px;color:var(--ink-500);line-height:1.6;}
+
+  .heat{display:grid;grid-template-columns:repeat(15,1fr);gap:4px;margin-top:12px;}
+  .heat i{aspect-ratio:1;border-radius:3px;background:var(--wash-2);}
+  .heat i.l1{background:rgba(34,229,240,0.28);} .heat i.l2{background:rgba(34,229,240,0.55);}
+  .heat i.l3{background:rgba(34,229,240,0.85);}
+
+  .add-form{display:none;}
+  .add-form.on{display:block;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-500);margin-bottom:6px;font-weight:700;}
+  .field input{width:100%;background:var(--wash-1);border:1px solid var(--glass-border);border-radius:11px;
+    padding:11px 13px;font-size:12.5px;font-family:'Inter';color:var(--ink-0);outline:none;box-sizing:border-box;}
+  .field input:focus{border-color:rgba(34,229,240,0.5);}
+  .time-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .time-chip{display:flex;align-items:center;gap:6px;background:rgba(34,229,240,0.1);border:1px solid rgba(34,229,240,0.35);
+    color:var(--cyan-bright);font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;padding:6px 10px;border-radius:9px;}
+  .time-chip button{background:transparent;border:none;color:var(--cyan-bright);cursor:pointer;font-size:13px;padding:0;}
+  .err-note{display:none;font-size:11.5px;color:#ffb3bd;background:rgba(255,92,114,0.1);
+    border:1px solid rgba(255,92,114,0.35);padding:9px 12px;border-radius:10px;margin-bottom:12px;}
+  .err-note.on{display:block;}
+  .empty{text-align:center;padding:38px 20px;color:var(--ink-500);font-size:12.5px;line-height:1.7;}
+  .empty .ic{font-size:32px;margin-bottom:9px;}
+
+  /* Phone. Two columns become one, and the week strip keeps seven days by
+     shrinking rather than overflowing. */
+  @media(max-width:900px){
+    .med-grid{grid-template-columns:1fr;gap:14px;}
+    .cal-strip{gap:4px;}
+    .cal-day{padding:11px 2px;min-height:52px;display:flex;flex-direction:column;justify-content:center;}
+    .cal-nav{min-width:30px;padding:0 4px;}
+    .cal-day .dw{font-size:8.5px;}
+    .cal-day .dn{font-size:13px;}
+    .heat{grid-template-columns:repeat(10,1fr);}
+    .slots{flex-wrap:wrap;}
+    .slot{min-height:38px;}          /* thumb-sized */
+    .add-form input,.add-form select{font-size:16px;}
+    .field input{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="rail" data-active="medicines"></div>
+  <div class="main">
+    <div class="topbar">
+      <div class="brand">Pulse<span>IQ</span></div>
+      <div class="grow"></div>
+      <span id="backendBadge" class="badge" style="margin-right:10px;">● Connecting…</span>
+      <div class="clock" id="clock">--:--:--</div>
+    </div>
+    <div class="content">
+      <div class="page-head"><h1>Medicines</h1><span class="sub" id="pageSub">Your schedule and adherence</span></div>
+
+      <div id="signinNote"></div>
+
+      <div class="cal-bar">
+        <button class="cal-nav" id="calPrev" title="Previous week">◀</button>
+        <div class="cal-strip" id="calStrip"></div>
+        <button class="cal-nav" id="calNext" title="Next week">▶</button>
+      </div>
+
+      <div class="med-grid">
+        <div class="card">
+          <div style="display:flex;align-items:center;">
+            <div>
+              <div class="day-title"><h3 style="margin:0;" id="dayHeading">Doses</h3><span class="badge-day" id="dayBadge" style="display:none;">Today</span></div>
+              <div class="card-sub" style="margin:2px 0 0;" id="todayDate">—</div>
+            </div>
+            <button class="btn primary" id="btnAdd" style="margin-left:auto;">+ Add Medicine</button>
+          </div>
+
+          <div class="add-form" id="addForm" style="margin-top:16px;">
+            <div class="err-note" id="addErr"></div>
+            <div class="field"><label>Medicine name</label><input id="mName" placeholder="e.g. Amlodipine"></div>
+            <div class="field"><label>Dosage</label><input id="mDose" placeholder="e.g. 5mg"></div>
+            <div class="field">
+              <label>Reminder times</label>
+              <div class="time-row">
+                <input type="time" id="mTime" style="width:150px;">
+                <button class="btn" id="btnAddTime" style="background:var(--glass);border:1px solid var(--glass-border-2);color:var(--ink-200);">+ Add time</button>
+              </div>
+              <div class="time-row" id="timeChips" style="margin-top:9px;"></div>
+            </div>
+            <div class="field"><label>Notes (optional)</label><input id="mNotes" placeholder="e.g. after dinner"></div>
+            <div style="display:flex;gap:9px;">
+              <button class="btn primary" id="btnSave">Save Medicine</button>
+              <button class="btn" id="btnCancel" style="background:var(--glass);border:1px solid var(--glass-border-2);color:var(--ink-300);">Cancel</button>
+            </div>
+          </div>
+
+          <div id="medList" style="margin-top:16px;"></div>
+        </div>
+
+        <div>
+          <div class="card">
+            <h3>Adherence</h3>
+            <div class="card-sub" id="adhWindow">Last 30 days</div>
+            <div class="adh-wrap">
+              <div class="gauge">
+                <svg viewBox="0 0 120 120">
+                  <circle class="track" cx="60" cy="60" r="50"/>
+                  <circle class="fill cyan" id="adhArc" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314"/>
+                </svg>
+                <div class="center"><div class="v" id="adhPct">—</div><div class="l">adherence</div></div>
+              </div>
+              <div class="adh-sub" id="adhDetail">No doses scheduled yet</div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px;">
+            <h3>Last 30 Days</h3>
+            <div class="card-sub">Doses logged per day</div>
+            <div class="heat" id="heat"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="status-bar">
+      <span>SYS: <b>OPERATIONAL</b></span>
+      <span>PulseIQ · Explainable Cuffless BP Monitoring · Demo Mode</span>
+    </div>
+  </div>
+</div>
+<script src="shared/shell.js?v=16"></script>
+<script>
+  function tick(){ var d=new Date(); document.getElementById('clock').textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':'); }
+  setInterval(tick,1000); tick();
+
+  var PULSEIQ_API = (window.PULSEIQ_API_BASE || (location.port === '8090' ? 'http://localhost:8001' : location.origin));
+  var TOKEN = localStorage.getItem('pulseiq_token');
+  var PENDING_TIMES = [];
+
+  // ---- Calendar state ---------------------------------------------------
+  function iso(d){
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function fromIso(s){ var p=s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function startOfWeek(d){                    // weeks run Monday → Sunday
+    var x = new Date(d), day = (x.getDay() + 6) % 7;
+    x.setDate(x.getDate() - day); x.setHours(0,0,0,0); return x;
+  }
+  var TODAY_ISO = iso(new Date());
+  var SELECTED = TODAY_ISO;
+  var WEEK_START = startOfWeek(new Date());
+  var HISTORY_BY_DAY = {};                     // day -> doses logged, for the pips
+
+  function H(){ return TOKEN ? Object.assign({'Content-Type':'application/json'},{'Authorization':'Bearer '+TOKEN}) : {'Content-Type':'application/json'}; }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function setBadge(ok,l){ var b=document.getElementById('backendBadge'); if(!b)return;
+    if(ok){b.textContent='● '+(l||'Connected');b.style.color='var(--green)';b.style.borderColor='rgba(52,211,153,0.4)';}
+    else {b.textContent='● '+(l||'Offline');b.style.color='var(--ink-500)';} }
+  function showErr(m){ var e=document.getElementById('addErr'); e.textContent=m||''; e.className='err-note'+(m?' on':''); }
+  function pretty(t){
+    var p=t.split(':'), h=parseInt(p[0],10), ap=h>=12?'PM':'AM';
+    var hh=h%12; if(hh===0) hh=12;
+    return hh+':'+p[1]+' '+ap;
+  }
+
+  function renderTimeChips(){
+    document.getElementById('timeChips').innerHTML = PENDING_TIMES.map(function(t,i){
+      return '<span class="time-chip">'+t+'<button data-rm="'+i+'">×</button></span>';
+    }).join('');
+    document.querySelectorAll('[data-rm]').forEach(function(b){
+      b.addEventListener('click', function(){
+        PENDING_TIMES.splice(parseInt(this.getAttribute('data-rm'),10),1); renderTimeChips();
+      });
+    });
+  }
+
+  var DAYS_SHORT = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+  function renderCalendar(){
+    var strip = document.getElementById('calStrip');
+    var html = '';
+    for(var i=0;i<7;i++){
+      var d = new Date(WEEK_START); d.setDate(d.getDate()+i);
+      var key = iso(d);
+      var future = key > TODAY_ISO;
+      var cls = 'cal-day' + (key===SELECTED?' on':'') + (key===TODAY_ISO?' today':'') + (future?' future':'');
+      var n = HISTORY_BY_DAY[key] || 0;
+      var pips = '';
+      if(!future && n > 0){
+        pips = '<div class="pip">' + Array(Math.min(n,4)).fill('<i></i>').join('') + '</div>';
+      }
+      html += '<div class="'+cls+'" data-day="'+key+'">' +
+              '<div class="dw">'+DAYS_SHORT[i]+'</div><div class="dn">'+d.getDate()+'</div>'+pips+'</div>';
+    }
+    strip.innerHTML = html;
+    // Every day in the strip is selectable, including future ones — a future
+    // day shows what is scheduled ahead, it just can't be logged.
+    strip.querySelectorAll('.cal-day').forEach(function(el){
+      el.addEventListener('click', function(){
+        SELECTED = this.getAttribute('data-day');
+        load();
+      });
+    });
+    document.getElementById('calNext').disabled = false;
+  }
+
+  document.getElementById('calPrev').onclick = function(){
+    WEEK_START.setDate(WEEK_START.getDate()-7); renderCalendar();
+  };
+  document.getElementById('calNext').onclick = function(){
+    WEEK_START.setDate(WEEK_START.getDate()+7); renderCalendar();
+  };
+
+  function renderMeds(d){
+    var el = document.getElementById('medList');
+    var isToday  = d.selectedDay === d.today;
+    var isFuture = d.selectedDay > d.today;
+    var isPast   = d.selectedDay < d.today;
+    var sd = fromIso(d.selectedDay);
+    document.getElementById('dayHeading').textContent =
+      isToday ? "Today's Doses" : (isFuture ? 'Scheduled Doses' : 'Doses');
+    var badge = document.getElementById('dayBadge');
+    badge.style.display = isToday ? 'inline-block' : 'none';
+    document.getElementById('todayDate').textContent =
+      sd.toLocaleDateString([], {weekday:'long', day:'numeric', month:'long', year:'numeric'}) +
+      (isToday  ? ' · tap a time to mark it taken'
+       : isFuture ? ' · upcoming — not due yet'
+       : ' · past day — tap a time to log it late');
+
+    // A reminder can only be created for today onwards, so the add form is
+    // hidden while looking backwards.
+    var addBtn = document.getElementById('btnAdd');
+    if(addBtn){
+      addBtn.style.display = isPast ? 'none' : '';
+      if(isPast){
+        var form = document.getElementById('addForm');
+        if(form) form.classList.remove('on');
+      }
+    }
+
+    if(!d.medicines.length){
+      el.innerHTML = '<div class="empty"><div class="ic">💊</div>No medicines added yet.<br>' +
+                     'Add one to start tracking doses and adherence.</div>';
+      return;
+    }
+    var scheduled = d.medicines.filter(function(m){ return m.scheduledOnDay; });
+    if(!scheduled.length){
+      // Honest reason rather than a dead end: these medicines were added after
+      // this date, so there is genuinely no dose history to show for it.
+      var added = d.medicines.map(function(m){ return m.createdAt; })
+                             .filter(function(x){ return x != null; }).sort();
+      var since = added.length ? new Date(added[0]*1000)
+                    .toLocaleDateString([], {day:'numeric', month:'long', year:'numeric'}) : null;
+      el.innerHTML = '<div class="empty"><div class="ic">📅</div>' +
+                     'No doses were scheduled on this date.<br>' +
+                     (since ? 'Your earliest reminder starts ' + esc(since) + '.'
+                            : 'Your reminders start after this date.') + '</div>';
+      return;
+    }
+    el.innerHTML = scheduled.map(function(m){
+      var slots = m.times.map(function(t){
+        var done = m.takenOnDay.indexOf(t) > -1;
+        // Future doses are shown but not tickable; past ones that were never
+        // logged are marked missed rather than left looking merely untouched.
+        var cls = done ? ' done' : (isFuture ? ' pending' : (isPast ? ' missed' : ''));
+        var mark = done ? '✓' : (isFuture ? '' : (isPast ? '✕' : ''));
+        return '<div class="slot'+cls+'" data-med="'+m.id+'" data-slot="'+t+'" data-done="'+(done?1:0)+'">' +
+               '<span class="tickbox">'+mark+'</span>'+pretty(t)+'</div>';
+      }).join('');
+      return '<div class="med-item">' +
+        (isPast ? '' : '<button class="med-del" data-del="'+m.id+'" title="Remove">✕</button>') +
+        '<div class="row1"><span class="nm">'+esc(m.name)+'</span><span class="ds">'+esc(m.dosage)+'</span></div>' +
+        (m.notes ? '<div class="nt">'+esc(m.notes)+'</div>' : '') +
+        '<div class="slots">'+slots+'</div></div>';
+    }).join('');
+
+    if(!isFuture){
+      el.querySelectorAll('.slot').forEach(function(s){
+        s.addEventListener('click', function(){
+          toggleDose(this.getAttribute('data-med'), this.getAttribute('data-slot'), this.getAttribute('data-done') !== '1');
+        });
+      });
+    }
+    el.querySelectorAll('[data-del]').forEach(function(b){
+      b.addEventListener('click', function(){ removeMed(this.getAttribute('data-del')); });
+    });
+  }
+
+  function renderAdherence(d){
+    var a = d.adherence;
+    document.getElementById('adhWindow').textContent = 'Last ' + a.windowDays + ' days';
+    if(a.percent === null){
+      document.getElementById('adhPct').textContent = '—';
+      document.getElementById('adhArc').setAttribute('stroke-dashoffset', 314);
+      document.getElementById('adhDetail').textContent = 'No doses scheduled yet';
+    } else {
+      document.getElementById('adhPct').textContent = Math.round(a.percent) + '%';
+      document.getElementById('adhArc').setAttribute('stroke-dashoffset', (314 * (1 - a.percent/100)).toFixed(1));
+      document.getElementById('adhDetail').innerHTML =
+        '<b style="color:var(--ink-0);">' + a.taken + '</b> of <b style="color:var(--ink-0);">' + a.expected + '</b> scheduled doses logged';
+    }
+    var max = Math.max.apply(null, d.history.map(function(h){ return h.taken; }).concat([1]));
+    HISTORY_BY_DAY = {};
+    d.history.forEach(function(h){ HISTORY_BY_DAY[h.day] = h.taken; });
+    document.getElementById('heat').innerHTML = d.history.map(function(h){
+      var lvl = h.taken === 0 ? '' : (h.taken/max > 0.66 ? 'l3' : (h.taken/max > 0.33 ? 'l2' : 'l1'));
+      return '<i class="'+lvl+'" data-day="'+h.day+'" style="cursor:pointer;" title="'+h.day+': '+h.taken+' dose(s) — click to open"></i>';
+    }).join('');
+    // Clicking a heatmap cell jumps the calendar to that day.
+    document.getElementById('heat').querySelectorAll('[data-day]').forEach(function(c){
+      c.addEventListener('click', function(){
+        SELECTED = this.getAttribute('data-day');
+        WEEK_START = startOfWeek(fromIso(SELECTED));
+        load();
+      });
+    });
+    renderCalendar();
+  }
+
+  function load(){
+    if(!TOKEN){
+      setBadge(false,'Guest');
+      document.getElementById('signinNote').innerHTML =
+        '<div style="background:rgba(255,200,87,0.08);border:1px solid rgba(255,200,87,0.3);color:var(--amber);' +
+        'font-size:11.5px;padding:11px 15px;border-radius:11px;margin-bottom:16px;line-height:1.6;">' +
+        'You\'re browsing as a guest, so reminders can\'t be saved. ' +
+        '<a href="login.html" style="color:var(--cyan-bright);font-weight:700;">Sign in or create an account</a> to track your medicines.</div>';
+      document.getElementById('btnAdd').disabled = true;
+      document.getElementById('medList').innerHTML =
+        '<div class="empty"><div class="ic">🔒</div>Sign in to add medicines and track adherence.</div>';
+      renderCalendar();
+      return;
+    }
+    fetch(PULSEIQ_API + '/api/medicines?day=' + encodeURIComponent(SELECTED), {headers:H()})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        setBadge(true,'Connected');
+        document.getElementById('pageSub').textContent =
+          d.medicines.length + ' active medicine' + (d.medicines.length===1?'':'s');
+        renderMeds(d); renderAdherence(d);
+      })
+      .catch(function(){
+        setBadge(false,'Offline');
+        document.getElementById('medList').innerHTML =
+          '<div class="empty"><div class="ic">⚠</div>Backend not reachable at ' + PULSEIQ_API +
+          '<br>Start it with: python -m uvicorn main:app --port 8001</div>';
+      });
+  }
+
+  function toggleDose(id, slot, taken){
+    // Logs against the day currently selected in the calendar, not just today.
+    fetch(PULSEIQ_API + '/api/medicines/' + id + '/dose', {
+      method:'POST', headers:H(), body: JSON.stringify({slot:slot, taken:taken, day:SELECTED})
+    }).then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(){ load(); })
+      .catch(function(){ setBadge(false,'Offline'); });
+  }
+
+  function removeMed(id){
+    if(!confirm('Remove this medicine and its dose history?')) return;
+    fetch(PULSEIQ_API + '/api/medicines/' + id, {method:'DELETE', headers:H()})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(){ load(); })
+      .catch(function(){});
+  }
+
+  document.getElementById('btnAdd').onclick = function(){
+    document.getElementById('addForm').classList.add('on'); showErr('');
+  };
+  document.getElementById('btnCancel').onclick = function(){
+    document.getElementById('addForm').classList.remove('on');
+    PENDING_TIMES = []; renderTimeChips(); showErr('');
+    ['mName','mDose','mNotes'].forEach(function(id){ document.getElementById(id).value=''; });
+  };
+  document.getElementById('btnAddTime').onclick = function(){
+    var t = document.getElementById('mTime').value;
+    if(!t){ showErr('Pick a time first.'); return; }
+    if(PENDING_TIMES.indexOf(t) > -1){ showErr('That time is already added.'); return; }
+    PENDING_TIMES.push(t); PENDING_TIMES.sort(); renderTimeChips(); showErr('');
+  };
+  document.getElementById('btnSave').onclick = function(){
+    showErr('');
+    var name = document.getElementById('mName').value.trim();
+    if(!name){ showErr('Enter a medicine name.'); return; }
+    if(!PENDING_TIMES.length){ showErr('Add at least one reminder time.'); return; }
+    fetch(PULSEIQ_API + '/api/medicines', {
+      method:'POST', headers:H(),
+      body: JSON.stringify({
+        name: name,
+        dosage: document.getElementById('mDose').value.trim(),
+        times: PENDING_TIMES,
+        notes: document.getElementById('mNotes').value.trim()
+      })
+    })
+      .then(function(r){ return r.json().then(function(d){ return {ok:r.ok, d:d}; }); })
+      .then(function(res){
+        if(!res.ok){ showErr(res.d.detail || 'Could not save.'); return; }
+        document.getElementById('btnCancel').click();
+        load();
+      })
+      .catch(function(){ showErr('Backend not reachable at ' + PULSEIQ_API); });
+  };
+
+  load();
+</script>
+</body>
+</html>

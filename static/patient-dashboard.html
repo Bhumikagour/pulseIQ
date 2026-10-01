@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — Dashboard</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  .dash-grid{display:grid;grid-template-columns:1.55fr 0.85fr;gap:18px;margin-bottom:18px;
+    align-items:start;}
+  .next-med-card{align-self:start;}
+  .top-row{display:grid;grid-template-columns:minmax(360px,0.95fr) 1.25fr;gap:18px;margin-bottom:18px;align-items:stretch;}
+  .top-row .bp-hero{margin:0;}
+  .side-tiles{display:grid;grid-template-rows:repeat(3,1fr);gap:14px;min-width:0;}
+  .side-tiles .stat-tile.mt{display:grid;grid-template-columns:minmax(190px,0.9fr) 1.4fr;align-items:center;gap:14px;padding:14px 18px;}
+  .side-tiles .stat-tile.mt .top{margin:0;}
+  .side-tiles .stat-tile.mt .sp{width:55%;height:40px;}
+  .sp-cap{position:relative;}
+  .sp-cap span{position:absolute;right:0;bottom:-16px;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--ink-600);}
+  .bh-reason{font-size:11.5px;line-height:1.6;color:var(--ink-300);text-align:center;margin:10px auto 0;max-width:380px;padding-top:10px;border-top:1px solid var(--glass-border);}
+  .bh-reason b{color:var(--ink-0);}
+  .bh-why{font-size:11px;line-height:1.55;color:var(--ink-400);text-align:center;margin:10px auto 0;max-width:320px;}
+  .bh-why b{color:var(--ink-0);}
+  @media(max-width:1100px){.top-row{grid-template-columns:1fr;}}
+  @media(max-width:700px){.side-tiles .stat-tile.mt{grid-template-columns:1fr;}}
+  .right-col{display:flex;flex-direction:column;gap:18px;min-width:0;}
+  .right-col .next-med-card{align-self:stretch;}
+  /* The popover must sit above the content cards, which create their own
+     stacking contexts via backdrop-filter. */
+  .topbar{position:relative;z-index:200;}
+  .notif-wrap{position:relative;}
+  .notif-btn{cursor:pointer;position:relative;user-select:none;}
+  .nb-dot{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;
+    background:#22e5f0;box-shadow:0 0 9px rgba(34,229,240,0.9);display:none;}
+  .nb-dot.on{display:block;}
+  .notif-pop{position:absolute;top:calc(100% + 10px);right:0;width:340px;z-index:120;display:none;
+    background:var(--panel-solid);border:1px solid var(--glass-border-2);border-radius:14px;overflow:hidden;
+    box-shadow:0 30px 70px -26px rgba(0,0,0,0.95);}
+  .notif-pop.on{display:block;}
+  .np-head{padding:12px 14px;font-size:11px;font-weight:800;color:var(--ink-0);letter-spacing:0.04em;
+    text-transform:uppercase;border-bottom:1px solid var(--glass-border);display:flex;
+    justify-content:space-between;align-items:center;}
+  .np-head span{font-size:10px;color:var(--cyan-bright);font-weight:700;text-transform:none;letter-spacing:0;}
+  .np-list{max-height:340px;overflow-y:auto;}
+  .np-item{display:flex;gap:11px;padding:12px 14px;text-decoration:none;
+    border-bottom:1px solid var(--wash-2);transition:background .13s;}
+  .np-item:hover{background:rgba(255,255,255,0.045);}
+  .np-item .i{font-size:16px;line-height:1.2;flex-shrink:0;}
+  .np-item > span:last-child{display:block;min-width:0;}
+  .np-item .t{display:block;font-size:12px;font-weight:700;color:var(--ink-0);margin-bottom:3px;line-height:1.35;}
+  .np-item .b{display:block;font-size:11px;color:var(--ink-500);line-height:1.45;}
+  .np-item.new .t{color:var(--cyan-bright);}
+  .np-empty{padding:26px 16px;text-align:center;font-size:11.5px;color:var(--ink-600);line-height:1.6;}
+
+
+  .signal-card{position:relative;}
+  .signal-card .top{display:flex;justify-content:space-between;align-items:center;}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);display:inline-block;margin-right:6px;animation:blink 1.4s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .signal-wave{height:132px;position:relative;overflow:hidden;margin:16px 0 14px;border-radius:12px;
+    background:radial-gradient(120% 140% at 50% 0%,rgba(34,229,240,0.07),rgba(0,0,0,0) 70%),var(--screen);}
+  /* Faint monitor grid behind the trace. */
+  .signal-wave::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,0.045) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,0.045) 1px,transparent 1px);
+    background-size:100% 26px, 34px 100%;}
+  /* Fade the trace out at both edges so the scroll has no hard seam. */
+  .signal-wave .vp{position:absolute;inset:0;overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);
+            mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%);}
+  .signal-wave svg{position:absolute;top:0;left:0;height:100%;width:100%;}
+  @keyframes pw{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .signal-wave .wv-line{filter:drop-shadow(0 0 7px rgba(34,229,240,0.55)) drop-shadow(0 0 18px rgba(34,229,240,0.25));}
+  .sig-note{font-size:10.5px;line-height:1.5;color:var(--ink-600);margin:-4px 0 12px;}
+  .sig-meta{display:flex;gap:16px;font-size:10px;color:var(--ink-600);letter-spacing:0.04em;
+    text-transform:uppercase;font-weight:700;margin-bottom:12px;}
+  .sig-meta b{color:var(--cyan-bright);font-family:'JetBrains Mono',monospace;font-size:11.5px;
+    letter-spacing:0;text-transform:none;}
+  .sq-row{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--ink-400);margin-bottom:6px;}
+  .sq-row b{color:var(--ink-0);}
+
+  .next-med{width:100%;background:var(--wash-1);border:1px solid var(--glass-border);border-radius:12px;padding:12px 14px;text-align:left;}
+  .next-med .l{font-size:9.5px;color:var(--ink-500);text-transform:uppercase;letter-spacing:0.05em;font-weight:700;margin-bottom:4px;}
+  .next-med .n{font-size:13px;font-weight:700;color:var(--ink-0);}
+  .next-med .t{font-size:11px;color:var(--ink-500);}
+  .next-med a{float:right;color:var(--cyan-bright);font-size:11px;font-weight:700;}
+
+  @media(max-width:900px){
+    .dash-grid{grid-template-columns:1fr;gap:14px;}
+    .next-med-card{align-self:auto;}
+    .sig-meta{flex-wrap:wrap;gap:10px 16px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="rail" data-active="home"></div>
+  <div class="main">
+    <div class="topbar">
+      <h1 id="greeting" style="font-size:16px;font-weight:800;color:var(--ink-0);margin:0;">Good morning, Rohit 👋</h1>
+      <span class="sub" style="font-size:11.5px;color:var(--ink-500);margin-left:12px;">Here's your health overview</span>
+      <div class="grow"></div>
+      <span id="backendBadge" class="badge" style="margin-right:10px;">● Connecting…</span>
+      <div class="clock" id="clock">--:--:--</div>
+      <div class="notif-wrap">
+        <div class="stat-chip notif-btn" id="notifBtn" title="Notifications">🔔<span class="nb-dot" id="notifDot"></span></div>
+        <div class="notif-pop" id="notifPop">
+          <div class="np-head">Notifications <span id="notifCount"></span></div>
+          <div class="np-list" id="notifList"><div class="np-empty">Loading…</div></div>
+        </div>
+      </div>
+      <div class="avatar" id="topAvatar" title="Account" style="background:var(--glass-strong);border:1px solid var(--glass-border-2);width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--ink-200);cursor:pointer;">–</div>
+    </div>
+
+    <div class="content">
+      <!-- v3: blood pressure shown once (gauge card, top left); the other vitals sit beside it -->
+      <div class="top-row">
+        <!-- v3: BP gauge hero — where the latest reading sits on the adult ranges. -->
+        <div class="bp-hero">
+          <!-- v3: still heart blended into the top-right corner, cropped by the card edge -->
+          <div class="bh-heart" aria-hidden="true"><img src="shared/img/heart-hd.webp" alt=""></div>
+          <div class="bh-top"><div><div class="bh-kick">Cuffless · Explainable</div>
+            <h3>Your blood pressure,<br><span>read from your pulse.</span></h3></div>
+</div>
+          <div class="bh-gauge" id="bpGauge"></div>
+          <div class="pa-legend" id="bpLegend"></div>
+          <div class="bh-why" id="bpWhy"></div>
+          <div class="bh-reason" id="bpReason"></div>
+        </div>
+        <div class="side-tiles">
+        <!-- v3: every tile is computed from the recording. Sparklines are the real
+             per-segment AI estimates (BP, MAP) and the real pulse trace (HR). -->
+        <div class="stat-tile mt hr"><div class="top"><div class="mi" data-pa-icon="heart"></div><div class="lbl">Heart Rate<small>from your pulse</small></div></div>
+          <div class="row"><div><div class="v" id="tileHR">—</div><span class="tag" style="background:var(--wash-2);color:var(--ink-400);">beats per minute</span></div><div class="sp sp-cap"><div id="spHR" style="height:100%;" title="A few real heartbeats from your recording, not a heart-rate trend"></div><span>your pulse wave</span></div></div></div>
+        <div class="stat-tile mt map"><div class="top"><div class="mi" data-pa-icon="drop"></div><div class="lbl">Mean Arterial Pressure<small>average pressure per beat</small></div></div>
+          <div class="row"><div><div class="v" id="tileMAP">—</div><span class="tag" style="background:var(--wash-2);color:var(--ink-400);">model estimate</span></div><div class="sp sp-cap"><div id="spMAP" style="height:100%;" title="The AI's MAP estimate for every segment of your recording"></div><span id="spMAPcap">across your recording</span></div></div></div>
+        <div class="stat-tile mt sq"><div class="top"><div class="mi" data-pa-icon="signal"></div><div class="lbl">Signal Quality<small>how clean the pulse is</small></div></div>
+          <div class="row"><div><div class="v" id="tileGap">—</div><span class="tag" id="tileGapTag" style="background:var(--wash-2);color:var(--ink-400);">beat-to-beat match</span></div>
+          <div class="sp" style="display:flex;align-items:flex-end;padding-bottom:6px;"><div class="pbar" style="width:100%;"><div class="fill" id="sqTileBar" style="width:0%;"></div></div></div></div></div>
+        </div>
+      </div>
+
+
+      <div class="dash-grid">
+        <div class="card signal-card glow-cyan">
+          <div class="top">
+            <div><h3 style="margin:0;">Recorded Pulse Signal (PPG)</h3><div class="card-sub" style="margin:2px 0 0;" id="ppgSub">Replaying the recording in real time · segment <b id="ppgSegNow">—</b></div></div>
+          </div>
+          <div class="signal-wave">
+            <div class="vp">
+              <svg id="ppgSvg" viewBox="0 0 2000 120" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="ppgStroke" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%"   stop-color="#22e5f0"/>
+                    <stop offset="50%"  stop-color="#7bf5fb"/>
+                    <stop offset="100%" stop-color="#22e5f0"/>
+                  </linearGradient>
+                  <linearGradient id="ppgFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%"   stop-color="#22e5f0" stop-opacity="0.30"/>
+                    <stop offset="100%" stop-color="#22e5f0" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path id="ppgArea" fill="url(#ppgFill)" stroke="none" d=""/>
+                <g id="ppgSegs"></g>
+                <path id="ppgLine" class="wv-line" fill="none" stroke="url(#ppgStroke)"
+                      stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d=""/>
+              </svg>
+            </div>
+          </div>
+          <div class="sig-meta">
+            <span>Heart rate <b id="ppgHr">—</b></span>
+            <span>Sampling <b id="ppgFs">—</b></span>
+            <span>Window <b id="ppgWin">—</b></span>
+          </div>
+          <div class="sig-note">Filtered (0.5–8 Hz) and scaled 0–1, exactly as fed to the AI model. Played back in order, every beat as recorded; dashed lines mark where one 12-second segment ends and the next begins.</div>
+          <div class="sq-row"><span>Signal quality <span style="color:var(--ink-600);text-transform:none;">· beat-template match</span></span><b id="sqVal">—</b></div>
+          <div class="pbar"><div class="fill" id="sqBar" style="width:0%;"></div></div>
+        </div>
+
+        <!-- The Model Reliability card was removed at the user's request. Next
+             Medicine used to live inside it and is a separate working feature,
+             so it survives here as its own card rather than being deleted with
+             the panel that happened to contain it. -->
+        <div class="right-col">
+        <div class="card next-med-card">
+          <h3>Next Medicine</h3>
+          <div class="card-sub" style="margin:2px 0 0;">From your reminder schedule</div>
+          <div class="next-med" id="nextMed" style="margin-top:14px;">
+            <div class="n" id="nextMedName">—</div>
+            <div class="t" id="nextMedTime"></div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <!-- The Backend Model Prediction card was removed at the user's request.
+           This slot stays so an unlinked account still gets its honest empty
+           state, which the card used to host. -->
+      <div id="noDataSlot"></div>
+
+      <div class="card">
+        <h3>Quick Actions</h3>
+        <div class="qa-grid" id="qaHub"></div>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <span>SYS: <b>OPERATIONAL</b> &nbsp; ROLE: <b>Patient</b></span>
+      <span>PulseIQ · Explainable Cuffless BP Monitoring · Demo Mode</span>
+    </div>
+  </div>
+</div>
+
+<script src="shared/shell.js?v=16"></script>
+<script src="shared/why.js?v=16"></script>
+<script>
+  // Greeting and avatar come from the signed-in account, never a fixed name.
+  function partOfDay(){
+    var h = new Date().getHours();
+    return h < 12 ? 'Good morning' : (h < 17 ? 'Good afternoon' : 'Good evening');
+  }
+  function setIdentity(name, signedIn){
+    var av = document.getElementById('topAvatar');
+    if(name){
+      document.getElementById('greeting').textContent = partOfDay() + ', ' + name.split(' ')[0] + ' 👋';
+      av.textContent = name.split(' ').map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+      av.title = name;
+      av.onclick = function(){ location.href = 'profile.html'; };
+    } else {
+      document.getElementById('greeting').textContent = partOfDay() + ' 👋';
+      av.textContent = signedIn ? '·' : '↪';
+      av.title = signedIn ? 'Account' : 'Not signed in — click to sign in';
+      av.onclick = function(){ location.href = signedIn ? 'profile.html' : 'login.html'; };
+    }
+  }
+  setIdentity(null, !!localStorage.getItem('pulseiq_token'));
+  document.getElementById('bpGauge').innerHTML = PulseArt.gauge(null, null);
+  document.getElementById('bpLegend').innerHTML = PulseArt.BANDS.map(function(b){
+    return '<span><i style="background:' + b.color + '"></i>' + b.name + '</span>'; }).join('');
+  function tick(){ var d=new Date(); document.getElementById('clock').textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':'); }
+  setInterval(tick,1000); tick();
+
+  // ---- Real backend wiring ---------------------------------------------
+  // PulseIQ backend (FastAPI) must be running locally:
+  //   cd pulseiq-backend && uvicorn main:app --reload --port 8001
+  var PULSEIQ_API = (window.PULSEIQ_API_BASE || (location.port === '8090' ? 'http://localhost:8001' : location.origin));
+
+  function setBadge(ok){
+    var b = document.getElementById('backendBadge');
+    if(!b) return;
+    if(ok){ b.textContent = '● Live Backend'; b.style.color = 'var(--green)'; b.style.borderColor='rgba(52,211,153,0.4)'; }
+    else { b.textContent = '● Demo Data (backend offline)'; b.style.color = 'var(--ink-500)'; }
+  }
+
+  // Use the recording linked to this account. An unlinked account shows an
+  // honest empty state instead of another person's readings.
+  window.PulseShell.resolvePatientKey().then(function(who){
+    setIdentity(who.guest ? null : who.name, !who.guest);
+    if(!who.linked){
+      setBadge(true);
+      document.getElementById('noDataSlot').innerHTML = window.PulseShell.noDataHtml(who.name);
+      (document.getElementById('tileBP')||{}).innerHTML = '—';
+      ['tileHR','tileMAP','tileGap'].forEach(function(id){ document.getElementById(id).textContent = '—'; });
+      var sw = document.querySelector('.signal-card');
+      if(sw) sw.style.display = 'none';
+      var tag = (document.getElementById('tileBPTag')||{});
+      if(tag){ tag.textContent = 'No data'; tag.className = 'tag'; }
+      return;
+    }
+    setIdentity(who.guest ? null : who.name, !who.guest);
+    loadPrediction(who.key);
+    loadWave(who.key);
+    loadTrend(who.key);
+  });
+
+  // ---- Notifications ------------------------------------------------------
+  // Every item comes from /api/notifications, which only reports things that
+  // actually happened on this account: messages received, doses scheduled and
+  // not logged, a missing recording link, or the band the model's reading
+  // falls into. Nothing is generated to pad the list.
+  var notifOpen = false;
+
+  function timeAgo(ts){
+    if(!ts) return '';
+    var s = Math.max(0, Date.now()/1000 - ts);
+    if(s < 60) return 'just now';
+    if(s < 3600) return Math.floor(s/60) + 'm ago';
+    if(s < 86400) return Math.floor(s/3600) + 'h ago';
+    return Math.floor(s/86400) + 'd ago';
+  }
+
+  function escHtml(t){
+    return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function renderNotifs(d){
+    var list = document.getElementById('notifList');
+    var dot = document.getElementById('notifDot');
+    var cnt = document.getElementById('notifCount');
+    var items = (d && d.items) || [];
+    dot.classList.toggle('on', !!(d && d.unreadCount));
+    cnt.textContent = (d && d.unreadCount) ? d.unreadCount + ' new' : '';
+    if(!items.length){
+      list.innerHTML = '<div class="np-empty">Nothing needs your attention.<br>' +
+                       'New messages, missed doses and out-of-range readings appear here.</div>';
+      return;
+    }
+    list.innerHTML = items.map(function(it){
+      return '<a class="np-item' + (it.unread ? ' new' : '') + '" href="' + escHtml(it.href) + '">' +
+             '<span class="i">' + escHtml(it.icon) + '</span><span>' +
+             '<span class="t">' + escHtml(it.title) + '</span>' +
+             '<span class="b">' + escHtml(it.body) +
+             (it.at ? ' · ' + timeAgo(it.at) : '') + '</span></span></a>';
+    }).join('');
+  }
+
+  function loadNotifs(){
+    var token = localStorage.getItem('pulseiq_token');
+    var list = document.getElementById('notifList');
+    if(!token){
+      document.getElementById('notifDot').classList.remove('on');
+      list.innerHTML = '<div class="np-empty">Sign in to get notifications about ' +
+                       'your messages, doses and readings.</div>';
+      return;
+    }
+    fetch(PULSEIQ_API + '/api/notifications', {headers:{Authorization:'Bearer ' + token}})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(renderNotifs)
+      .catch(function(){
+        list.innerHTML = '<div class="np-empty">Backend offline — notifications unavailable.</div>';
+      });
+  }
+
+  document.getElementById('notifBtn').addEventListener('click', function(e){
+    e.stopPropagation();
+    notifOpen = !notifOpen;
+    document.getElementById('notifPop').classList.toggle('on', notifOpen);
+    if(notifOpen) loadNotifs();
+  });
+  document.addEventListener('click', function(){
+    notifOpen = false;
+    document.getElementById('notifPop').classList.remove('on');
+  });
+  document.getElementById('notifPop').addEventListener('click', function(e){ e.stopPropagation(); });
+  loadNotifs();
+  setInterval(loadNotifs, 30000);
+
+  // ---- Next medicine ------------------------------------------------------
+  function to12h(hhmm){
+    var p = hhmm.split(':'), h = parseInt(p[0], 10);
+    var ap = h >= 12 ? 'PM' : 'AM';
+    return ((h % 12) || 12) + ':' + (p[1] || '00') + ' ' + ap;
+  }
+
+  function loadNextMedicine(){
+    var token = localStorage.getItem('pulseiq_token');
+    var nameEl = document.getElementById('nextMedName');
+    var timeEl = document.getElementById('nextMedTime');
+    if(!token){
+      nameEl.innerHTML = 'Sign in to track medicines <a href="login.html">Sign in</a>';
+      return;
+    }
+    fetch(PULSEIQ_API + '/api/medicines', {headers:{Authorization:'Bearer ' + token}})
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        var meds = d.medicines || [];
+        if(!meds.length){
+          nameEl.innerHTML = 'No medicines added <a href="medicine-reminders.html">Add one</a>';
+          timeEl.textContent = '';
+          return;
+        }
+        var now = new Date(), nowMin = now.getHours()*60 + now.getMinutes();
+        var best = null;
+        meds.forEach(function(m){
+          (m.times || []).forEach(function(slot){
+            if((m.takenOnDay || []).indexOf(slot) !== -1) return;  // already logged
+            var p = slot.split(':'), mins = parseInt(p[0],10)*60 + parseInt(p[1]||'0',10);
+            var delta = mins - nowMin;
+            var key = delta >= 0 ? delta : delta + 1440;           // roll to tomorrow
+            if(!best || key < best.key) best = {key:key, slot:slot, m:m, today:delta >= 0};
+          });
+        });
+        if(!best){
+          nameEl.innerHTML = 'All doses logged today <a href="medicine-reminders.html">View all</a>';
+          timeEl.textContent = '';
+          return;
+        }
+        nameEl.innerHTML = escHtml(best.m.name + (best.m.dosage ? ' ' + best.m.dosage : '')) +
+                           ' <a href="medicine-reminders.html">View all</a>';
+        timeEl.textContent = to12h(best.slot) + (best.today ? '' : ' · tomorrow');
+      })
+      .catch(function(){
+        nameEl.innerHTML = 'Backend offline <a href="medicine-reminders.html">Open</a>';
+        timeEl.textContent = '';
+      });
+  }
+  loadNextMedicine();
+
+  // ---- Real PPG trace -----------------------------------------------------
+  // Same seamless-loop technique as the ICU monitor: crop the recorded window
+  // to whole cardiac cycles, remove the residual drift so the last sample
+  // equals the first, then tile it twice and scroll by exactly half. The scroll
+  // duration is set from the real sample count and sampling rate, so the trace
+  // moves at the speed the signal was actually recorded at.
+  var VB_W = 2000, VB_H = 120, VPAD = 16;
+
+  function findPeaks(a, minDist, thresh){
+    var out = [], last = -1e9;
+    for(var i=1;i<a.length-1;i++){
+      if(a[i] > a[i-1] && a[i] >= a[i+1] && a[i] > thresh && (i - last) >= minDist){
+        out.push(i); last = i;
+      }
+    }
+    return out;
+  }
+
+  function zscore(v){
+    var m = 0, i;
+    for(i=0;i<v.length;i++) m += v[i];
+    m /= v.length;
+    var sd = 0;
+    for(i=0;i<v.length;i++) sd += (v[i]-m)*(v[i]-m);
+    sd = Math.sqrt(sd/v.length) || 1;
+    return v.map(function(x){ return (x-m)/sd; });
+  }
+
+  function forceLoop(v){
+    var n = v.length;
+    if(n < 3) return v;
+    var drift = v[n-1] - v[0], out = new Array(n);
+    for(var i=0;i<n;i++) out[i] = v[i] - drift * (i/(n-1));
+    return out.slice(0, n-1);
+  }
+
+  function tiledPaths(values){
+    var lo = Math.min.apply(null, values), hi = Math.max.apply(null, values);
+    var span = (hi - lo) || 1, n = values.length, total = n * 2;
+    var line = '', pts = [];
+    for(var i=0;i<total;i++){
+      var x = (i/(total-1)) * VB_W;
+      var y = VB_H - VPAD - ((values[i % n] - lo)/span) * (VB_H - VPAD*2);
+      pts.push([x, y]);
+      line += (i===0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    var area = line + 'L' + VB_W + ',' + VB_H + 'L0,' + VB_H + 'Z';
+    return {line: line, area: area};
+  }
+
+  // Beat-template SQI: correlate every detected beat against the average beat.
+  // A clean pulsatile signal gives near-identical beats (r -> 1); motion
+  // artefact or a poor sensor contact breaks that similarity. This is a real
+  // measurement of the samples on screen, not a fixed number.
+  function beatTemplateSQI(ppg){
+    var z = zscore(ppg);
+    var pk = findPeaks(z, Math.max(4, Math.floor(ppg.length * 0.03)), 0.2);
+    if(pk.length < 3) return null;
+    var pre = Math.floor(ppg.length * 0.012), post = Math.floor(ppg.length * 0.028);
+    var beats = [];
+    for(var i=0;i<pk.length;i++){
+      var a = pk[i] - pre, b = pk[i] + post;
+      if(a < 0 || b > z.length) continue;
+      beats.push(z.slice(a, b));
+    }
+    if(beats.length < 3) return null;
+    var L = beats[0].length, tpl = new Array(L).fill(0), j, k;
+    for(j=0;j<beats.length;j++) for(k=0;k<L;k++) tpl[k] += beats[j][k]/beats.length;
+    function corr(x, y){
+      var mx=0, my=0, i;
+      for(i=0;i<L;i++){ mx+=x[i]; my+=y[i]; }
+      mx/=L; my/=L;
+      var num=0, dx=0, dy=0;
+      for(i=0;i<L;i++){ var a=x[i]-mx, b=y[i]-my; num+=a*b; dx+=a*a; dy+=b*b; }
+      return num / (Math.sqrt(dx*dy) || 1);
+    }
+    var sum = 0;
+    for(j=0;j<beats.length;j++) sum += corr(beats[j], tpl);
+    return Math.max(0, Math.min(1, sum/beats.length));
+  }
+
+  // ---- Recorded PPG player (v3) ----------------------------------------
+  // Plays the patient's recorded segments one after another, in real time and
+  // in order. Nothing is looped, cropped or tilted: every sample on screen is a
+  // sample from the recording. Dashed lines mark segment boundaries.
+  var VIEW_S = 4;                        // seconds of signal visible at once
+  var PLAY = {key:null, list:[], pos:0, fs:125/3, buf:[], marks:[], off:0, loading:false, last:0, raf:0, shown:null};
+
+  function setMeta(d){
+    document.getElementById('ppgHr').textContent = d.heartRateBpm ? Math.round(d.heartRateBpm) + ' bpm' : 'n/a';
+    document.getElementById('ppgFs').textContent = d.samplingRateHz + ' Hz';
+    // Position within this patient's own recording (not the whole dataset).
+    var pos = (d.windowIndices || []).indexOf(d.windowIndex) + 1 || 1;
+    document.getElementById('ppgWin').textContent = pos + ' / ' + d.numWindowsAvailable;
+    document.getElementById('ppgSegNow').textContent = pos + ' of ' + d.numWindowsAvailable;
+    var sqi = beatTemplateSQI(d.channels.ppg);
+    var pct = sqi == null ? null : Math.round(sqi * 100);
+    document.getElementById('sqVal').textContent = pct == null ? 'n/a' : pct + '%';
+    document.getElementById('sqBar').style.width = (pct == null ? 0 : pct) + '%';
+  }
+
+  function fetchSeg(win){
+    var url = PULSEIQ_API + '/api/waveform/' + PLAY.key + (win != null ? '?window=' + win : '');
+    return fetch(url).then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); });
+  }
+
+  function appendSeg(d){
+    PLAY.marks.push({at: PLAY.buf.length, d: d});
+    PLAY.buf = PLAY.buf.concat(d.channels.ppg);
+  }
+
+  function queueNext(){
+    if(PLAY.loading || !PLAY.list.length) return;
+    PLAY.loading = true;
+    PLAY.pos = (PLAY.pos + 1) % PLAY.list.length;   // after the last segment, start the recording again
+    fetchSeg(PLAY.list[PLAY.pos]).then(function(d){ appendSeg(d); })
+      .catch(function(){}).then(function(){ PLAY.loading = false; });
+  }
+
+  function drawFrame(ts){
+    PLAY.raf = requestAnimationFrame(drawFrame);
+    var dt = PLAY.last ? Math.min(0.1, (ts - PLAY.last) / 1000) : 0;
+    PLAY.last = ts;
+    var N = Math.round(VIEW_S * PLAY.fs);
+    if(PLAY.buf.length < N + 2) return;
+    PLAY.off += dt * PLAY.fs;
+    var maxOff = PLAY.buf.length - N - 1;
+    if(PLAY.off > maxOff) PLAY.off = maxOff;          // hold at the edge until the next segment arrives
+    if(PLAY.buf.length - (PLAY.off + N) < PLAY.fs * 6) queueNext();
+    if(PLAY.off > PLAY.fs * 30){                       // drop samples long gone off the left edge
+      var cut = Math.floor(PLAY.off - PLAY.fs * 2);
+      PLAY.buf = PLAY.buf.slice(cut); PLAY.off -= cut;
+      PLAY.marks = PLAY.marks.map(function(m){ return {at: m.at - cut, d: m.d}; });
+      while(PLAY.marks.length > 1 && PLAY.marks[1].at <= 0) PLAY.marks.shift();
+    }
+    var i0 = Math.floor(PLAY.off), frac = PLAY.off - i0, line = '';
+    for(var k=0;k<=N;k++){
+      var v = PLAY.buf[i0 + k]; if(v == null) break;
+      var x = ((k - frac) / N) * VB_W;
+      var y = VB_H - VPAD - Math.max(0, Math.min(1, v)) * (VB_H - VPAD*2);
+      line += (k ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    document.getElementById('ppgLine').setAttribute('d', line);
+    document.getElementById('ppgArea').setAttribute('d', line + 'L' + VB_W + ',' + VB_H + 'L0,' + VB_H + 'Z');
+    var g = '', centre = PLAY.off + N/2, cur = null;
+    PLAY.marks.forEach(function(m){
+      if(m.at <= centre) cur = m.d;
+      var x = ((m.at - PLAY.off) / N) * VB_W;
+      if(m.at > 0 && x > 0 && x < VB_W)
+        g += '<line x1="' + x.toFixed(1) + '" x2="' + x.toFixed(1) + '" y1="4" y2="' + VB_H +
+             '" stroke="rgba(255,255,255,.3)" stroke-dasharray="3,4" vector-effect="non-scaling-stroke"/>';
+    });
+    document.getElementById('ppgSegs').innerHTML = g;
+    if(cur && cur !== PLAY.shown){ PLAY.shown = cur; setMeta(cur); }
+  }
+
+  function loadWave(PATIENT_KEY){
+    PLAY.key = PATIENT_KEY;
+    fetchSeg(null)
+      .then(function(d){
+        var ppg = d.channels.ppg;
+        if(!ppg || ppg.length < 40) throw new Error('short');
+        PLAY.list = d.windowIndices || [d.windowIndex];
+        PLAY.pos = Math.max(0, PLAY.list.indexOf(d.windowIndex));
+        PLAY.fs = d.samplingRateHz / (d.downsample || 1);
+        appendSeg(d);
+        PLAY.shown = d; setMeta(d);
+
+        // The summary tiles describe the same segment as the BP reading (the first one).
+        document.getElementById('tileHR').innerHTML =
+          d.heartRateBpm ? Math.round(d.heartRateBpm) + '<small> BPM</small>' : 'n/a';
+        var sqi = beatTemplateSQI(ppg), pct = sqi == null ? null : Math.round(sqi * 100);
+        document.getElementById('tileGap').innerHTML = pct == null ? 'n/a' : pct + '<small>%</small>';
+        document.getElementById('sqTileBar').style.width = (pct == null ? 0 : pct) + '%';
+        var z = zscore(ppg), pk = findPeaks(z, Math.max(4, Math.floor(ppg.length * 0.03)), 0.2);
+        var seg = (pk.length >= 3) ? ppg.slice(pk[0], pk[Math.min(5, pk.length - 1)]) : ppg;
+        document.getElementById('spHR').innerHTML = PulseArt.spark(seg.filter(function(_, i){ return i % 2 === 0; }),
+          {color:'var(--t-hr)', fill:false, sw:1.6});
+
+        queueNext();
+        cancelAnimationFrame(PLAY.raf);
+        PLAY.raf = requestAnimationFrame(drawFrame);
+      })
+      .catch(function(){
+        // No invented trace: say the signal is unavailable instead.
+        document.getElementById('ppgSub').innerHTML =
+          '<span style="color:var(--ink-500);">Recording unavailable — backend offline</span>';
+        document.getElementById('sqVal').textContent = 'n/a';
+        document.getElementById('tileGap').textContent = 'n/a';
+      });
+  }
+
+  // Trend sparklines: the AI's real estimate for every recorded segment.
+  function mapDots(vals){
+    var W = 200, H = 40, lo = Math.min.apply(null, vals) - 3, hi = Math.max.apply(null, vals) + 3, n = vals.length;
+    var out = '';
+    vals.forEach(function(v, i){
+      var x = n === 1 ? W/2 : 18 + i * (W - 36) / (n - 1);
+      var y = 26 - ((v - lo) / (hi - lo || 1)) * 16;
+      out += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="4" fill="var(--t-map)"/>' +
+             '<text x="' + x.toFixed(1) + '" y="' + (y - 8).toFixed(1) + '" text-anchor="middle" font-size="10" font-weight="700" ' +
+             'fill="var(--ink-300)" font-family="JetBrains Mono,monospace">' + Math.round(v) + '</text>';
+    });
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:100%;overflow:visible" aria-label="MAP per segment">' + out + '</svg>';
+  }
+
+  function loadTrend(PATIENT_KEY){
+    fetch(PULSEIQ_API + '/api/subject/' + PATIENT_KEY)
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        var w = d.windows || [];
+        if(w.length < 1) return;
+        var sbp = w.map(function(x){ return x.dl.SBP; }), dbp = w.map(function(x){ return x.dl.DBP; });
+        (document.getElementById('spBP')||{}).innerHTML = PulseArt.spark(sbp, {second: dbp, color:'var(--bp)', color2:'#8aa8ff'});
+        var maps = w.map(function(x){ return x.dl.MAP; });
+        var secs = Math.round(w.length * 12);
+        var dur = secs >= 60 ? Math.round(secs / 60) + ' min' : secs + ' s';
+        document.getElementById('spMAPcap').textContent = w.length + ' segments · ' + dur;
+        // v3: a short recording is shown as labelled dots, not a line that
+        // would draw a misleading "trend" out of just a few points.
+        document.getElementById('spMAP').innerHTML = maps.length < 6 ? mapDots(maps)
+          : PulseArt.spark(maps, {color:'var(--t-map)'});
+      })
+      .catch(function(){});
+  }
+
+  // Kept because the Latest BP tile and its band tag come from this endpoint;
+  // only the table that displayed the raw model columns is gone.
+  function loadPrediction(PATIENT_KEY){
+  fetch(PULSEIQ_API + '/api/predict/' + PATIENT_KEY)
+    .then(function(r){ if(!r.ok) throw new Error('bad status'); return r.json(); })
+    .then(function(d){
+      setBadge(true);
+      var sbp = Math.round(d.dl.SBP), dbp = Math.round(d.dl.DBP);
+      (document.getElementById('tileBP')||{}).innerHTML = sbp + '<small>/' + dbp + '</small>';
+      // Same bands the backend's classify_bp uses, so the tile and the
+      // explainability page can never disagree about the same reading.
+      var band = (sbp >= 140 || dbp >= 90) ? 'High'
+               : (sbp >= 130 || dbp >= 80) ? 'Elevated'
+               : (sbp >= 120) ? 'Borderline'
+               : (sbp < 90) ? 'Low' : 'Normal';
+      var tag = (document.getElementById('tileBPTag')||{});
+      tag.textContent = band;
+      tag.className = 'tag ' + (band === 'Normal' ? 'ok' : (band === 'High' ? 'bad' : 'warn'));
+
+      document.getElementById('tileMAP').innerHTML = Math.round(d.dl.MAP) + '<small> mmHg</small>';
+
+      document.getElementById('bpGauge').innerHTML = PulseArt.gauge(d.dl.SBP, d.dl.DBP);
+      var bw = window.PulseWhy.band(Math.round(d.dl.SBP), Math.round(d.dl.DBP));
+      document.getElementById('bpWhy').innerHTML = bw.label + ' because ' + bw.why
+        .replace('systolic <b>', 'the top number (<b>').replace('diastolic <b>', 'the bottom number (<b>')
+        .replace(/<\/b>/g, '</b>)') + '. An estimate, not a diagnosis.';
+      window.PulseWhy.summaryLine(document.getElementById('bpReason'), {key: PATIENT_KEY, window: d.windowIndex});
+
+
+    })
+    .catch(function(err){
+      // The card that used to explain an offline backend is gone, so the tile
+      // must not keep showing its markup default — that would be a made-up
+      // reading with nothing on screen saying so. The topbar badge and the
+      // signal card both still report the offline state.
+      setBadge(false);
+      (document.getElementById('tileBP')||{}).innerHTML = '—';
+      var t = (document.getElementById('tileBPTag')||{});
+      if(t){ t.textContent = 'No data'; t.className = 'tag'; }
+      document.getElementById('tileMAP').textContent = '—';
+    });
+  }
+</script>
+</body>
+</html>

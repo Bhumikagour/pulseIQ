@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — Explainability</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  .view{display:none;} .view.on{display:block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .shap-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .shap-feat{width:170px;font-size:12px;color:var(--ink-200);flex-shrink:0;}
+  .shap-track{flex:1;height:20px;background:var(--wash-1);border-radius:5px;position:relative;display:flex;align-items:center;}
+  .shap-track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--glass-border-2);}
+  .shap-fill{height:12px;border-radius:4px;position:absolute;top:4px;}
+  .shap-fill.pos{background:linear-gradient(90deg,var(--cyan-dim),var(--cyan));left:50%;box-shadow:0 0 10px -2px var(--cyan-glow);}
+  .shap-fill.neg{background:linear-gradient(90deg,#ff9b9b,var(--sbp));right:50%;box-shadow:0 0 10px -2px var(--sbp-glow);}
+  .shap-val{font-family:'JetBrains Mono',monospace;font-size:11px;width:50px;text-align:right;color:var(--ink-400);flex-shrink:0;}
+  .beeswarm{position:relative;height:210px;}
+  .bee-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .bee-feat{width:110px;font-size:10.5px;color:var(--ink-400);flex-shrink:0;text-align:right;}
+  .bee-lane{flex:1;height:14px;position:relative;}
+  .bee-dot{position:absolute;width:7px;height:7px;border-radius:50%;top:3px;}
+  .scale-row{display:flex;justify-content:space-between;font-size:9.5px;color:var(--ink-600);margin-top:6px;padding-left:120px;}
+
+  .wave-panel{position:relative;background:#03050a;border:1px solid var(--glass-border);border-radius:var(--radius-md);height:190px;overflow:hidden;margin:14px 0;}
+  .wave-panel .wave-label{position:absolute;top:14px;left:18px;font-size:11px;color:var(--ink-400);font-weight:700;letter-spacing:0.05em;z-index:3;}
+  .wave-track{position:absolute;top:55px;left:0;width:200%;height:110px;animation:scroll-wave 7s linear infinite;}
+  @keyframes scroll-wave{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .attn-zone{position:absolute;top:0;height:100%;background:linear-gradient(180deg, var(--purple-glow-soft), transparent 70%);filter:blur(2px);}
+  .conf-chip{position:absolute;bottom:14px;right:18px;background:rgba(180,92,247,0.12);border:1px solid rgba(180,92,247,0.4);color:var(--purple-bright);font-weight:800;font-size:11px;padding:7px 13px;border-radius:99px;z-index:3;}
+  .research-note{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:14px 16px;font-size:11.5px;color:var(--ink-400);margin-top:14px;}
+  .research-note b{color:var(--ink-0);}
+  .val-badges{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+  /* Grade C had no style, so it rendered as bare text next to styled A/B/D pills. */
+  .badge.grade-c{background:rgba(34,229,240,0.1);color:var(--cyan-bright);border-color:rgba(34,229,240,0.35);}
+
+  /* --- Why This Reading --- */
+  .reading-big{font-family:'JetBrains Mono',monospace;font-size:52px;font-weight:800;color:var(--ink-0);line-height:1;margin:16px 0 8px;}
+  .reading-big small{font-size:18px;color:var(--ink-500);font-weight:600;}
+  .reading-band{display:inline-block;font-size:12px;font-weight:800;padding:6px 15px;border-radius:99px;margin-bottom:18px;}
+  .reading-band.normal{background:rgba(60,230,133,0.12);color:var(--green);}
+  .reading-band.elevated{background:rgba(255,200,87,0.12);color:var(--amber);}
+  .reading-band.high{background:rgba(255,92,114,0.12);color:var(--red);}
+
+  .band-scale{position:relative;height:52px;margin:6px 0 14px;}
+  .band-scale .track{display:flex;height:9px;border-radius:99px;overflow:hidden;}
+  .band-scale .seg{height:100%;}
+  .band-scale .seg.b0{background:rgba(124,147,255,0.5);}
+  .band-scale .seg.b1{background:rgba(60,230,133,0.55);}
+  .band-scale .seg.b2{background:rgba(255,200,87,0.5);}
+  .band-scale .seg.b3{background:rgba(255,160,80,0.55);}
+  .band-scale .seg.b4{background:rgba(255,92,114,0.6);}
+  .band-scale .marker{position:absolute;top:-5px;width:3px;height:19px;background:#fff;border-radius:2px;box-shadow:0 0 10px rgba(255,255,255,0.9);}
+  .band-scale .marker::after{content:attr(data-v);position:absolute;top:22px;left:50%;transform:translateX(-50%);
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:800;color:var(--ink-0);white-space:nowrap;}
+  .band-scale .ticks{position:relative;margin-top:26px;height:12px;}
+  .band-scale .ticks i{position:absolute;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;
+    font-size:9px;color:var(--ink-600);font-style:normal;}
+  .band-legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin:2px 0 14px;}
+  .band-legend span{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--ink-500);}
+  .band-legend i{width:9px;height:9px;border-radius:3px;display:inline-block;}
+  .band-why{font-size:12px;color:var(--ink-300);line-height:1.6;}
+
+  .mag-flow{display:flex;align-items:center;gap:14px;margin:14px 0 18px;}
+  .mag-step{background:var(--wash-1);border:1px solid var(--glass-border);border-radius:12px;padding:11px 16px;flex:1;}
+  .mag-step .l{font-size:9px;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-600);font-weight:700;margin-bottom:4px;}
+  .mag-step .v{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:800;color:var(--ink-200);}
+  .mag-step .v.hl{color:var(--cyan-bright);}
+  .mag-arrow{color:var(--ink-600);font-size:17px;}
+
+  .grp-row{margin-bottom:15px;}
+  .grp-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
+  .grp-head .nm{font-size:12.5px;font-weight:700;color:var(--ink-0);}
+  .grp-head .amt{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;}
+  .grp-head .amt.up{color:var(--sbp);} .grp-head .amt.down{color:var(--cyan-bright);}
+  .grp-track{height:18px;background:var(--wash-1);border-radius:5px;position:relative;display:flex;align-items:center;}
+  .grp-track .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--glass-border-2);}
+  .grp-fill{height:11px;border-radius:4px;position:absolute;}
+  .grp-fill.up{background:linear-gradient(90deg,#ff9b9b,var(--sbp));left:50%;box-shadow:0 0 10px -2px var(--sbp-glow);}
+  .grp-fill.down{background:linear-gradient(90deg,var(--cyan-dim),var(--cyan));right:50%;box-shadow:0 0 10px -2px var(--cyan-glow);}
+
+  .gd-item{padding:13px 0;border-bottom:1px solid var(--glass-border);}
+  .gd-item:last-child{border-bottom:none;}
+  .gd-item .t{display:flex;align-items:baseline;gap:9px;}
+  .gd-item .t .nm{font-size:12.5px;font-weight:700;color:var(--ink-0);}
+  .gd-item .t .amt{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;}
+  .gd-item .d{font-size:11.5px;color:var(--ink-400);margin-top:4px;line-height:1.6;}
+  .gd-item .f{font-size:10.5px;color:var(--ink-600);margin-top:6px;font-family:'JetBrains Mono',monospace;}
+
+  .agree{display:flex;gap:10px;align-items:flex-start;border-radius:12px;padding:10px 13px;font-size:11.5px;line-height:1.55;margin:4px 0 14px;}
+  .agree.ok{background:rgba(60,230,133,0.08);border:1px solid rgba(60,230,133,0.3);color:var(--ink-300);}
+  .agree.rough{background:rgba(255,200,87,0.08);border:1px solid rgba(255,200,87,0.35);color:var(--ink-300);}
+  .agree .ic{font-weight:800;font-size:13px;line-height:1.3;}
+  .agree.ok .ic{color:var(--green);} .agree.rough .ic{color:var(--amber);}
+  .agree b{color:var(--ink-0);}
+  #groupBars.dim{opacity:0.55;}
+  .tgt-tabs{display:inline-flex;gap:4px;background:var(--wash-1);border:1px solid var(--glass-border);border-radius:99px;padding:3px;margin:2px 0 10px;}
+  .tgt-tabs button{background:none;border:0;color:var(--ink-500);font:700 11px 'Inter',system-ui,sans-serif;padding:5px 12px;border-radius:99px;cursor:pointer;}
+  .tgt-tabs button.on{background:var(--glass-border-2);color:var(--ink-0);}
+  .tgt-row{display:flex;align-items:center;gap:10px;margin:0 0 14px;flex-wrap:wrap;}
+  .tgt-l{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-600);font-weight:700;}
+  .tgt-tabs{margin:0 !important;}
+  .small-note{font-size:10.5px;color:var(--ink-600);margin-top:8px;}
+  .pat-pick{display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+  .pat-pick label{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-600);font-weight:700;}
+  .pat-pick select{background:var(--wash-1);border:1px solid var(--glass-border-2);color:var(--ink-0);
+    font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:700;padding:8px 12px;border-radius:10px;outline:none;cursor:pointer;}
+  .pat-pick select option{background:var(--panel-solid);color:var(--ink-0);}
+
+  @media(max-width:900px){
+    .two-col{grid-template-columns:1fr !important;gap:14px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="rail" data-active="insights"></div>
+  <div class="main">
+    <div class="topbar">
+      <div class="brand">Pulse<span>IQ</span></div>
+      <div class="grow"></div>
+      <span id="backendBadge" class="badge" style="margin-right:10px;">● Connecting…</span>
+      <div class="clock" id="clock">--:--:--</div>
+    </div>
+
+    <div class="content">
+      <div class="page-head"><h1>Explainability</h1><span class="sub" id="pageSub">Why the model predicted this reading</span></div>
+
+      <div class="pat-pick" id="patPick" style="display:none;">
+        <label for="xaiPatient">Patient</label>
+        <select id="xaiPatient"><option value="">Loading…</option></select>
+      </div>
+
+
+      <!-- ============ Why This Reading (clinical, plain language) ============ -->
+      <div class="view on" id="viewWhy">
+        <div id="whyLoading" class="card" style="text-align:center;padding:34px;">
+          <div style="font-size:13px;color:var(--ink-300);">Computing a real explanation for this reading…</div>
+          <div style="font-size:11px;color:var(--ink-600);margin-top:6px;">Working out which parts of the pulse mattered most.</div>
+        </div>
+
+        <div id="whyContent" style="display:none;">
+          <div class="tgt-row"><span class="tgt-l">Explain the</span>
+            <div class="tgt-tabs" id="tgtTabs">
+              <button type="button" data-t="SBP" class="on">Top number</button>
+              <button type="button" data-t="DBP">Bottom number</button>
+              <button type="button" data-t="MAP">Average pressure</button>
+            </div>
+          </div>
+          <div class="two-col" style="grid-template-columns:1fr 1.25fr;">
+            <div class="card">
+              <h3>The Reading</h3>
+              <div class="card-sub" id="whoSub">—</div>
+              <div class="reading-big" id="readingBig">—</div>
+              <div class="reading-band" id="readingBand">—</div>
+              <div class="band-scale" id="bandScale"></div>
+              <div class="band-legend" id="bandLegend"></div>
+              <div class="band-why" id="bandWhy">—</div>
+            </div>
+
+            <div class="card">
+              <h3>What the AI Looked At</h3>
+              <div class="card-sub" id="igSub">Which part of a heartbeat the AI relied on for the top number</div>
+              <div id="igBox"></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:18px;">
+            <h3>What Pushed It Up or Down</h3>
+            <div class="card-sub" id="magSub">—</div>
+            <div id="agreeBox"></div>
+            <div class="mag-flow">
+              <div class="mag-step"><div class="l">Model's average reading</div><div class="v" id="magBase">—</div></div>
+              <div class="mag-arrow" id="magArrow">→</div>
+              <div class="mag-step"><div class="l">Explained by these factors</div><div class="v hl" id="magFinal">—</div></div>
+            </div>
+            <div id="groupBars"></div>
+            <div class="small-note" id="barsNote"></div>
+          </div>
+
+          <div class="card" style="margin-top:18px;">
+            <h3>What Each Factor Measures</h3>
+            <div class="card-sub">Plain-language description of the signal properties the model relied on</div>
+            <div id="groupDetail"></div>
+          </div>
+
+          <div class="research-note" id="whyNote" style="margin-top:16px;"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="status-bar">
+      <span>SYS: <b>OPERATIONAL</b> &nbsp; EXPLAINER: <b>Integrated Gradients + SHAP (deep-model surrogate)</b></span>
+      <span>PulseIQ · Explainable Cuffless BP Monitoring · Demo Mode</span>
+    </div>
+  </div>
+</div>
+
+<script src="shared/shell.js?v=16"></script>
+<script src="shared/why.js?v=16"></script>
+<script>
+  function tick(){ var d=new Date(); document.getElementById('clock').textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':'); }
+  setInterval(tick,1000); tick();
+
+  // ---- Real backend wiring ---------------------------------------------
+  var PULSEIQ_API = (window.PULSEIQ_API_BASE || (location.port === '8090' ? 'http://localhost:8001' : location.origin));
+  var ROLE = localStorage.getItem('pulseiq_role') || 'patient';
+  var IS_DOCTOR = ROLE === 'doctor';
+  var DEFAULT_PATIENT = 'rohit-sharma';
+  // Patients only ever see their own explanation; doctors can switch.
+  // v3: a doctor arriving from a "Why this reading" panel lands on that patient.
+  var DEMO_PATIENT = (IS_DOCTOR && new URLSearchParams(location.search).get('patient')) || DEFAULT_PATIENT;
+  // v3: a specific recorded segment can be opened from the ICU monitor / dashboard.
+  var WIN = new URLSearchParams(location.search).get('window');
+  function winQ(first){ return WIN != null && WIN !== '' ? (first ? '?' : '&') + 'window=' + encodeURIComponent(WIN) : ''; }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  // ---- "Why This Reading" -----------------------------------------------
+  function renderWhy(d){
+    document.getElementById('whyLoading').style.display = 'none';
+    document.getElementById('whyContent').style.display = 'block';
+
+    var r = d.reading, c = d.classification, m = d.magnitude;
+
+    document.getElementById('whoSub').textContent =
+      IS_DOCTOR ? (d.patientName + ' · deep-model estimate') : 'Your latest estimate';
+    document.getElementById('readingBig').innerHTML =
+      Math.round(r.SBP) + '/' + Math.round(r.DBP) + ' <small>mmHg</small>';
+    var bandEl = document.getElementById('readingBand');
+    bandEl.textContent = c.band;
+    bandEl.className = 'reading-band ' + c.tone;
+
+    // Where this systolic value falls across the standard bands.
+    var lo = 60, hi = 180, span = hi - lo;
+    var segs = c.bands.map(function(b, i){
+      return '<div class="seg b' + i + '" style="width:' + ((b.to-b.from)/span*100) + '%"></div>';
+    }).join('');
+    // Numeric boundaries avoid the label collisions that band names cause on
+    // the narrow Borderline / Elevated segments.
+    var bounds = [60, 90, 120, 130, 140, 180];
+    var ticks = bounds.map(function(v){
+      return '<i style="left:' + ((v-lo)/span*100).toFixed(1) + '%">' + v + '</i>';
+    }).join('');
+    var legend = c.bands.map(function(b, i){
+      return '<span><i class="seg b' + i + '"></i>' + esc(b.name) + ' ' + esc(b.range) + '</span>';
+    }).join('');
+    var pos = Math.max(0, Math.min(100, (r.SBP - lo)/span*100));
+    document.getElementById('bandScale').innerHTML =
+      '<div class="track">' + segs + '</div>' +
+      '<div class="marker" style="left:' + pos.toFixed(1) + '%" data-v="' + Math.round(r.SBP) + '"></div>' +
+      '<div class="ticks">' + ticks + '</div>';
+    var lg = document.getElementById('bandLegend');
+    if(lg) lg.innerHTML = legend;
+    document.getElementById('bandWhy').innerHTML =
+      'Classified <b>' + esc(c.band) + '</b> because ' + esc(c.why) + '.';
+
+    renderMag(d);
+  }
+
+  var MIN_MMHG = 0.5;   // factors smaller than this are hidden as noise
+  var TNAME = {SBP:'top number (systolic)', DBP:'bottom number (diastolic)', MAP:'average pressure (MAP)'};
+  function mm(v){ return (+v).toFixed(1) + ' <small style="font-size:11px;">mmHg</small>'; }
+
+  function renderMag(d){
+    var m = d.magnitude, t = m.explainedTarget;
+    if(m.averageEstimate == null || m.copyEstimate == null || !m.agreement){
+      // The page is newer than the server: an old backend is still running.
+      document.getElementById('agreeBox').innerHTML = '<div class="agree rough"><span class="ic">!</span><div>' +
+        '<b>The PulseIQ server is running an older version.</b> Stop it (Ctrl+C in its window) and start it again with ' +
+        '<code>python -m uvicorn main:app --port 8001</code> from the pulseiq-backend-v3 folder, then reload this page.</div></div>';
+      ['magBase','magFinal'].forEach(function(id){ document.getElementById(id).textContent = '—'; });
+      document.getElementById('magArrow').textContent = '→';
+      document.getElementById('groupBars').innerHTML = '';
+      document.getElementById('barsNote').textContent = '';
+      document.getElementById('groupDetail').innerHTML = '';
+      return;
+    }
+    var a = m.agreement, f = m.fidelity || {};
+    document.getElementById('magSub').textContent = IS_DOCTOR
+      ? 'SHAP on a surrogate trained to copy the deep model, grouped by physiological theme'
+      : 'Which parts of the pulse moved this reading up or down, in mmHg';
+    document.getElementById('magBase').innerHTML = mm(m.averageEstimate);
+    document.getElementById('magFinal').innerHTML = mm(m.copyEstimate);
+    document.getElementById('magArrow').textContent = (m.netShift >= 0 ? '+' : '') + m.netShift + ' mmHg →';
+
+    document.getElementById('agreeBox').innerHTML = a.close
+      ? '<div class="agree ok"><span class="ic">✓</span><div>These factors account for this reading: they explain <b>' +
+          m.copyEstimate + '</b> mmHg against the actual <b>' + m.reading + '</b> mmHg (' + a.gapMmHg + ' apart).</div></div>'
+      : '<div class="agree rough"><span class="ic">!</span><div><b>Rough guide only for this reading.</b> The factors explain <b>' +
+          m.copyEstimate + '</b> mmHg, but the AI read <b>' + m.reading + '</b> mmHg (' + a.gapMmHg +
+          ' apart). Part of what drove this reading lies in waveform detail these named measurements don\'t capture, so the ' +
+          'bars below may not match the reading\'s direction. The chart above, of where the AI looked, is still exact.</div></div>';
+
+    var shown = m.groups.filter(function(g){ return Math.abs(g.mmHg) >= MIN_MMHG; });
+    var hidden = m.groups.length - shown.length;
+    var maxAbs = Math.max.apply(null, shown.map(function(g){ return Math.abs(g.mmHg); })) || 1;
+    var gb = document.getElementById('groupBars');
+    gb.className = a.close ? '' : 'dim';
+    gb.innerHTML = shown.length ? shown.map(function(g){
+      var up = g.mmHg >= 0;
+      var pct = Math.min(48, Math.abs(g.mmHg)/maxAbs * 48);
+      return '<div class="grp-row">' +
+        '<div class="grp-head"><span class="nm">' + esc(g.label) + '</span>' +
+        '<span class="amt ' + (up?'up':'down') + '">' + (up?'+':'') + g.mmHg.toFixed(1) + ' mmHg</span></div>' +
+        '<div class="grp-track"><div class="mid"></div>' +
+        '<div class="grp-fill ' + (up?'up':'down') + '" style="width:' + pct.toFixed(1) + '%"></div></div>' +
+      '</div>';
+    }).join('') : '<div class="why-txt">No factor moved this reading by ' + MIN_MMHG + ' mmHg or more.</div>';
+    document.getElementById('barsNote').textContent =
+      'Right of the centre line pushed the ' + TNAME[t] + ' up; left pulled it down.' +
+      (hidden ? ' ' + hidden + ' smaller factor' + (hidden>1?'s':'') + ' (under ' + MIN_MMHG + ' mmHg) hidden.' : '');
+
+    document.getElementById('groupDetail').innerHTML = shown.map(function(g){
+      var up = g.mmHg >= 0;
+      var verb = up ? 'pushed the ' + TNAME[t] + ' up' : 'pulled the ' + TNAME[t] + ' down';
+      return '<div class="gd-item">' +
+        '<div class="t"><span class="nm">' + esc(g.label) + '</span>' +
+        '<span class="amt ' + (up?'up':'down') + '" style="color:' + (up?'var(--sbp)':'var(--cyan-bright)') + '">' +
+        (up?'+':'') + g.mmHg.toFixed(1) + ' mmHg</span></div>' +
+        '<div class="d">' + esc(g.what) + ' For this reading it ' + verb + ' by ' +
+        Math.abs(g.mmHg).toFixed(1) + ' mmHg.</div>' +
+        '<div class="f">' + g.topFeatures.filter(function(x){ return Math.abs(x.shapValue) >= 0.05; }).map(function(x){
+          return esc(x.label) + ' ' + (x.shapValue>=0?'+':'') + x.shapValue.toFixed(2);
+        }).join('  ·  ') + '</div>' +
+      '</div>';
+    }).join('');
+
+    document.getElementById('whyNote').innerHTML = IS_DOCTOR
+      ? '<b>Method.</b> The reading comes from the deep model (ResNet-BiLSTM on the raw PPG, VPG and APG waveforms). ' +
+        '"What the AI looked at" is Integrated Gradients on that model, folded onto an average heartbeat with every beat weighted equally ' +
+        '(the model otherwise weights the end of the 12-second window more heavily). The deep model can\'t name the measurements ' +
+        'behind a number, so a surrogate (gradient-boosted trees) was trained to copy its outputs from 63 named pulse measurements; ' +
+        'SHAP on the surrogate, against 100 training windows, gives the factor bars. On the 7 patients the surrogate never saw, ' +
+        'it lands within 5 mmHg of the deep model on ' + f.within5Pct + '% of ' + t + ' readings (average gap ' + f.maeMmHg +
+        ' mmHg, R² ' + f.r2 + '; always guessing the average would be off by ' + f.maeIfGuessingAverage + ' mmHg). ' +
+        'When the gap on a reading is over ' + a.closeWithinMmHg + ' mmHg, the bars are marked as a rough guide. Not a diagnosis.'
+      : '<b>How to read this:</b> the AI starts from its average reading (' + m.averageEstimate + ' mmHg) and moves up or down ' +
+        'based on your pulse. The bars show how much each part of your pulse moved it. This explains the same AI that gave your ' +
+        'reading. It describes the reading only and is not a diagnosis.';
+  }
+
+  var TARGET = 'SBP';
+  var CUR_PID = null;
+  document.getElementById('tgtTabs').addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b || b.dataset.t === TARGET) return;
+    TARGET = b.dataset.t;
+    [].forEach.call(this.querySelectorAll('button'), function(x){ x.classList.toggle('on', x === b); });
+    loadIG();
+    fetch(PULSEIQ_API + '/api/explain/summary/' + encodeURIComponent(CUR_PID) + '?target=' + TARGET + winQ(false))
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(renderMag)
+      .catch(function(){});
+  });
+
+  // v3: the attention chart follows the same tab as the mmHg bars.
+  var TSHORT = {SBP:'top number', DBP:'bottom number', MAP:'average pressure'};
+  function loadIG(){
+    document.getElementById('igSub').textContent =
+      'Which part of a heartbeat the AI relied on for the ' + TSHORT[TARGET] + (IS_DOCTOR ? ' (' + TARGET + ')' : '') +
+      (IS_DOCTOR && TARGET !== 'SBP' ? '. Same pattern as SBP: this model derives DBP and MAP from one internal estimate.' : '');
+    if(window.PulseWhy) window.PulseWhy.mountIG(document.getElementById('igBox'), {key: CUR_PID, window: WIN, target: TARGET});
+  }
+
+  function loadWhy(pid){
+    CUR_PID = pid; TARGET = 'SBP';
+    [].forEach.call(document.querySelectorAll('#tgtTabs button'), function(x){ x.classList.toggle('on', x.dataset.t === 'SBP'); });
+    loadIG();
+    document.getElementById('whyLoading').style.display = 'block';
+    document.getElementById('whyContent').style.display = 'none';
+    fetch(PULSEIQ_API + '/api/explain/summary/' + encodeURIComponent(pid) + '?target=SBP' + winQ(false))
+      .then(function(r){
+        if(r.status === 503){
+          // The server is up but still scoring the held-out test set. Say so
+          // and retry, rather than claiming the backend is unreachable.
+          return r.json().then(function(e){
+            setBadge(true);
+            document.getElementById('whyLoading').innerHTML =
+              '<div style="font-size:13px;color:var(--ink-300);">Preparing explanations…</div>' +
+              '<div style="font-size:11px;color:var(--ink-600);margin-top:6px;max-width:420px;">' +
+              (e.detail || 'The server is warming up.') + '</div>';
+            setTimeout(function(){ loadWhy(pid); }, 8000);
+            throw new Error('warming');
+          });
+        }
+        if(!r.ok) throw new Error('bad');
+        return r.json();
+      })
+      .then(function(d){ if(d){ setBadge(true); renderWhy(d); } })
+      .catch(function(err){
+        if(err && err.message === 'warming') return;
+        setBadge(false);
+        document.getElementById('whyLoading').innerHTML =
+          '<div style="font-size:13px;color:var(--ink-300);">Backend not reachable at ' + PULSEIQ_API + '</div>' +
+          '<div style="font-size:11px;color:var(--ink-600);margin-top:6px;">Start it with: python -m uvicorn main:app --port 8001</div>';
+      });
+  }
+
+  function setBadge(ok){
+    var b = document.getElementById('backendBadge');
+    if(!b) return;
+    if(ok){ b.textContent = '● Live Backend'; b.style.color = 'var(--green)'; b.style.borderColor='rgba(52,211,153,0.4)'; }
+    else { b.textContent = '● Demo Data (backend offline)'; b.style.color = 'var(--ink-500)'; }
+  }
+
+  function prettyFeature(name){
+    var parts = name.split('_');
+    var prefixMap = {ppg:'PPG', vpg:'VPG', apg:'APG'};
+    var prefix = prefixMap[parts[0]] || parts[0].toUpperCase();
+    var rest = parts.slice(1).join(' ');
+    return prefix + ' · ' + rest.charAt(0).toUpperCase() + rest.slice(1);
+  }
+
+  var backendOK = false;
+
+  if(IS_DOCTOR){
+    loadWhy(DEMO_PATIENT);
+  } else {
+    window.PulseShell.resolvePatientKey().then(function(who){
+      if(!who.linked){
+        document.getElementById('whyLoading').innerHTML = window.PulseShell.noDataHtml(who.name);
+        document.getElementById('pageSub').textContent = 'No recording linked to this account';
+        return;
+      }
+      DEMO_PATIENT = who.key;
+      loadWhy(DEMO_PATIENT);
+      reloadTechnical();
+    });
+  }
+
+  // Doctors can switch patient; patients are pinned to their own reading.
+  if(IS_DOCTOR){
+    document.getElementById('patPick').style.display = 'flex';
+    fetch(PULSEIQ_API + '/api/patients')
+      .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+      .then(function(d){
+        var sel = document.getElementById('xaiPatient');
+        sel.innerHTML = d.patients.map(function(pt){
+          return '<option value="' + esc(pt.id) + '"' + (pt.id === DEMO_PATIENT ? ' selected' : '') + '>' +
+                 esc(pt.name) + ' — Bed ' + esc(pt.bed) + '</option>';
+        }).join('');
+        sel.addEventListener('change', function(){
+          DEMO_PATIENT = this.value;
+          loadWhy(DEMO_PATIENT);
+          reloadTechnical();
+        });
+      })
+      .catch(function(){});
+  }
+
+  function reloadTechnical(){ loadPrediction(); }
+
+  // 1) Prediction (drives the page subtitle)
+  function loadPrediction(){
+  fetch(PULSEIQ_API + '/api/predict/' + DEMO_PATIENT + winQ(true))
+    .then(function(r){ if(!r.ok) throw new Error('bad'); return r.json(); })
+    .then(function(d){
+      backendOK = true; setBadge(true);
+      document.getElementById('pageSub').textContent = IS_DOCTOR
+        ? ('Why the model predicted ' + Math.round(+d.dl.SBP.toFixed(1)) + '/' + Math.round(+d.dl.DBP.toFixed(1)) + ' mmHg for ' + d.patientName)
+        : ('Why the model predicted ' + Math.round(+d.dl.SBP.toFixed(1)) + '/' + Math.round(+d.dl.DBP.toFixed(1)) + ' mmHg for your reading');
+    })
+    .catch(function(){ setBadge(false); });
+  }
+  if(IS_DOCTOR) loadPrediction();   // patients load after their recording resolves
+
+</script>
+</body>
+</html>
