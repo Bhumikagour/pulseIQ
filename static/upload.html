@@ -73,6 +73,9 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
           <div class="card-sub">A CSV or text file with a PPG (pulse) signal, at least 12 seconds long</div>
           <input type="file" id="file" accept=".csv,.txt,.tsv,.dat" style="display:none">
           <div class="up-drop" id="drop"><b>Choose a file</b> or drop it here<br><span id="fileName" style="font-size:11.5px;">No file selected</span></div>
+          <details class="adv" style="margin-top:12px;">
+            <summary style="cursor:pointer;font-size:12px;font-weight:700;color:var(--cyan-bright);">Advanced options</summary>
+            <div class="up-note" style="margin-top:6px;">Not needed for files that contain a time column and a <code># cuff:</code> line. Use these for other recordings: sampling rate, PPG column, a cuff reading to calibrate, or a true value to compare.</div>
           <div class="up-row">
             <div class="up-field"><label>Sampling rate (Hz)</label><input id="fs" type="number" min="20" max="2000" step="any" placeholder="auto (125 if no time column)">
               <div class="hint">Samples per second of your recording</div></div>
@@ -90,6 +93,7 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
             <div class="up-field"><label>Cuff SBP at start</label><input id="csbp" type="number" step="any" placeholder="e.g. 141"></div>
             <div class="up-field"><label>Cuff DBP at start</label><input id="cdbp" type="number" step="any" placeholder="e.g. 84"></div>
           </div>
+          </details>
           <button class="btn primary" id="go" style="margin-top:16px;width:100%;">Analyse recording</button>
           <div id="msg"></div>
         </div>
@@ -126,7 +130,7 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
   // sbp/dbp: arterial-line median over the 60 s. c*: arterial value in the first 12 s (used as the
   // "cuff" for calibration). r*: arterial median over the remaining 48 s (what calibration is scored on).
   var SAMPLES = [
-    {f:'demo_ppg_vitaldb_case762_low.csv',        n:'VitalDB case 762',  sbp:92.9,  dbp:49.5, cs:97,  cd:50, rs:91.4,  rd:49.0},
+    {f:'demo_ppg_vitaldb_case2627_low.csv',       n:'VitalDB case 2627', sbp:85,    dbp:48,   cs:86,  cd:47, rs:84,    rd:49},
     {f:'demo_ppg_vitaldb_case1563_normal.csv',    n:'VitalDB case 1563', sbp:118.6, dbp:56.4, cs:119, cd:58, rs:118.1, rd:56.4},
     {f:'demo_ppg_vitaldb_case655_borderline.csv', n:'VitalDB case 655',  sbp:127.5, dbp:72.2, cs:127, cd:72, rs:127.0, rd:72.2},
     {f:'demo_ppg_vitaldb_case2572_high.csv',      n:'VitalDB case 2572', sbp:145.2, dbp:88.0, cs:141, cd:84, rs:145.7, rd:88.9}
