@@ -205,10 +205,15 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
         '<div class="stat"><div class="k">Band</div><div class="v" style="color:' + bandCol + ';font-size:20px;">' + esc(c.band) + '</div><div class="s">' + esc(c.why) + '</div></div>' +
         ref +
       '</div>' +
-      '<div class="ok-note" style="border-color:rgba(255,200,87,.35);"><b>How accurate is this?</b> On patients the model never saw in training, its typical error was ' +
+      '<div class="ok-note" style="border-color:rgba(255,200,87,.35);display:flex;gap:18px;align-items:center;">' +
+        '<div style="text-align:center;min-width:110px;"><div style="font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-500);">Accuracy</div>' +
+        '<div style="font-family:JetBrains Mono,monospace;font-size:30px;font-weight:800;color:var(--ink-0);line-height:1.1;">' + Math.round(I.accuracyPct.SBP) + '%</div>' +
+        '<div style="font-size:10.5px;color:var(--ink-500);">systolic</div></div><div>' +
+        '<b>How accurate is this?</b> Accuracy = 100 − the average % error on patients the model never saw in training (systolic ' + Math.round(I.accuracyPct.SBP) +
+        '%, diastolic ' + Math.round(I.accuracyPct.DBP) + '%, MAP ' + Math.round(I.accuracyPct.MAP) + '%). Its typical error was ' +
         '<b>±' + I.SBP.maeMmHg + '</b> mmHg for systolic, <b>±' + I.DBP.maeMmHg + '</b> for diastolic and <b>±' + I.MAP.maeMmHg + '</b> for MAP. ' + esc(I.basis) +
         ' With that uncertainty, the true systolic band could be anywhere from <b>' + sysBand(I.SBP.low) + '</b> to <b>' + sysBand(I.SBP.high) + '</b>, ' +
-        'so treat the band as indicative and confirm with a cuff.</div>' +
+        'so treat the band as indicative and confirm with a cuff.</div></div>' +
       (d.notes.length ? '<div class="ok-note"><b>Processing:</b> ' + d.notes.map(esc).join(' ') + ' Cleaned with the same filter as the training data (0.5–8 Hz).</div>' : '') +
       '<div class="k" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);margin-bottom:6px;">Cleaned signal (first 30 s, 12-second windows marked)</div>' +
       '<div class="wave">' + wave(d.preview) + '</div>' +
