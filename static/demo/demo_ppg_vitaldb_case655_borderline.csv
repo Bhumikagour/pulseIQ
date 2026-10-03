@@ -1,3 +1,6 @@
+# VitalDB case 655, fingertip PPG, 125 Hz, 60 s
+# cuff: 127/72  (arterial-line BP in the first 12 s, used for calibration)
+# reference: 127/72  (true arterial-line BP over the remaining 48 s, for comparison only)
 time_s,ppg
 0.000,-3.65780
 0.008,-3.88584

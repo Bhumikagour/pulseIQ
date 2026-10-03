@@ -1828,6 +1828,11 @@ async def upload_ppg(file: UploadFile = File(...),
     # model estimate on that window; every LATER window gets model + offset.
     # The calibration window itself is never scored.
     calib = None
+    if calSBP is None and calDBP is None and prep.get("cuffInFile"):
+        calSBP, calDBP = prep["cuffInFile"]
+        prep["notes"].append(f"Cuff reading {calSBP:g}/{calDBP:g} mmHg was read from the file and used for calibration.")
+    if refSBP is None and refDBP is None and prep.get("referenceInFile"):
+        refSBP, refDBP = prep["referenceInFile"]
     if calSBP is not None and calDBP is not None:
         if not (60 <= calSBP <= 260 and 30 <= calDBP <= 160 and calSBP > calDBP):
             raise HTTPException(status_code=422, detail="The cuff reading doesn't look like a valid blood pressure.")

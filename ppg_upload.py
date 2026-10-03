@@ -179,6 +179,14 @@ def prepare(raw: bytes, fs: float = None, column: str = ""):
     from beats import segment_beats
 
     sig, fs_time, col_name = read_signal(raw, column)
+    # Optional header lines written by a recording device or exported with the file:
+    #   # cuff: 97/50        (cuff reading taken during the first 12 s -> calibration)
+    #   # reference: 91/49   (true BP over the rest, only used for comparison)
+    head = raw[:2000].decode("utf-8", "ignore").lower()
+    def _bp(tag):
+        m = re.search(r"#\s*" + tag + r"[^0-9\n]*(\d+(?:\.\d+)?)\s*/\s*(\d+(?:\.\d+)?)", head)
+        return (float(m.group(1)), float(m.group(2))) if m else None
+    cuff_in_file, ref_in_file = _bp("cuff"), _bp("reference")
     notes = []
     if fs is None or fs <= 0:
         if fs_time:
@@ -242,4 +250,6 @@ def prepare(raw: bytes, fs: float = None, column: str = ""):
         "durationS": round(dur, 1),
         "notes": notes,
         "preview": np.round(_minmax(x[:preview_n])[::5], 4).tolist(),
+        "cuffInFile": cuff_in_file,
+        "referenceInFile": ref_in_file,
     }
