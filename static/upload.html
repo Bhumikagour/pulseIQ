@@ -239,6 +239,32 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
         K.windowsScored + ' later window' + (K.windowsScored > 1 ? 's were' : ' was') + ' estimated as model estimate + offset.</div>';
   }
 
+  // One row: SBP, DBP, MAP, Accuracy, plus one short line underneath.
+  function topBlock(d){
+    var K = d.calibration, S = K ? K.summary : d.summary, I = K ? K.interval : d.interval;
+    var acc = K ? K.accuracyPct : d.interval.accuracyPct, c = K ? K.classification : d.summary.classification;
+    var bandCol = c.tone === 'normal' ? 'var(--green)' : (c.tone === 'high' ? 'var(--red)' : 'var(--amber)');
+    var card = function(k, v, unit, sub){
+      return '<div class="stat"><div class="k">' + k + '</div><div class="v">' + v + '<small> ' + unit + '</small></div><div class="s">' + sub + '</div></div>';
+    };
+    var rng = function(t){ return 'Likely range (90%): <b style="color:var(--ink-0)">' + I[t].low + '–' + I[t].high + '</b>'; };
+    var sign = function(x){ return (x > 0 ? '+' : '') + x; };
+    var line = '<b style="color:' + bandCol + '">' + esc(c.band) + '</b> · heart rate ' + d.summary.heartRate + ' bpm';
+    if(K) line += ' · calibrated with cuff ' + Math.round(K.cuff.SBP) + '/' + Math.round(K.cuff.DBP) + ' (first 12 s; later windows estimated)';
+    if(d.reference){
+      var e = K ? K.reference : d.reference;
+      line += ' · true ' + Math.round(d.reference.SBP) + '/' + Math.round(d.reference.DBP) + ', off by ' + sign(e.errorSBP) + '/' + sign(e.errorDBP) + ' mmHg';
+    }
+    line += '<br><span style="font-size:11px;">Accuracy = 100 − average % error on patients the model never saw' +
+      (K ? ' (with one cuff reading; repeating the cuff value alone scored ' + Math.round(K.cuffAlone.SBP.accuracyPct) + '%).' : ' (no cuff calibration).') + '</span>';
+    return '<div class="stat-row">' +
+        card('SBP' + (K ? ' (calibrated)' : ''), Math.round(S.SBP), 'mmHg', rng('SBP')) +
+        card('DBP' + (K ? ' (calibrated)' : ''), Math.round(S.DBP), 'mmHg', rng('DBP')) +
+        card('MAP' + (K ? ' (calibrated)' : ''), Math.round(S.MAP), 'mmHg', rng('MAP')) +
+        card('Accuracy', Math.round(acc.SBP), '%', 'systolic · DBP ' + Math.round(acc.DBP) + '% · MAP ' + Math.round(acc.MAP) + '%') +
+      '</div><div class="ok-note">' + line + '</div>';
+  }
+
   function render(d){
     var s = d.summary, c = s.classification, out = document.getElementById('results'), I = d.interval;
     var bandCol = c.tone === 'normal' ? 'var(--green)' : (c.tone === 'high' ? 'var(--red)' : 'var(--amber)');
@@ -255,24 +281,7 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
       '<h3>Result for ' + esc(d.fileName) + '</h3>' +
       '<div class="card-sub">' + d.durationS + ' s at ' + d.fsInput + ' Hz · column “' + esc(d.column) + '” · ' + d.windowsUsed + ' of ' + d.windowsTotal +
         ' twelve-second windows passed the quality checks · median of the windows shown</div>' +
-      (d.calibration ? calBlock(d) : (
-      '<div class="stat-row">' +
-        '<div class="stat"><div class="k">Estimated BP</div><div class="v">' + Math.round(s.SBP) + '/' + Math.round(s.DBP) + '<small> mmHg</small></div>' +
-          '<div class="s">Likely range (90%): <b style="color:var(--ink-0)">' + I.SBP.low + '–' + I.SBP.high + ' / ' + I.DBP.low + '–' + I.DBP.high + '</b></div></div>' +
-        '<div class="stat"><div class="k">MAP</div><div class="v">' + Math.round(s.MAP) + '<small> mmHg</small></div>' +
-          '<div class="s">Likely range (90%): <b style="color:var(--ink-0)">' + I.MAP.low + '–' + I.MAP.high + '</b></div></div>' +
-        '<div class="stat"><div class="k">Band</div><div class="v" style="color:' + bandCol + ';font-size:20px;">' + esc(c.band) + '</div><div class="s">' + esc(c.why) + '</div></div>' +
-        ref +
-      '</div>' +
-      '<div class="ok-note" style="border-color:rgba(255,200,87,.35);display:flex;gap:18px;align-items:center;">' +
-        '<div style="text-align:center;min-width:110px;"><div style="font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-500);">Accuracy</div>' +
-        '<div style="font-family:JetBrains Mono,monospace;font-size:30px;font-weight:800;color:var(--ink-0);line-height:1.1;">' + Math.round(I.accuracyPct.SBP) + '%</div>' +
-        '<div style="font-size:10.5px;color:var(--ink-500);">systolic</div></div><div>' +
-        '<b>How accurate is this?</b> Accuracy = 100 − the average % error on patients the model never saw in training (systolic ' + Math.round(I.accuracyPct.SBP) +
-        '%, diastolic ' + Math.round(I.accuracyPct.DBP) + '%, MAP ' + Math.round(I.accuracyPct.MAP) + '%). Its typical error was ' +
-        '<b>±' + I.SBP.maeMmHg + '</b> mmHg for systolic, <b>±' + I.DBP.maeMmHg + '</b> for diastolic and <b>±' + I.MAP.maeMmHg + '</b> for MAP. ' + esc(I.basis) +
-        ' With that uncertainty, the true systolic band could be anywhere from <b>' + sysBand(I.SBP.low) + '</b> to <b>' + sysBand(I.SBP.high) + '</b>, ' +
-        'so treat the band as indicative and confirm with a cuff.</div></div>')) +
+      topBlock(d) +
       (d.notes.length ? '<div class="ok-note"><b>Processing:</b> ' + d.notes.map(esc).join(' ') + ' Cleaned with the same filter as the training data (0.5–8 Hz).</div>' : '') +
       '<div class="k" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);margin-bottom:6px;">Cleaned signal (first 30 s, 12-second windows marked)</div>' +
       '<div class="wave">' + wave(d.preview) + '</div>' +
