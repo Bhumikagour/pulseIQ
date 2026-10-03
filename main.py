@@ -1700,6 +1700,18 @@ def explain_saliency(patient_id: str, target: str = "SBP", window: Optional[int]
 # Upload your own PPG recording: clean it the same way as the training data,
 # predict BP per 12-second window with the deep model, and explain it.
 # ---------------------------------------------------------------------------
+# Empirical 90% prediction interval for one reading, from the deep model's
+# errors (true - predicted) on 12,230 windows of 47 patients it never saw in
+# training: MIMIC-IV held-out test (7 patients, 327 windows) + VitalDB
+# (40 patients, 11,903 windows). true is in [pred + low, pred + high] for 90%
+# of those windows (5th-95th percentile of the error). maeMmHg = mean |error|.
+ERROR_INTERVAL_90 = {
+    "SBP": {"low": -29.9, "high": 39.5, "maeMmHg": 17.1},
+    "DBP": {"low": -10.3, "high": 33.5, "maeMmHg": 13.4},
+    "MAP": {"low": -17.3, "high": 35.4, "maeMmHg": 14.1},
+}
+
+
 def _shap_groups(shap_vals):
     totals = {k: 0.0 for k in FEATURE_GROUPS}
     feats = {k: [] for k in FEATURE_GROUPS}
@@ -1786,10 +1798,18 @@ async def upload_ppg(file: UploadFile = File(...),
     except Exception as e:
         print(f"[upload] SHAP skipped: {e}")
 
+    interval = {t: {"low": round(med[t] + ERROR_INTERVAL_90[t]["low"]),
+                    "high": round(med[t] + ERROR_INTERVAL_90[t]["high"]),
+                    "maeMmHg": ERROR_INTERVAL_90[t]["maeMmHg"]} for t in TARGETS}
+    interval["basis"] = ("90% of true values fell in this range on 12,230 recordings from 47 patients "
+                         "the model never saw in training (MIMIC-IV test set and VitalDB).")
+
     ref = None
     if refSBP is not None and refDBP is not None:
         ref = {"SBP": refSBP, "DBP": refDBP,
-               "errorSBP": round(med["SBP"] - refSBP, 1), "errorDBP": round(med["DBP"] - refDBP, 1)}
+               "errorSBP": round(med["SBP"] - refSBP, 1), "errorDBP": round(med["DBP"] - refDBP, 1),
+               "insideRange": bool(interval["SBP"]["low"] <= refSBP <= interval["SBP"]["high"] and
+                                   interval["DBP"]["low"] <= refDBP <= interval["DBP"]["high"])}
 
     return {
         "fileName": file.filename,
@@ -1800,6 +1820,7 @@ async def upload_ppg(file: UploadFile = File(...),
         "windowsTotal": len(prep["windows"]),
         "windowsUsed": len(good),
         "windows": prep["windows"],
+        "interval": interval,
         "summary": {"SBP": round(med["SBP"], 1), "DBP": round(med["DBP"], 1), "MAP": round(med["MAP"], 1),
                     "heartRate": round(hr), "classification": classify_bp(med["SBP"], med["DBP"])},
         "explainedWindow": prep["windows"][[w["index"] for w in prep["windows"] if w["ok"]][k]]["index"],

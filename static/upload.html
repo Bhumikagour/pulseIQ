@@ -182,13 +182,14 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
   }
 
   function render(d){
-    var s = d.summary, c = s.classification, out = document.getElementById('results');
+    var s = d.summary, c = s.classification, out = document.getElementById('results'), I = d.interval;
     var bandCol = c.tone === 'normal' ? 'var(--green)' : (c.tone === 'high' ? 'var(--red)' : 'var(--amber)');
     var ref = '';
     if(d.reference){
       var R = d.reference;
       ref = '<div class="stat"><div class="k">Reference (your value)</div><div class="v">' + Math.round(R.SBP) + '/' + Math.round(R.DBP) + '<small> mmHg</small></div>' +
-        '<div class="s">Difference: SBP ' + (R.errorSBP > 0 ? '+' : '') + R.errorSBP + ', DBP ' + (R.errorDBP > 0 ? '+' : '') + R.errorDBP + ' mmHg</div></div>';
+        '<div class="s">Difference: SBP ' + (R.errorSBP > 0 ? '+' : '') + R.errorSBP + ', DBP ' + (R.errorDBP > 0 ? '+' : '') + R.errorDBP + ' mmHg<br>' +
+        (R.insideRange ? '<span style="color:var(--green)">Inside the 90% range</span>' : '<span style="color:var(--amber)">Outside the 90% range</span>') + '</div></div>';
     } else {
       ref = '<div class="stat"><div class="k">Heart rate</div><div class="v">' + s.heartRate + '<small> bpm</small></div><div class="s">From the pulse peaks</div></div>';
     }
@@ -197,11 +198,17 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
       '<div class="card-sub">' + d.durationS + ' s at ' + d.fsInput + ' Hz · column “' + esc(d.column) + '” · ' + d.windowsUsed + ' of ' + d.windowsTotal +
         ' twelve-second windows passed the quality checks · median of the windows shown</div>' +
       '<div class="stat-row">' +
-        '<div class="stat"><div class="k">Estimated BP</div><div class="v">' + Math.round(s.SBP) + '/' + Math.round(s.DBP) + '<small> mmHg</small></div><div class="s">Systolic / diastolic</div></div>' +
-        '<div class="stat"><div class="k">MAP</div><div class="v">' + Math.round(s.MAP) + '<small> mmHg</small></div><div class="s">Mean arterial pressure</div></div>' +
+        '<div class="stat"><div class="k">Estimated BP</div><div class="v">' + Math.round(s.SBP) + '/' + Math.round(s.DBP) + '<small> mmHg</small></div>' +
+          '<div class="s">Likely range (90%): <b style="color:var(--ink-0)">' + I.SBP.low + '–' + I.SBP.high + ' / ' + I.DBP.low + '–' + I.DBP.high + '</b></div></div>' +
+        '<div class="stat"><div class="k">MAP</div><div class="v">' + Math.round(s.MAP) + '<small> mmHg</small></div>' +
+          '<div class="s">Likely range (90%): <b style="color:var(--ink-0)">' + I.MAP.low + '–' + I.MAP.high + '</b></div></div>' +
         '<div class="stat"><div class="k">Band</div><div class="v" style="color:' + bandCol + ';font-size:20px;">' + esc(c.band) + '</div><div class="s">' + esc(c.why) + '</div></div>' +
         ref +
       '</div>' +
+      '<div class="ok-note" style="border-color:rgba(255,200,87,.35);"><b>How accurate is this?</b> On patients the model never saw in training, its typical error was ' +
+        '<b>±' + I.SBP.maeMmHg + '</b> mmHg for systolic, <b>±' + I.DBP.maeMmHg + '</b> for diastolic and <b>±' + I.MAP.maeMmHg + '</b> for MAP. ' + esc(I.basis) +
+        ' With that uncertainty, the true systolic band could be anywhere from <b>' + sysBand(I.SBP.low) + '</b> to <b>' + sysBand(I.SBP.high) + '</b>, ' +
+        'so treat the band as indicative and confirm with a cuff.</div>' +
       (d.notes.length ? '<div class="ok-note"><b>Processing:</b> ' + d.notes.map(esc).join(' ') + ' Cleaned with the same filter as the training data (0.5–8 Hz).</div>' : '') +
       '<div class="k" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);margin-bottom:6px;">Cleaned signal (first 30 s, 12-second windows marked)</div>' +
       '<div class="wave">' + wave(d.preview) + '</div>' +
@@ -225,6 +232,9 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
     document.getElementById('shapBox').innerHTML = shapHtml(d.shap);
     out.scrollIntoView({behavior:'smooth', block:'start'});
   }
+
+  // Same systolic thresholds as the backend's bands (Low <90, Normal <120, Borderline <130, Elevated <140, High).
+  function sysBand(v){ return v < 90 ? 'Low' : v < 120 ? 'Normal' : v < 130 ? 'Borderline' : v < 140 ? 'Elevated' : 'High'; }
 
   function shapHtml(m){
     if(!m) return '<div class="up-note">Not available for this recording.</div>';
