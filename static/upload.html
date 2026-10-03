@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* Applied before first paint so a light-mode user never sees a dark flash. */
+try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<title>PulseIQ — Upload PPG</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/theme.css">
+<link rel="stylesheet" href="shared/bp-theme.css?v=15">
+<script src="shared/bp-art.js?v=6"></script>
+<style>
+  .up-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:16px;}
+  .up-drop{border:1.5px dashed var(--glass-border-2);border-radius:var(--radius-md);padding:22px;text-align:center;cursor:pointer;color:var(--ink-400);font-size:13px;transition:border-color .15s;}
+  .up-drop:hover,.up-drop.drag{border-color:var(--cyan-bright);color:var(--ink-0);}
+  .up-drop b{color:var(--ink-0);}
+  .up-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+  .up-field label{display:block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);margin-bottom:6px;}
+  .up-field input{width:100%;box-sizing:border-box;background:var(--screen);border:1px solid var(--glass-border);border-radius:10px;padding:9px 11px;color:var(--ink-0);font-size:13px;font-family:inherit;}
+  .up-field .hint{font-size:10.5px;color:var(--ink-500);margin-top:4px;}
+  .up-note{font-size:12px;color:var(--ink-400);line-height:1.55;}
+  .up-note code{background:var(--screen);padding:1px 5px;border-radius:5px;color:var(--ink-0);}
+  .sample{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--glass-border);font-size:12.5px;}
+  .sample:last-child{border-bottom:none;}
+  .sample .nm{flex:1;color:var(--ink-0);font-weight:600;}
+  .sample .nm span{display:block;font-weight:400;font-size:11px;color:var(--ink-500);}
+  .sample a{color:var(--cyan-bright);font-size:11.5px;font-weight:700;text-decoration:none;}
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;}
+  .stat{background:var(--screen);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:14px 16px;}
+  .stat .k{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-500);}
+  .stat .v{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;color:var(--ink-0);margin-top:4px;}
+  .stat .v small{font-size:11px;color:var(--ink-500);font-weight:600;}
+  .stat .s{font-size:11px;color:var(--ink-400);margin-top:2px;}
+  .wave{height:140px;background:var(--screen);border:1px solid var(--glass-border);border-radius:var(--radius-md);overflow:hidden;}
+  .wave svg{width:100%;height:100%;display:block;}
+  .wtab{width:100%;border-collapse:collapse;font-size:12px;}
+  .wtab th{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);text-align:left;padding:8px 6px;border-bottom:1px solid var(--glass-border);}
+  .wtab td{padding:8px 6px;border-bottom:1px solid var(--glass-border);color:var(--ink-200);}
+  .wtab td.mono{font-family:'JetBrains Mono',monospace;color:var(--ink-0);font-weight:700;}
+  .wtab tr.bad td{color:var(--ink-500);}
+  .shap-row{display:grid;grid-template-columns:1.3fr 2fr 70px;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--glass-border);font-size:12.5px;}
+  .shap-row:last-child{border-bottom:none;}
+  .shap-bar{position:relative;height:10px;background:var(--wash-1);border-radius:99px;}
+  .shap-bar i{position:absolute;top:0;height:10px;border-radius:99px;}
+  .shap-bar:after{content:'';position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--ink-500);}
+  .err{background:rgba(255,92,114,.08);border:1px solid rgba(255,92,114,.35);color:var(--ink-0);border-radius:var(--radius-md);padding:12px 14px;font-size:12.5px;margin-top:14px;}
+  .ok-note{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:12px 14px;font-size:12px;color:var(--ink-400);margin-bottom:14px;}
+  .ok-note b{color:var(--ink-0);}
+  .spin{display:inline-block;width:12px;height:12px;border:2px solid var(--glass-border-2);border-top-color:var(--cyan-bright);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:8px;}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  @media(max-width:900px){.up-grid{grid-template-columns:1fr;}.stat-row{grid-template-columns:1fr 1fr;}.up-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="rail" data-active="upload"></div>
+  <div class="main">
+    <div class="topbar">
+      <div class="brand">Pulse<span>IQ</span></div>
+      <div class="grow"></div>
+      <span id="backendBadge" class="badge" style="margin-right:10px;">● Connecting…</span>
+      <div class="clock" id="clock">--:--:--</div>
+    </div>
+    <div class="content">
+      <div class="page-head"><h1>Upload PPG</h1><span class="sub">Estimate blood pressure from your own pulse recording</span></div>
+
+      <div class="up-grid">
+        <div class="card">
+          <h3>Your recording</h3>
+          <div class="card-sub">A CSV or text file with a PPG (pulse) signal, at least 12 seconds long</div>
+          <input type="file" id="file" accept=".csv,.txt,.tsv,.dat" style="display:none">
+          <div class="up-drop" id="drop"><b>Choose a file</b> or drop it here<br><span id="fileName" style="font-size:11.5px;">No file selected</span></div>
+          <div class="up-row">
+            <div class="up-field"><label>Sampling rate (Hz)</label><input id="fs" type="number" min="20" max="2000" step="any" placeholder="auto (125 if no time column)">
+              <div class="hint">Samples per second of your recording</div></div>
+            <div class="up-field"><label>PPG column (optional)</label><input id="col" type="text" placeholder="auto: 'ppg', 'pleth', 'ir'…">
+              <div class="hint">Name or number of the column</div></div>
+          </div>
+          <div class="up-row">
+            <div class="up-field"><label>Reference SBP (optional)</label><input id="rsbp" type="number" step="any" placeholder="e.g. 120">
+              <div class="hint">From a cuff or arterial line, to compare</div></div>
+            <div class="up-field"><label>Reference DBP (optional)</label><input id="rdbp" type="number" step="any" placeholder="e.g. 80"></div>
+          </div>
+          <button class="btn primary" id="go" style="margin-top:16px;width:100%;">Analyse recording</button>
+          <div id="msg"></div>
+        </div>
+
+        <div class="card">
+          <h3>Sample recordings</h3>
+          <div class="card-sub">Real 60-second PPG from VitalDB (Seoul National University Hospital), a dataset the model never saw in training. The true BP comes from the patient's arterial line.</div>
+          <div id="samples"></div>
+          <div class="up-note" style="margin-top:12px;"><b style="color:var(--ink-0)">File format.</b> One number per line, or columns separated by commas, e.g.<br>
+            <code>time_s,ppg</code><br><code>0.000,0.512</code><br><code>0.008,0.534</code><br>
+            If there is a time column (seconds or milliseconds), the sampling rate is read from it.</div>
+        </div>
+      </div>
+
+      <div id="results" style="margin-top:16px;"></div>
+    </div>
+    <div class="status-bar">
+      <span>SYS: <b>OPERATIONAL</b></span>
+      <span>PulseIQ · Explainable Cuffless BP Monitoring · Upload</span>
+    </div>
+  </div>
+</div>
+<script src="shared/shell.js?v=17"></script>
+<script src="shared/why.js?v=17"></script>
+<script>
+  function tick(){ var d=new Date(); document.getElementById('clock').textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(function(n){return String(n).padStart(2,'0');}).join(':'); }
+  setInterval(tick,1000); tick();
+  var API = (window.PULSEIQ_API_BASE || (location.port === '8090' ? 'http://localhost:8001' : location.origin));
+  function badge(ok){ var b=document.getElementById('backendBadge'); if(ok){ b.textContent='● Live Backend'; b.style.color='var(--green)'; b.style.borderColor='rgba(52,211,153,0.4)'; } else { b.textContent='● Backend offline'; b.style.color='var(--ink-500)'; } }
+  fetch(API + '/api/health').then(function(r){ badge(r.ok); }).catch(function(){ badge(false); });
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  // Sample files (true BP = median arterial-line value over the 60 s)
+  var SAMPLES = [
+    {f:'demo_ppg_vitaldb_case762_low.csv',        n:'VitalDB case 762',  sbp:92.9,  dbp:49.5},
+    {f:'demo_ppg_vitaldb_case1563_normal.csv',    n:'VitalDB case 1563', sbp:118.6, dbp:56.4},
+    {f:'demo_ppg_vitaldb_case655_borderline.csv', n:'VitalDB case 655',  sbp:127.5, dbp:72.2},
+    {f:'demo_ppg_vitaldb_case2572_high.csv',      n:'VitalDB case 2572', sbp:145.2, dbp:88.0}
+  ];
+  document.getElementById('samples').innerHTML = SAMPLES.map(function(s, i){
+    return '<div class="sample"><div class="nm">' + s.n + '<span>Arterial line: ' + Math.round(s.sbp) + '/' + Math.round(s.dbp) + ' mmHg · 60 s · 125 Hz</span></div>' +
+      '<a href="demo/' + s.f + '" download>Download</a>' +
+      '<button class="btn subtle" style="padding:7px 12px;font-size:11.5px;" data-sample="' + i + '">Analyse</button></div>';
+  }).join('');
+
+  var chosen = null;
+  var fileEl = document.getElementById('file'), drop = document.getElementById('drop');
+  function pick(f){ chosen = f; document.getElementById('fileName').textContent = f ? f.name + ' (' + Math.round(f.size/1024) + ' KB)' : 'No file selected'; }
+  drop.onclick = function(){ fileEl.click(); };
+  fileEl.onchange = function(){ pick(fileEl.files[0]); };
+  drop.ondragover = function(e){ e.preventDefault(); drop.classList.add('drag'); };
+  drop.ondragleave = function(){ drop.classList.remove('drag'); };
+  drop.ondrop = function(e){ e.preventDefault(); drop.classList.remove('drag'); if(e.dataTransfer.files[0]) pick(e.dataTransfer.files[0]); };
+
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-sample]');
+    if(!b) return;
+    var s = SAMPLES[+b.getAttribute('data-sample')];
+    document.getElementById('rsbp').value = s.sbp; document.getElementById('rdbp').value = s.dbp;
+    document.getElementById('fs').value = ''; document.getElementById('col').value = '';
+    fetch('demo/' + s.f).then(function(r){ return r.blob(); }).then(function(bl){
+      pick(new File([bl], s.f, {type:'text/csv'})); analyse();
+    });
+  });
+  document.getElementById('go').onclick = analyse;
+
+  function analyse(){
+    var msg = document.getElementById('msg'), out = document.getElementById('results');
+    if(!chosen){ msg.innerHTML = '<div class="err">Choose a file first, or use one of the sample recordings.</div>'; return; }
+    var fd = new FormData();
+    fd.append('file', chosen);
+    var v = function(id){ return document.getElementById(id).value.trim(); };
+    if(v('fs')) fd.append('fs', v('fs'));
+    if(v('col')) fd.append('column', v('col'));
+    if(v('rsbp') && v('rdbp')){ fd.append('refSBP', v('rsbp')); fd.append('refDBP', v('rdbp')); }
+    msg.innerHTML = '';
+    out.innerHTML = '<div class="card"><span class="spin"></span>Cleaning the signal, estimating BP for each 12-second window and working out the explanation… (about 5–20 s)</div>';
+    document.getElementById('go').disabled = true;
+    fetch(API + '/api/upload/ppg', {method:'POST', body: fd})
+      .then(function(r){ return r.json().then(function(d){ if(!r.ok) throw new Error(d.detail || 'Upload failed'); return d; }); })
+      .then(function(d){ render(d); })
+      .catch(function(err){ out.innerHTML = ''; msg.innerHTML = '<div class="err">⚠ ' + esc(err.message) + '</div>'; })
+      .then(function(){ document.getElementById('go').disabled = false; });
+  }
+
+  function wave(pre){
+    var W = 1000, H = 140, n = pre.length;
+    var pts = pre.map(function(v, i){ return (i/(n-1)*W).toFixed(1) + ',' + (H - 10 - v*(H-20)).toFixed(1); }).join(' ');
+    var secs = n * 5 / 125, ticks = '';
+    for(var s = 0; s <= secs; s += 12){
+      var x = (s/secs*W).toFixed(1);
+      ticks += '<line x1="'+x+'" x2="'+x+'" y1="0" y2="'+H+'" stroke="var(--glass-border)" stroke-dasharray="3 4"/><text x="'+(+x+4)+'" y="12" font-size="10" fill="var(--ink-500)" font-family="JetBrains Mono,monospace">'+s+'s</text>';
+    }
+    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">' + ticks +
+      '<polyline points="'+pts+'" fill="none" stroke="var(--spo2)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>';
+  }
+
+  function render(d){
+    var s = d.summary, c = s.classification, out = document.getElementById('results');
+    var bandCol = c.tone === 'normal' ? 'var(--green)' : (c.tone === 'high' ? 'var(--red)' : 'var(--amber)');
+    var ref = '';
+    if(d.reference){
+      var R = d.reference;
+      ref = '<div class="stat"><div class="k">Reference (your value)</div><div class="v">' + Math.round(R.SBP) + '/' + Math.round(R.DBP) + '<small> mmHg</small></div>' +
+        '<div class="s">Difference: SBP ' + (R.errorSBP > 0 ? '+' : '') + R.errorSBP + ', DBP ' + (R.errorDBP > 0 ? '+' : '') + R.errorDBP + ' mmHg</div></div>';
+    } else {
+      ref = '<div class="stat"><div class="k">Heart rate</div><div class="v">' + s.heartRate + '<small> bpm</small></div><div class="s">From the pulse peaks</div></div>';
+    }
+    var html = '<div class="card">' +
+      '<h3>Result for ' + esc(d.fileName) + '</h3>' +
+      '<div class="card-sub">' + d.durationS + ' s at ' + d.fsInput + ' Hz · column “' + esc(d.column) + '” · ' + d.windowsUsed + ' of ' + d.windowsTotal +
+        ' twelve-second windows passed the quality checks · median of the windows shown</div>' +
+      '<div class="stat-row">' +
+        '<div class="stat"><div class="k">Estimated BP</div><div class="v">' + Math.round(s.SBP) + '/' + Math.round(s.DBP) + '<small> mmHg</small></div><div class="s">Systolic / diastolic</div></div>' +
+        '<div class="stat"><div class="k">MAP</div><div class="v">' + Math.round(s.MAP) + '<small> mmHg</small></div><div class="s">Mean arterial pressure</div></div>' +
+        '<div class="stat"><div class="k">Band</div><div class="v" style="color:' + bandCol + ';font-size:20px;">' + esc(c.band) + '</div><div class="s">' + esc(c.why) + '</div></div>' +
+        ref +
+      '</div>' +
+      (d.notes.length ? '<div class="ok-note"><b>Processing:</b> ' + d.notes.map(esc).join(' ') + ' Cleaned with the same filter as the training data (0.5–8 Hz).</div>' : '') +
+      '<div class="k" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);margin-bottom:6px;">Cleaned signal (first 30 s, 12-second windows marked)</div>' +
+      '<div class="wave">' + wave(d.preview) + '</div>' +
+      '<table class="wtab" style="margin-top:14px;"><tr><th>Window</th><th>SBP</th><th>DBP</th><th>MAP</th><th>Heart rate</th><th>Quality</th></tr>' +
+      d.windows.map(function(w){
+        var mark = w.index === d.explainedWindow ? ' <span class="badge cyan" style="font-size:9px;padding:2px 7px;">explained below</span>' : '';
+        return w.ok
+          ? '<tr><td>' + w.startS + '–' + (w.startS + 12) + ' s' + mark + '</td><td class="mono">' + w.SBP.toFixed(1) + '</td><td class="mono">' + w.DBP.toFixed(1) + '</td><td class="mono">' + w.MAP.toFixed(1) + '</td><td>' + w.heartRate + ' bpm</td><td style="color:var(--green)">OK</td></tr>'
+          : '<tr class="bad"><td>' + w.startS + '–' + (w.startS + 12) + ' s</td><td>–</td><td>–</td><td>–</td><td>–</td><td>Skipped: ' + esc(w.reason) + '</td></tr>';
+      }).join('') + '</table>' +
+      '<div class="up-note" style="margin-top:12px;">' + esc(d.note) + '</div>' +
+      '</div>' +
+      '<div class="up-grid" style="margin-top:16px;">' +
+        '<div class="card"><h3>Where the AI looked</h3><div class="card-sub">Integrated Gradients on the deep model, systolic estimate, window ' +
+          (d.windows[d.explainedWindow].startS) + '–' + (d.windows[d.explainedWindow].startS + 12) + ' s</div><div id="igBox"></div></div>' +
+        '<div class="card"><h3>Which pulse features moved the value</h3><div class="card-sub">SHAP, in mmHg, for the same window (systolic)</div><div id="shapBox"></div></div>' +
+      '</div>';
+    out.innerHTML = html;
+    var tech = false; try { tech = localStorage.getItem('pulseiq_role') === 'doctor'; } catch(e){}
+    if(window.PulseWhy && PulseWhy.igHtml){ PulseWhy.injectCss(); document.getElementById('igBox').innerHTML = PulseWhy.igHtml(d.ig, tech); }
+    document.getElementById('shapBox').innerHTML = shapHtml(d.shap);
+    out.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function shapHtml(m){
+    if(!m) return '<div class="up-note">Not available for this recording.</div>';
+    var groups = m.groups.filter(function(g){ return Math.abs(g.mmHg) >= 0.5; });
+    var mx = Math.max.apply(null, groups.map(function(g){ return Math.abs(g.mmHg); }).concat([1]));
+    var rows = groups.map(function(g){
+      var w = Math.abs(g.mmHg)/mx*50, up = g.mmHg > 0;
+      return '<div class="shap-row"><div style="color:var(--ink-0);font-weight:600;">' + esc(g.label) + '</div>' +
+        '<div class="shap-bar"><i style="' + (up ? 'left:50%;' : 'left:' + (50-w) + '%;') + 'width:' + w + '%;background:' + (up ? 'var(--red)' : 'var(--green)') + ';"></i></div>' +
+        '<div style="font-family:JetBrains Mono,monospace;font-weight:700;color:' + (up ? 'var(--red)' : 'var(--green)') + ';text-align:right;">' + (up ? '+' : '') + g.mmHg.toFixed(1) + '</div></div>';
+    }).join('') || '<div class="up-note">No factor moved the value by 0.5 mmHg or more.</div>';
+    var agree = m.agreement.close
+      ? 'The readable copy lands within ' + m.agreement.closeWithinMmHg + ' mmHg of the deep model here (gap ' + m.agreement.gapMmHg + ' mmHg), so these factors describe this reading well.'
+      : 'The readable copy is ' + m.agreement.gapMmHg + ' mmHg from the deep model here, so treat these factors as a rough guide.';
+    return '<div class="up-note" style="margin-bottom:8px;">Starts from the model\'s average reading of <b style="color:var(--ink-0)">' + m.averageEstimate +
+      ' mmHg</b>; red pushed this reading up, green pulled it down.</div>' + rows +
+      '<div class="up-note" style="margin-top:10px;">' + agree + '</div>';
+  }
+</script>
+</body>
+</html>

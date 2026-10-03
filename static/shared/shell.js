@@ -53,12 +53,14 @@
       { key: 'medicines', href: 'medicine-reminders.html', icon: '\ud83d\udc8a', label: 'Medicines',      sub: 'Doses & adherence' },
       { key: 'finder',    href: 'hospital-finder.html',    icon: '\ud83d\uddfa\ufe0f', label: 'Find Care', sub: 'Doctors & hospitals' },
       { key: 'vault',     href: 'medical-vault.html',      icon: '\ud83d\uddc2\ufe0f', label: 'My Vault',  sub: 'Reports & scans' },
-      { key: 'chat',      href: 'chat.html',               icon: '\ud83d\udcac', label: 'Messages',       sub: 'Doctors & AI assistant' }
+      { key: 'chat',      href: 'chat.html',               icon: '\ud83d\udcac', label: 'Messages',       sub: 'Doctors & AI assistant' },
+      { key: 'upload',    href: 'upload.html',             icon: '\ud83d\udce4', label: 'Upload PPG',     sub: 'Test your own recording' }
     ],
     doctor: [
       { key: 'monitor',  href: 'icu-monitor.html', icon: '\ud83e\udec0', label: 'ICU Monitor',      sub: 'Patient waveforms' },
       { key: 'insights', href: 'xai-results.html', icon: '\ud83e\udde0', label: 'Explainability',   sub: 'Why this reading' },
-      { key: 'chat',     href: 'chat.html',        icon: '\ud83d\udcac', label: 'Patient Messages', sub: 'Your patients' }
+      { key: 'chat',     href: 'chat.html',        icon: '\ud83d\udcac', label: 'Patient Messages', sub: 'Your patients' },
+      { key: 'upload',   href: 'upload.html',      icon: '\ud83d\udce4', label: 'Upload PPG',       sub: 'Analyse a recording' }
     ]
   };
 

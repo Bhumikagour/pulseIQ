@@ -1697,6 +1697,122 @@ def explain_saliency(patient_id: str, target: str = "SBP", window: Optional[int]
 
 
 # ---------------------------------------------------------------------------
+# Upload your own PPG recording: clean it the same way as the training data,
+# predict BP per 12-second window with the deep model, and explain it.
+# ---------------------------------------------------------------------------
+def _shap_groups(shap_vals):
+    totals = {k: 0.0 for k in FEATURE_GROUPS}
+    feats = {k: [] for k in FEATURE_GROUPS}
+    for f, v in zip(STATE["feature_names"], shap_vals):
+        gk = _GROUP_OF.get(f)
+        if gk is None:
+            continue
+        totals[gk] += float(v)
+        feats[gk].append({"feature": f, "label": FEATURE_LABELS.get(f, f), "shapValue": float(v)})
+    groups = []
+    for gk, g in FEATURE_GROUPS.items():
+        if not feats[gk]:
+            continue
+        t = totals[gk]
+        groups.append({"key": gk, "label": g["label"], "what": g["what"], "mmHg": round(t, 2),
+                       "direction": "raised" if t > 0 else ("lowered" if t < 0 else "neutral"),
+                       "topFeatures": sorted(feats[gk], key=lambda r: abs(r["shapValue"]), reverse=True)[:3]})
+    groups.sort(key=lambda g: abs(g["mmHg"]), reverse=True)
+    return groups
+
+
+@app.post("/api/upload/ppg")
+async def upload_ppg(file: UploadFile = File(...),
+                     fs: Optional[float] = Form(default=None),
+                     column: Optional[str] = Form(default=""),
+                     refSBP: Optional[float] = Form(default=None),
+                     refDBP: Optional[float] = Form(default=None),
+                     current_user: dict = Depends(auth.get_current_user)):
+    import ppg_upload
+    raw = await file.read()
+    try:
+        prep = ppg_upload.prepare(raw, fs, column or "")
+    except ppg_upload.UploadError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=422, detail=f"Could not read this file as a PPG signal ({e}).")
+
+    X = prep["X"]
+    if len(X) == 0:
+        raise HTTPException(status_code=422, detail=(
+            "No 12-second window passed the quality checks (the heartbeats could not be found). "
+            "Check that the file holds a PPG signal and that the sampling rate is right."))
+
+    model = STATE["dl_model"]
+    with torch.no_grad():
+        P = model(torch.tensor(X)).numpy()
+    for w in prep["windows"]:
+        if w["ok"]:
+            p = P[w.pop("row")]
+            w.update({t: round(float(p[j]), 1) for j, t in enumerate(TARGETS)})
+
+    med = {t: float(np.median(P[:, j])) for j, t in enumerate(TARGETS)}
+    good = [w for w in prep["windows"] if w["ok"]]
+    hr = float(np.median([w["heartRate"] for w in good]))
+
+    # Explain the window whose SBP is closest to the median (a typical window).
+    k = int(np.argmin(np.abs(P[:, 0] - med["SBP"])))
+    x = torch.tensor(X[k:k + 1], requires_grad=True)
+    from captum.attr import IntegratedGradients
+    attr = IntegratedGradients(model).attribute(x, target=0, n_steps=32).detach().numpy()[0]
+    step = 5
+    ig = {
+        "target": "SBP",
+        "samplingRateHz": Config.SAMPLING_RATE,
+        "channels": {c: X[k, j, ::step].tolist() for j, c in enumerate(("ppg", "vpg", "apg"))},
+        "attribution": {c: attr[j, ::step].tolist() for j, c in enumerate(("ppg", "vpg", "apg"))},
+        "beat": beat_attention(X[k, 0], attr, Config.SAMPLING_RATE),
+    }
+
+    shap_block = None
+    try:
+        row = _extract_features_row(X[k, 0], X[k, 1], X[k, 2])
+        row = row.reindex(columns=STATE["feature_names"]).replace([np.inf, -np.inf], np.nan).fillna(0.0)
+        feat = STATE["scaler"].transform(row)
+        sv, base, est = surrogate_shap(feat, "SBP")
+        reading = float(P[k, 0])
+        shap_block = {
+            "target": "SBP", "averageEstimate": round(base, 1), "copyEstimate": round(est, 1),
+            "reading": round(reading, 1), "netShift": round(est - base, 1),
+            "groups": _shap_groups(sv),
+            "agreement": {"closeWithinMmHg": AGREE_MMHG, "gapMmHg": round(abs(reading - est), 1),
+                          "close": bool(abs(reading - est) <= AGREE_MMHG)},
+        }
+    except Exception as e:
+        print(f"[upload] SHAP skipped: {e}")
+
+    ref = None
+    if refSBP is not None and refDBP is not None:
+        ref = {"SBP": refSBP, "DBP": refDBP,
+               "errorSBP": round(med["SBP"] - refSBP, 1), "errorDBP": round(med["DBP"] - refDBP, 1)}
+
+    return {
+        "fileName": file.filename,
+        "column": prep["column"],
+        "fsInput": prep["fsInput"],
+        "durationS": prep["durationS"],
+        "notes": prep["notes"],
+        "windowsTotal": len(prep["windows"]),
+        "windowsUsed": len(good),
+        "windows": prep["windows"],
+        "summary": {"SBP": round(med["SBP"], 1), "DBP": round(med["DBP"], 1), "MAP": round(med["MAP"], 1),
+                    "heartRate": round(hr), "classification": classify_bp(med["SBP"], med["DBP"])},
+        "explainedWindow": prep["windows"][[w["index"] for w in prep["windows"] if w["ok"]][k]]["index"],
+        "ig": ig,
+        "shap": shap_block,
+        "reference": ref,
+        "preview": prep["preview"],
+        "note": "Estimated by the PPGResNetBiLSTM deep model from the uploaded PPG only (no calibration). "
+                "Research demonstrator, not a medical device.",
+    }
+
+
+# ---------------------------------------------------------------------------
 # v2 (validation audit): verified results only.
 # Removed from the comparison because they were found to be invalid:
 #   * "Multimodal ECG+PPG+PTT, 5-min recalib" (3.23 mmHg SBP, "Grade A"): the ECG was synthetic and the

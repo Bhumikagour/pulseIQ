@@ -432,5 +432,5 @@
       .catch(function () { el.innerHTML = 'Reason not available right now.' + link; });
   }
 
-  window.PulseWhy = { mount: mount, mountIG: mountIG, summaryLine: summaryLine, band: band };
+  window.PulseWhy = { mount: mount, mountIG: mountIG, summaryLine: summaryLine, band: band, igHtml: igHtml, injectCss: injectCss };
 })();
