@@ -242,7 +242,7 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
 
   // ---------------- AI thread (local LLM, stored in this browser) ----------------
   var AI_KEY = 'pulseiq_ai_thread';
-  var AI_GREETING = "Hi! I'm your PulseIQ Health Assistant, running on a local AI model on your own machine. Ask me anything about general wellness, medications, or your readings.";
+  var AI_GREETING = "Hi! I'm your PulseIQ Health Assistant. Ask me about blood pressure, healthy ranges, lifestyle tips, your readings, or how PulseIQ works.";
   function loadAiThread(){
     try { var t = JSON.parse(localStorage.getItem(AI_KEY)); if(Array.isArray(t) && t.length) return t; } catch(e){}
     return [{who:'them', text:AI_GREETING}];
@@ -318,7 +318,7 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
     document.getElementById('chatHead').classList.add('ai');
     document.getElementById('headAv').textContent = '🤖';
     document.getElementById('headName').textContent = 'PulseIQ AI Assistant';
-    document.getElementById('headSub').textContent = 'General guidance · not a diagnosis · runs locally via Ollama';
+    document.getElementById('headSub').textContent = 'General guidance · not a diagnosis';
     document.getElementById('disclaimer').textContent = '⚠ AI can make mistakes. Always consult a doctor.';
     document.getElementById('headActions').innerHTML = '<button class="mini-btn" id="clearAi">Clear chat</button>';
     document.getElementById('clearAi').onclick = function(){
@@ -688,8 +688,10 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
             ? 'General guidance · not a diagnosis · running locally via Ollama (' + model + ')'
             : (d.ollamaReachable ? 'Model not installed — run: ollama pull ' + model
                                  : (d.hint || 'Local AI offline — start Ollama, then: ollama pull ' + model));
+        } else if(d.provider === 'builtin'){
+          sub.textContent = 'General guidance · not a diagnosis · built-in health assistant';
         } else {
-          sub.textContent = 'AI assistant is not configured on this server.';
+          sub.textContent = 'General guidance · not a diagnosis';
         }
       })
       .catch(function(){});

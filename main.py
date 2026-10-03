@@ -49,6 +49,7 @@ from pydantic import BaseModel
 from typing import List
 
 import auth
+import health_assistant
 
 warnings.filterwarnings("ignore")
 
@@ -111,6 +112,11 @@ STATE = {}
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2")
 OLLAMA_TIMEOUT_SECONDS = 120
+# Optional hosted model: set GROQ_API_KEY (free key from console.groq.com) on the
+# server to answer with Llama via Groq. With neither Groq nor Ollama available
+# (e.g. on Render), the built-in assistant in health_assistant.py answers.
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "").strip()
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.1-8b-instant")
 
 CHAT_SYSTEM_PROMPT = (
     "You are the PulseIQ Health Assistant, a general wellness chatbot inside a "
@@ -1841,27 +1847,54 @@ class ChatRequest(BaseModel):
     patientId: Optional[str] = None  # optional: include recent BP as context
 
 
+def _chat_provider() -> str:
+    """Which assistant answers: Groq if a key is set, else Ollama if it is
+    reachable (local runs), else the built-in assistant (always available)."""
+    if GROQ_API_KEY:
+        return "groq"
+    try:
+        requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=1).raise_for_status()
+        return "ollama"
+    except Exception:
+        return "builtin"
+
+
 @app.get("/api/chat/health")
 def chat_health():
-    try:
-        r = requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=3)
-        r.raise_for_status()
-        models = [m.get("name") for m in r.json().get("models", [])]
-        return {
-            "ollamaReachable": True,
-            "configuredModel": OLLAMA_MODEL,
-            "modelPulled": any(OLLAMA_MODEL in m for m in models),
-            "installedModels": models,
-        }
-    except Exception as e:
-        return {
-            "ollamaReachable": False,
-            "configuredModel": OLLAMA_MODEL,
-            "error": str(e),
-            "hint": "Install Ollama (https://ollama.com/download), run "
-                    f"'ollama pull {OLLAMA_MODEL}', then make sure Ollama is "
-                    "running (it usually starts automatically after install).",
-        }
+    provider = _chat_provider()
+    if provider == "groq":
+        return {"provider": "groq", "reachable": True, "modelAvailable": True,
+                "configuredModel": GROQ_MODEL}
+    if provider == "ollama":
+        try:
+            r = requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=3)
+            models = [m.get("name") for m in r.json().get("models", [])]
+        except Exception:
+            models = []
+        return {"provider": "ollama", "ollamaReachable": True, "configuredModel": OLLAMA_MODEL,
+                "modelPulled": any(OLLAMA_MODEL in m for m in models), "installedModels": models}
+    return {"provider": "builtin", "reachable": True, "configuredModel": "built-in"}
+
+
+def _ask_groq(messages):
+    r = requests.post(
+        "https://api.groq.com/openai/v1/chat/completions",
+        headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
+        json={"model": GROQ_MODEL, "messages": messages, "temperature": 0.3, "max_tokens": 400},
+        timeout=30,
+    )
+    r.raise_for_status()
+    return r.json()["choices"][0]["message"]["content"].strip()
+
+
+def _ask_ollama(messages):
+    r = requests.post(
+        f"{OLLAMA_BASE_URL}/api/chat",
+        json={"model": OLLAMA_MODEL, "messages": messages, "stream": False},
+        timeout=OLLAMA_TIMEOUT_SECONDS,
+    )
+    r.raise_for_status()
+    return r.json().get("message", {}).get("content", "").strip()
 
 
 @app.post("/api/chat")
@@ -1870,6 +1903,7 @@ def chat(req: ChatRequest, authorization: Optional[str] = Header(default=None)):
         raise HTTPException(status_code=400, detail="message must not be empty")
 
     system_prompt = CHAT_SYSTEM_PROMPT
+    reading = None
     # v3: BP context only for a signed-in caller allowed to see that recording.
     allowed = False
     if req.patientId and authorization:
@@ -1881,51 +1915,39 @@ def chat(req: ChatRequest, authorization: Optional[str] = Header(default=None)):
     if allowed and req.patientId in STATE.get("patient_index", {}):
         try:
             info = STATE["patient_index"][req.patientId]
-            i = info["first_window"]
-            dl_pred = dl_predict_window(i)
+            dl_pred = dl_predict_window(info["first_window"])
+            sbp, dbp, mp = round(dl_pred["SBP"]), round(dl_pred["DBP"]), round(dl_pred["MAP"])
+            reading = {"SBP": sbp, "DBP": dbp, "MAP": mp, "band": classify_bp(sbp, dbp)["band"]}
             system_prompt += (
                 f"\n\nContext: the user's most recent PulseIQ reading (from the "
-                f"PPGResNetBiLSTM model) was approximately "
-                f"{round(dl_pred['SBP'])}/{round(dl_pred['DBP'])} mmHg "
-                f"(MAP {round(dl_pred['MAP'])}). Only mention this if it's "
-                f"relevant to what they're asking."
+                f"PPGResNetBiLSTM model) was approximately {sbp}/{dbp} mmHg (MAP {mp}). "
+                f"Only mention this if it's relevant to what they're asking."
             )
         except Exception:
             pass  # context is best-effort; never block the chat over it
 
-    messages = [{"role": "system", "content": system_prompt}]
-    for m in req.history[-10:]:  # keep recent context bounded
-        if m.role in ("user", "assistant"):
-            messages.append({"role": m.role, "content": m.content})
-    messages.append({"role": "user", "content": req.message})
+    history = [{"role": m.role, "content": m.content}
+               for m in req.history[-10:] if m.role in ("user", "assistant")]
+    messages = [{"role": "system", "content": system_prompt}] + history + \
+               [{"role": "user", "content": req.message}]
 
+    provider = _chat_provider()
     try:
-        resp = requests.post(
-            f"{OLLAMA_BASE_URL}/api/chat",
-            json={"model": OLLAMA_MODEL, "messages": messages, "stream": False},
-            timeout=OLLAMA_TIMEOUT_SECONDS,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        reply = data.get("message", {}).get("content", "").strip()
-        if not reply:
-            raise ValueError("empty response from local model")
-        return {"reply": reply, "model": OLLAMA_MODEL, "source": "local-llm"}
-    except requests.exceptions.ConnectionError:
-        raise HTTPException(
-            status_code=503,
-            detail=f"Local AI (Ollama) is not reachable at {OLLAMA_BASE_URL}. "
-                   f"Install it from https://ollama.com/download, run "
-                   f"'ollama pull {OLLAMA_MODEL}', and make sure it's running.",
-        )
-    except requests.exceptions.Timeout:
-        raise HTTPException(
-            status_code=504,
-            detail="Local AI took too long to respond. Try a smaller model "
-                   "(e.g. 'ollama pull llama3.2:1b') if your machine is slow.",
-        )
+        if provider == "groq":
+            reply = _ask_groq(messages)
+            if reply:
+                return {"reply": reply, "model": GROQ_MODEL, "source": "groq"}
+        elif provider == "ollama":
+            reply = _ask_ollama(messages)
+            if reply:
+                return {"reply": reply, "model": OLLAMA_MODEL, "source": "local-llm"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Local AI error: {e}")
+        print(f"[chat] {provider} failed, using built-in assistant: {e}")
+
+    # No language model available (e.g. on Render) or it failed: answer from
+    # the built-in knowledge base so the chat always works.
+    return {"reply": health_assistant.answer(req.message, history, reading),
+            "model": "built-in", "source": "builtin"}
 
 
 # ---------------------------------------------------------------------------
