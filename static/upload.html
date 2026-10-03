@@ -84,6 +84,12 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
               <div class="hint">From a cuff or arterial line, to compare</div></div>
             <div class="up-field"><label>Reference DBP (optional)</label><input id="rdbp" type="number" step="any" placeholder="e.g. 80"></div>
           </div>
+          <div class="up-field" style="margin-top:16px;"><label>Calibration with a cuff reading (optional)</label>
+            <div class="hint" style="margin:0 0 6px;">A cuff measurement taken during the first 12 seconds of this recording. The first window is used to calibrate; BP is then estimated for the rest.</div></div>
+          <div class="up-row" style="margin-top:0;">
+            <div class="up-field"><label>Cuff SBP at start</label><input id="csbp" type="number" step="any" placeholder="e.g. 141"></div>
+            <div class="up-field"><label>Cuff DBP at start</label><input id="cdbp" type="number" step="any" placeholder="e.g. 84"></div>
+          </div>
           <button class="btn primary" id="go" style="margin-top:16px;width:100%;">Analyse recording</button>
           <div id="msg"></div>
         </div>
@@ -117,16 +123,19 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
   // Sample files (true BP = median arterial-line value over the 60 s)
+  // sbp/dbp: arterial-line median over the 60 s. c*: arterial value in the first 12 s (used as the
+  // "cuff" for calibration). r*: arterial median over the remaining 48 s (what calibration is scored on).
   var SAMPLES = [
-    {f:'demo_ppg_vitaldb_case762_low.csv',        n:'VitalDB case 762',  sbp:92.9,  dbp:49.5},
-    {f:'demo_ppg_vitaldb_case1563_normal.csv',    n:'VitalDB case 1563', sbp:118.6, dbp:56.4},
-    {f:'demo_ppg_vitaldb_case655_borderline.csv', n:'VitalDB case 655',  sbp:127.5, dbp:72.2},
-    {f:'demo_ppg_vitaldb_case2572_high.csv',      n:'VitalDB case 2572', sbp:145.2, dbp:88.0}
+    {f:'demo_ppg_vitaldb_case762_low.csv',        n:'VitalDB case 762',  sbp:92.9,  dbp:49.5, cs:97,  cd:50, rs:91.4,  rd:49.0},
+    {f:'demo_ppg_vitaldb_case1563_normal.csv',    n:'VitalDB case 1563', sbp:118.6, dbp:56.4, cs:119, cd:58, rs:118.1, rd:56.4},
+    {f:'demo_ppg_vitaldb_case655_borderline.csv', n:'VitalDB case 655',  sbp:127.5, dbp:72.2, cs:127, cd:72, rs:127.0, rd:72.2},
+    {f:'demo_ppg_vitaldb_case2572_high.csv',      n:'VitalDB case 2572', sbp:145.2, dbp:88.0, cs:141, cd:84, rs:145.7, rd:88.9}
   ];
   document.getElementById('samples').innerHTML = SAMPLES.map(function(s, i){
-    return '<div class="sample"><div class="nm">' + s.n + '<span>Arterial line: ' + Math.round(s.sbp) + '/' + Math.round(s.dbp) + ' mmHg · 60 s · 125 Hz</span></div>' +
+    return '<div class="sample"><div class="nm">' + s.n + '<span>Arterial line: ' + Math.round(s.sbp) + '/' + Math.round(s.dbp) + ' mmHg · first 12 s: ' + s.cs + '/' + s.cd + ' · 60 s · 125 Hz</span></div>' +
       '<a href="demo/' + s.f + '" download>Download</a>' +
-      '<button class="btn subtle" style="padding:7px 12px;font-size:11.5px;" data-sample="' + i + '">Analyse</button></div>';
+      '<button class="btn subtle" style="padding:7px 10px;font-size:11px;" data-sample="' + i + '">Analyse</button>' +
+      '<button class="btn subtle" style="padding:7px 10px;font-size:11px;" data-sample="' + i + '" data-cal="1">+ Calibrate</button></div>';
   }).join('');
 
   var chosen = null;
@@ -141,8 +150,10 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
   document.addEventListener('click', function(e){
     var b = e.target.closest && e.target.closest('[data-sample]');
     if(!b) return;
-    var s = SAMPLES[+b.getAttribute('data-sample')];
-    document.getElementById('rsbp').value = s.sbp; document.getElementById('rdbp').value = s.dbp;
+    var s = SAMPLES[+b.getAttribute('data-sample')], cal = b.getAttribute('data-cal') === '1';
+    // With calibration, compare against the arterial value over the 48 s that are actually estimated.
+    document.getElementById('rsbp').value = cal ? s.rs : s.sbp; document.getElementById('rdbp').value = cal ? s.rd : s.dbp;
+    document.getElementById('csbp').value = cal ? s.cs : ''; document.getElementById('cdbp').value = cal ? s.cd : '';
     document.getElementById('fs').value = ''; document.getElementById('col').value = '';
     fetch('demo/' + s.f).then(function(r){ return r.blob(); }).then(function(bl){
       pick(new File([bl], s.f, {type:'text/csv'})); analyse();
@@ -159,6 +170,10 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
     if(v('fs')) fd.append('fs', v('fs'));
     if(v('col')) fd.append('column', v('col'));
     if(v('rsbp') && v('rdbp')){ fd.append('refSBP', v('rsbp')); fd.append('refDBP', v('rdbp')); }
+    if(v('csbp') || v('cdbp')){
+      if(!(v('csbp') && v('cdbp'))){ msg.innerHTML = '<div class="err">Enter both cuff values (SBP and DBP), or leave both empty.</div>'; return; }
+      fd.append('calSBP', v('csbp')); fd.append('calDBP', v('cdbp'));
+    }
     msg.innerHTML = '';
     out.innerHTML = '<div class="card"><span class="spin"></span>Cleaning the signal, estimating BP for each 12-second window and working out the explanation… (about 5–20 s)</div>';
     document.getElementById('go').disabled = true;
@@ -181,6 +196,49 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
       '<polyline points="'+pts+'" fill="none" stroke="var(--spo2)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>';
   }
 
+  function calBlock(d){
+    var K = d.calibration, s = K.summary, c = K.classification, I = K.interval, R = K.reference, M = d.summary;
+    var bandCol = c.tone === 'normal' ? 'var(--green)' : (c.tone === 'high' ? 'var(--red)' : 'var(--amber)');
+    var sign = function(x){ return (x > 0 ? '+' : '') + x; };
+    // uncalibrated estimates over the same (scored) windows, for a fair side-by-side
+    var est = d.windows.filter(function(w){ return w.ok && !w.calibrationWindow; });
+    var med = function(a, k){ var v = a.map(function(w){ return w[k]; }).sort(function(x, y){ return x - y; }), n = v.length;
+      return n % 2 ? v[(n - 1) / 2] : (v[n / 2 - 1] + v[n / 2]) / 2; };
+    var cmp = function(k, v, sub, hi){
+      return '<div class="stat"' + (hi ? ' style="border-color:var(--cyan-bright);"' : '') + '><div class="k">' + k + '</div><div class="v" style="font-size:20px;">' + v + '<small> mmHg</small></div><div class="s">' + sub + '</div></div>';
+    };
+    return '<div class="stat-row">' +
+        '<div class="stat" style="border-color:var(--cyan-bright);"><div class="k">Estimated BP (calibrated)</div><div class="v">' + Math.round(s.SBP) + '/' + Math.round(s.DBP) + '<small> mmHg</small></div>' +
+          '<div class="s">Likely range (90%): <b style="color:var(--ink-0)">' + I.SBP.low + '–' + I.SBP.high + ' / ' + I.DBP.low + '–' + I.DBP.high + '</b></div></div>' +
+        '<div class="stat"><div class="k">MAP (calibrated)</div><div class="v">' + Math.round(s.MAP) + '<small> mmHg</small></div>' +
+          '<div class="s">Likely range (90%): <b style="color:var(--ink-0)">' + I.MAP.low + '–' + I.MAP.high + '</b></div></div>' +
+        '<div class="stat"><div class="k">Band</div><div class="v" style="color:' + bandCol + ';font-size:20px;">' + esc(c.band) + '</div><div class="s">' + esc(c.why) + '</div></div>' +
+        '<div class="stat"><div class="k">Heart rate</div><div class="v">' + M.heartRate + '<small> bpm</small></div><div class="s">From the pulse peaks</div></div>' +
+      '</div>' +
+      '<div class="k" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);margin:4px 0 6px;">Side by side (estimated part of the recording)</div>' +
+      '<div class="stat-row">' +
+        cmp('Model alone', Math.round(med(est, 'SBP')) + '/' + Math.round(med(est, 'DBP')), 'No calibration · accuracy ' + Math.round(d.interval.accuracyPct.SBP) + '%') +
+        cmp('Model + cuff', Math.round(s.SBP) + '/' + Math.round(s.DBP), 'Offset ' + sign(K.offset.SBP) + '/' + sign(K.offset.DBP) + ' mmHg · accuracy ' + Math.round(K.accuracyPct.SBP) + '%', true) +
+        cmp('Cuff value alone', Math.round(K.cuff.SBP) + '/' + Math.round(K.cuff.DBP), 'Repeating the cuff · accuracy ' + Math.round(K.cuffAlone.SBP.accuracyPct) + '%') +
+        (d.reference
+          ? cmp('Reference (true)', Math.round(d.reference.SBP) + '/' + Math.round(d.reference.DBP),
+                'Model + cuff off by ' + sign(R.errorSBP) + '/' + sign(R.errorDBP) + '; cuff alone ' + sign(R.cuffAloneErrorSBP) + '/' + sign(R.cuffAloneErrorDBP) +
+                '<br>' + (R.insideRange ? '<span style="color:var(--green)">Inside the 90% range</span>' : '<span style="color:var(--amber)">Outside the 90% range</span>'))
+          : '<div class="stat"><div class="k">Reference</div><div class="v" style="font-size:20px;">–</div><div class="s">Enter a reference value to compare</div></div>') +
+      '</div>' +
+      '<div class="ok-note" style="border-color:rgba(255,200,87,.35);display:flex;gap:18px;align-items:center;">' +
+        '<div style="text-align:center;min-width:110px;"><div style="font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-500);">Accuracy</div>' +
+        '<div style="font-family:JetBrains Mono,monospace;font-size:30px;font-weight:800;color:var(--ink-0);line-height:1.1;">' + Math.round(K.accuracyPct.SBP) + '%</div>' +
+        '<div style="font-size:10.5px;color:var(--ink-500);">systolic, calibrated</div></div><div>' +
+        '<b>How accurate is this?</b> With one cuff reading, accuracy (100 − average % error) rises to ' + Math.round(K.accuracyPct.SBP) + '% systolic, ' +
+        Math.round(K.accuracyPct.DBP) + '% diastolic, ' + Math.round(K.accuracyPct.MAP) + '% MAP (typical error ±' + I.SBP.maeMmHg + ' / ±' + I.DBP.maeMmHg + ' / ±' + I.MAP.maeMmHg + ' mmHg), up from ' +
+        Math.round(d.interval.accuracyPct.SBP) + '% without calibration. ' + esc(K.basis) +
+        ' <b>Most of the gain comes from the cuff reading itself:</b> over one minute, simply repeating the cuff value was slightly more accurate (' +
+        Math.round(K.cuffAlone.SBP.accuracyPct) + '%, ±' + K.cuffAlone.SBP.maeMmHg + ' mmHg), because blood pressure changes little in that time.</div></div>' +
+      '<div class="ok-note">The first good window (' + K.calibrationWindowStartS + '–' + (K.calibrationWindowStartS + 12) + ' s) was used for calibration and is not scored; ' +
+        K.windowsScored + ' later window' + (K.windowsScored > 1 ? 's were' : ' was') + ' estimated as model estimate + offset.</div>';
+  }
+
   function render(d){
     var s = d.summary, c = s.classification, out = document.getElementById('results'), I = d.interval;
     var bandCol = c.tone === 'normal' ? 'var(--green)' : (c.tone === 'high' ? 'var(--red)' : 'var(--amber)');
@@ -197,6 +255,7 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
       '<h3>Result for ' + esc(d.fileName) + '</h3>' +
       '<div class="card-sub">' + d.durationS + ' s at ' + d.fsInput + ' Hz · column “' + esc(d.column) + '” · ' + d.windowsUsed + ' of ' + d.windowsTotal +
         ' twelve-second windows passed the quality checks · median of the windows shown</div>' +
+      (d.calibration ? calBlock(d) : (
       '<div class="stat-row">' +
         '<div class="stat"><div class="k">Estimated BP</div><div class="v">' + Math.round(s.SBP) + '/' + Math.round(s.DBP) + '<small> mmHg</small></div>' +
           '<div class="s">Likely range (90%): <b style="color:var(--ink-0)">' + I.SBP.low + '–' + I.SBP.high + ' / ' + I.DBP.low + '–' + I.DBP.high + '</b></div></div>' +
@@ -213,16 +272,18 @@ try{if(localStorage.getItem('pulseiq_theme')==='light')document.documentElement.
         '%, diastolic ' + Math.round(I.accuracyPct.DBP) + '%, MAP ' + Math.round(I.accuracyPct.MAP) + '%). Its typical error was ' +
         '<b>±' + I.SBP.maeMmHg + '</b> mmHg for systolic, <b>±' + I.DBP.maeMmHg + '</b> for diastolic and <b>±' + I.MAP.maeMmHg + '</b> for MAP. ' + esc(I.basis) +
         ' With that uncertainty, the true systolic band could be anywhere from <b>' + sysBand(I.SBP.low) + '</b> to <b>' + sysBand(I.SBP.high) + '</b>, ' +
-        'so treat the band as indicative and confirm with a cuff.</div></div>' +
+        'so treat the band as indicative and confirm with a cuff.</div></div>')) +
       (d.notes.length ? '<div class="ok-note"><b>Processing:</b> ' + d.notes.map(esc).join(' ') + ' Cleaned with the same filter as the training data (0.5–8 Hz).</div>' : '') +
       '<div class="k" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-500);margin-bottom:6px;">Cleaned signal (first 30 s, 12-second windows marked)</div>' +
       '<div class="wave">' + wave(d.preview) + '</div>' +
-      '<table class="wtab" style="margin-top:14px;"><tr><th>Window</th><th>SBP</th><th>DBP</th><th>MAP</th><th>Heart rate</th><th>Quality</th></tr>' +
+      '<table class="wtab" style="margin-top:14px;"><tr><th>Window</th><th>SBP</th><th>DBP</th><th>MAP</th>' + (d.calibration ? '<th>Calibrated SBP/DBP/MAP</th>' : '') + '<th>Heart rate</th><th>Quality</th></tr>' +
       d.windows.map(function(w){
         var mark = w.index === d.explainedWindow ? ' <span class="badge cyan" style="font-size:9px;padding:2px 7px;">explained below</span>' : '';
         return w.ok
-          ? '<tr><td>' + w.startS + '–' + (w.startS + 12) + ' s' + mark + '</td><td class="mono">' + w.SBP.toFixed(1) + '</td><td class="mono">' + w.DBP.toFixed(1) + '</td><td class="mono">' + w.MAP.toFixed(1) + '</td><td>' + w.heartRate + ' bpm</td><td style="color:var(--green)">OK</td></tr>'
-          : '<tr class="bad"><td>' + w.startS + '–' + (w.startS + 12) + ' s</td><td>–</td><td>–</td><td>–</td><td>–</td><td>Skipped: ' + esc(w.reason) + '</td></tr>';
+          ? '<tr><td>' + w.startS + '–' + (w.startS + 12) + ' s' + mark + '</td><td class="mono">' + w.SBP.toFixed(1) + '</td><td class="mono">' + w.DBP.toFixed(1) + '</td><td class="mono">' + w.MAP.toFixed(1) + '</td>' +
+            (d.calibration ? (w.calibrationWindow ? '<td style="color:var(--ink-500)">calibration window (cuff)</td>' : '<td class="mono" style="color:var(--cyan-bright)">' + w.cal.SBP.toFixed(1) + ' / ' + w.cal.DBP.toFixed(1) + ' / ' + w.cal.MAP.toFixed(1) + '</td>') : '') +
+            '<td>' + w.heartRate + ' bpm</td><td style="color:var(--green)">OK</td></tr>'
+          : '<tr class="bad"><td>' + w.startS + '–' + (w.startS + 12) + ' s</td><td>–</td><td>–</td><td>–</td>' + (d.calibration ? '<td>–</td>' : '') + '<td>–</td><td>Skipped: ' + esc(w.reason) + '</td></tr>';
       }).join('') + '</table>' +
       '<div class="up-note" style="margin-top:12px;">' + esc(d.note) + '</div>' +
       '</div>' +

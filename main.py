@@ -1712,6 +1712,21 @@ ERROR_INTERVAL_90 = {
 }
 
 
+# One-cuff calibration, tested leak-free on VitalDB: cuff = true BP of the first
+# 12 s window, scored only on the next 48 s (2,209 one-minute recordings, 40
+# patients, 8,836 scored windows). Errors are true - estimate.
+CALIBRATED_STATS = {
+    "model": {"SBP": {"low": -12.9, "high": 14.5, "maeMmHg": 5.4, "accuracyPct": 95.3},
+              "DBP": {"low": -6.7, "high": 7.8, "maeMmHg": 3.0, "accuracyPct": 95.3},
+              "MAP": {"low": -7.0, "high": 12.5, "maeMmHg": 4.6, "accuracyPct": 94.6}},
+    "cuffAlone": {"SBP": {"maeMmHg": 3.7, "accuracyPct": 96.8},
+                  "DBP": {"maeMmHg": 2.3, "accuracyPct": 96.5},
+                  "MAP": {"maeMmHg": 3.8, "accuracyPct": 95.6}},
+    "basis": "Tested on 2,209 one-minute VitalDB recordings (40 patients): cuff value from the first "
+             "12 seconds, accuracy measured on the remaining 48 seconds only.",
+}
+
+
 def _shap_groups(shap_vals):
     totals = {k: 0.0 for k in FEATURE_GROUPS}
     feats = {k: [] for k in FEATURE_GROUPS}
@@ -1739,6 +1754,8 @@ async def upload_ppg(file: UploadFile = File(...),
                      column: Optional[str] = Form(default=""),
                      refSBP: Optional[float] = Form(default=None),
                      refDBP: Optional[float] = Form(default=None),
+                     calSBP: Optional[float] = Form(default=None),
+                     calDBP: Optional[float] = Form(default=None),
                      current_user: dict = Depends(auth.get_current_user)):
     import ppg_upload
     raw = await file.read()
@@ -1806,8 +1823,53 @@ async def upload_ppg(file: UploadFile = File(...),
     interval["basis"] = ("90% of true values fell in this range on 12,230 recordings from 47 patients "
                          "the model never saw in training (MIMIC-IV test set and VitalDB).")
 
+    # ---- optional one-cuff calibration -------------------------------------
+    # The cuff reading belongs to the first good 12-s window. offset = cuff -
+    # model estimate on that window; every LATER window gets model + offset.
+    # The calibration window itself is never scored.
+    calib = None
+    if calSBP is not None and calDBP is not None:
+        if not (60 <= calSBP <= 260 and 30 <= calDBP <= 160 and calSBP > calDBP):
+            raise HTTPException(status_code=422, detail="The cuff reading doesn't look like a valid blood pressure.")
+        if len(good) < 2:
+            raise HTTPException(status_code=422, detail=(
+                "Calibration needs at least 24 seconds of good signal: the first 12-second window is "
+                "used for the cuff reading and later windows are estimated."))
+        cuff = np.array([calSBP, calDBP, (calSBP + 2 * calDBP) / 3.0])
+        off = cuff - P[0]
+        C = P[1:] + off
+        for n, w in enumerate(good):
+            if n == 0:
+                w["calibrationWindow"] = True
+            else:
+                w["cal"] = {t: round(float(C[n - 1, j]), 1) for j, t in enumerate(TARGETS)}
+        cmed = {t: float(np.median(C[:, j])) for j, t in enumerate(TARGETS)}
+        st = CALIBRATED_STATS["model"]
+        calib = {
+            "cuff": {"SBP": calSBP, "DBP": calDBP, "MAP": round(float(cuff[2]), 1)},
+            "offset": {t: round(float(off[j]), 1) for j, t in enumerate(TARGETS)},
+            "summary": {t: round(cmed[t], 1) for t in TARGETS},
+            "classification": classify_bp(cmed["SBP"], cmed["DBP"]),
+            "interval": {t: {"low": round(cmed[t] + st[t]["low"]), "high": round(cmed[t] + st[t]["high"]),
+                             "maeMmHg": st[t]["maeMmHg"]} for t in TARGETS},
+            "accuracyPct": {t: st[t]["accuracyPct"] for t in TARGETS},
+            "cuffAlone": CALIBRATED_STATS["cuffAlone"],
+            "basis": CALIBRATED_STATS["basis"],
+            "windowsScored": len(C),
+            "calibrationWindowStartS": good[0]["startS"],
+        }
+
     ref = None
     if refSBP is not None and refDBP is not None:
+        if calib:
+            calib["reference"] = {
+                "errorSBP": round(calib["summary"]["SBP"] - refSBP, 1),
+                "errorDBP": round(calib["summary"]["DBP"] - refDBP, 1),
+                "cuffAloneErrorSBP": round(calSBP - refSBP, 1),
+                "cuffAloneErrorDBP": round(calDBP - refDBP, 1),
+                "insideRange": bool(calib["interval"]["SBP"]["low"] <= refSBP <= calib["interval"]["SBP"]["high"] and
+                                    calib["interval"]["DBP"]["low"] <= refDBP <= calib["interval"]["DBP"]["high"]),
+            }
         ref = {"SBP": refSBP, "DBP": refDBP,
                "errorSBP": round(med["SBP"] - refSBP, 1), "errorDBP": round(med["DBP"] - refDBP, 1),
                "insideRange": bool(interval["SBP"]["low"] <= refSBP <= interval["SBP"]["high"] and
@@ -1829,6 +1891,7 @@ async def upload_ppg(file: UploadFile = File(...),
         "ig": ig,
         "shap": shap_block,
         "reference": ref,
+        "calibration": calib,
         "preview": prep["preview"],
         "note": "Estimated by the PPGResNetBiLSTM deep model from the uploaded PPG only (no calibration). "
                 "Research demonstrator, not a medical device.",
