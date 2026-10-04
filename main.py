@@ -1664,7 +1664,7 @@ def explain_saliency(patient_id: str, target: str = "SBP", window: Optional[int]
     x = torch.tensor(STATE["X"][i : i + 1], dtype=torch.float32, requires_grad=True)
 
     ig = IntegratedGradients(model)
-    attributions = ig.attribute(x, target=target_idx, n_steps=32)
+    attributions = ig.attribute(x, target=target_idx, n_steps=32, internal_batch_size=8)
     attr = attributions.detach().numpy()[0]  # [3, 1500]
 
     with torch.no_grad():
@@ -1788,7 +1788,7 @@ async def upload_ppg(file: UploadFile = File(...),
     k = int(np.argmin(np.abs(P[:, 0] - med["SBP"])))
     x = torch.tensor(X[k:k + 1], requires_grad=True)
     from captum.attr import IntegratedGradients
-    attr = IntegratedGradients(model).attribute(x, target=0, n_steps=32).detach().numpy()[0]
+    attr = IntegratedGradients(model).attribute(x, target=0, n_steps=32, internal_batch_size=8).detach().numpy()[0]
     step = 5
     ig = {
         "target": "SBP",

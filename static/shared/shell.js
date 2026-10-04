@@ -228,6 +228,34 @@
     mountThemeToggle();
   }
 
+  // A "Back" button on every inner page (the dashboards, landing, login and the
+  // live monitor, which has its own, are left alone). Goes to the previous page
+  // if it was part of PulseIQ, otherwise to the user's dashboard.
+  function mountBackButton() {
+    var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    var skip = ['', 'index.html', 'login.html', 'patient-dashboard.html', 'doctor-dashboard.html', 'icu-monitor.html'];
+    if (skip.indexOf(page) >= 0 || document.querySelector('[data-back-btn]')) return;
+    var host = document.querySelector('.topbar') || document.querySelector('.finder-top');
+    if (!host) return;
+    var a = document.createElement('a');
+    a.className = 'back-btn';
+    a.setAttribute('data-back-btn', '1');
+    a.href = homeHref();
+    a.textContent = '\u2190 Back';
+    a.addEventListener('click', function (e) {
+      var ref = document.referrer || '';
+      if (ref && ref.indexOf(location.origin) === 0 && history.length > 1 && ref !== location.href) {
+        e.preventDefault(); history.back();
+      }
+    });
+    host.insertBefore(a, host.firstChild);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountBackButton);
+  } else {
+    mountBackButton();
+  }
+
   // On a phone the rail is an off-canvas drawer. The button lives in the page's
   // own topbar, so it is injected here rather than duplicated in 13 files.
   function wireMobileDrawer(rail) {

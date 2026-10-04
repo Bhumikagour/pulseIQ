@@ -611,3 +611,10 @@ textarea:focus-visible,.qa-tile:focus-visible,.tab:focus-visible{
    controls; .badge, .live-pill and .av are status indicators — glowing them
    would suggest they can be clicked. Strip containers (.tabs, .auth-tabs) stay
    flat because their child tabs already respond. */
+
+/* Back button injected by shell.js on inner pages */
+.back-btn{display:inline-flex;align-items:center;flex-shrink:0;background:var(--glass);border:1px solid var(--glass-border-2);
+  color:var(--ink-0);padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;text-decoration:none;min-height:36px;}
+.back-btn:hover{background:var(--glass-hover);}
+/* Server-status badge removed from all pages */
+#backendBadge{display:none !important;}
